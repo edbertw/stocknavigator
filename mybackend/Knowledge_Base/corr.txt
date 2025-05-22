@@ -1,0 +1,16 @@
+Infinance,correlation tradingis a strategy in which the investor gets exposure to the averagecorrelationof an index.
+
+The key to correlation trading is being able to predict when future realized correlation amongst the stocks of a particular index will be greater or less than the "implied" correlation level derived from derivatives on the index and its single stocks.  One observation related to correlation trading is the principle ofdiversification, which implies that the volatility of a portfolio of securities is less than (or equal to) the average volatility of all the securities in that portfolio (This has nothing to do withModern Portfolio Theoryand follows from Statistics 101, definition of portfolio variance). The lower the correlation amongst the individual securities, the lower the overallvolatilityof the entire portfolio. This is due tothe way in which variances behave when summing correlated random variables.
+
+To sell correlation, investors can:
+
+In practice,exchange-traded funds(ETF's) are sometimes chosen instead of indices.
+
+Dispersion trading is increasingly recognized as a strategy for traders looking to beat the market.[1]Its premise is simple, despite the perceived complexity. At its heart, dispersion trading takes advantage of the fact that an index's volatility is usually less variable than that of its individual stocks, a result of diversification. While individual stocks may fluctuate widely, the index generally maintains more stability.
+
+However, market forces often raise the expected correlation among stocks, giving the impression of increased index volatility.[2]Traders, especially in hedge funds and trading desks, see this as an opportunity. They bet against the index's volatility while supporting the volatility of individual stocks, aiming to profit from the index's perceived overvalued volatility.
+
+Imagine an index with just two stocks moving in unison. Their perfect correlation means the index volatility directly reflects the stocks. On the other hand, if the stocks move oppositely, the index shows no volatility. Dispersion traders analyze such scenarios to inform their strategies. Dispersion trading capitalizes on the tendency to overestimate the correlation between stocks in the market. This overestimation, often pushed by structured product sellers who prefer long correlation positions, makes index volatility seem higher than it is.[3]
+
+In long dispersion[4]trades, traders short index volatility while going long on individual stock volatility. This strategy counters the market's common assumption about implied correlation. While dispersion trading is a common approach to trading implied correlation, its effectiveness also depends on overall market volatility. It's essentially about trading the index's correlation, calculated through specific financial models.
+

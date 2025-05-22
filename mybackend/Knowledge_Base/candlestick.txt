@@ -1,0 +1,34 @@
+Acandlestick chart(also calledJapanese candlestick chartorK-line) is a style of financial chart used to describe price movements of asecurity,derivative, orcurrency.
+
+While similar in appearance to a bar chart, each candlestick represents four important pieces of information for that day: open and close in the thick body, and high and low in the "candle wick". Being densely packed with information, it tends to representtrading patternsover short periods of time, often a few days or a few trading sessions.[citation needed]
+
+Candlestick charts are most often used intechnical analysisof equity and currency price patterns. They are used by traders to determine possible price movement based on past patterns, and who use the opening price, closing price, high and low of that time period.[citation needed]They are visually similar tobox plots, though box plots show different information.[1]
+
+Candlestick charts are thought to have been developed in the 18th century byMunehisa Homma, aJapaneserice trader.[2]They were introduced to the Western world by Steve Nison in his bookJapanese Candlestick Charting Techniques, first published in 1991. They are often used today in stock analysis along with other analytical tools such asFibonacci analysis.[3]
+
+InBeyond Candlesticks,[4]Nison says:
+
+However, based on my research, it is unlikely that Homma used candle charts. As will be seen later, when I discuss the evolution of the candle charts, it was more likely that candle charts were developed in the early part of the Meiji period in Japan (in the late 1800s).
+
+The area between the open and the close is called thereal body, price excursions above and below the real body areshadows(also calledwicks). Wicks illustrate the highest and lowest traded prices of an asset during the time interval represented. The body illustrates the opening and closing trades.
+
+The price range is the distance between the top of the upper shadow and the bottom of the lower shadow moved through during the time frame of the candlestick. The range is calculated by subtracting the low price from the high price.
+
+The fill or the color of the candle's body represent the price change during the period. Normally, if the asset closed higher than it opened, the body is displayed as hollow (or the green color is used), with the opening price at the bottom of the body and the closing price at the top. Conversely, if the asset closed lower than it opened, the body is displayed as filled (or the red color is used), with the opening price at the top and the closing price at the bottom. Modern charting software permits unrestricted customization of candle looks and colors, so the actual look of rising or falling price candles may vary.
+
+A version of a candlestick chart is ahollow candlestickchart, where both fill and color are used to represent different price relationships:[5]
+
+A candlestick need not have either a body or a wick. Generally, the longer the body of the candle, the more intense the trading.[3]
+
+Candlesticks can also show the current price as they're forming, whether the price moved up or down over the time phrase and the price range of the asset covered in that time.
+
+Rather than using the open, high, low, and close values for a given time interval, candlesticks can also be constructed using the open, high, low, and close of a specified volume range (for example, 1,000; 100,000; 1 million shares per candlestick).[citation needed]In modern charting software, volume can be incorporated into candlestick charts by increasing or decreasing candlesticks width according to the relative volume for a given time period.[6]
+
+Candlestick charts are a visual aid for decision making instock,foreign exchange,commodity, andoptiontrading.  By looking at a candlestick, one can identify an asset's opening and closing prices, highs and lows, and overall range for a specific time frame.[7]Candlestick charts serve as a cornerstone of technical analysis.  For example, when the bar is white and high relative to other time periods, it means buyers are verybullish. The opposite is true when there is a black bar.
+
+Acandlestick patternis a particular sequence of candlesticks on a candlestick chart, which is mainly used to identify trends.[citation needed]
+
+Heikin-Ashi (平均足, Japanese for 'average bar') candlesticks are a weighted version of candlesticks calculated in the following way:[citation needed]
+
+The body of a Heikin-Ashi candle does not always represent the actual open/close. Unlike with regular candlesticks, a long wick shows more strength, whereas the same period on a standard chart might show a long body with little or no wick.[citation needed]
+

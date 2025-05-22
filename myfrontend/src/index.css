@@ -1,0 +1,77 @@
+/* General Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+*{
+  font-family: Outfit;
+}
+
+.placeholder-color{
+  color: #e0e0e0;
+  font-weight:300;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Container for the app */
+div {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Header styles */
+h1 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #777;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Dropdown Styles */
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Paragraph (selected value display) */
+p {
+  color: #555;
+  font-size: 1.1rem;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+/* Hover and focus effects */
+select:hover, select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+
