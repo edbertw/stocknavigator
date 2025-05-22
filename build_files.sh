@@ -1,6 +1,6 @@
 #!/bin/bash
 python3.11 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 cd mybackend
-python manage.py collectstatic
+python3 manage.py collectstatic
