@@ -86,16 +86,14 @@ DATABASES = {
 '''
 
 DATABASES = {
-    '''
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'ev0sMYTHICAL'
-        'HOST': "containers-us-west-196.railway.app',
+        'PASSWORD': 'ev0sMYTHICAL',
+        'HOST': "containers-us-west-196.railway.app",
         'PORT': '6625',
     }
-    '''
 }
 
 # Password validation
