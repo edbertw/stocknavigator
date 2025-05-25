@@ -38,4 +38,14 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Run Django with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "mybackend.wsgi:application"]
+ENV PYTHONUNBUFFERED=1 
+    #GUNICORN_WORKERS=2 \
+    #GUNICORN_THREADS=2 \
+    #GUNICORN_TIMEOUT=120
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD sh -c "gunicorn --bind 0.0.0.0:8000 \
+    #--workers ${GUNICORN_WORKERS} \
+    #--threads ${GUNICORN_THREADS} \
+    #--timeout ${GUNICORN_TIMEOUT} \
+    #--worker-class sync \
+    #mybackend.wsgi:application"

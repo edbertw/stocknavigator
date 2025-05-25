@@ -8,6 +8,7 @@ from langchain_community.vectorstores import FAISS
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 from langchain_community.llms import HuggingFacePipeline
 from langchain.chains import RetrievalQA
+import os
 '''
 file_paths = [
         "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/candlestick.txt",
@@ -38,9 +39,18 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 chunks = text_splitter.split_documents(documents)
         
 embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-embeddings = embedding_model.embed_documents([chunk.page_content for chunk in chunks])
-vectorstore = FAISS.from_documents(documents=chunks, embedding=embedding_model)
-        
+faiss_index_path = "faiss"
+
+# Check if FAISS index exists
+if os.path.exists(faiss_index_path):
+    # Load the persisted FAISS index
+    vectorstore = FAISS.load_local(faiss_index_path, embedding_model)
+else:
+    # Create the FAISS index and persist it
+    embeddings = embedding_model.embed_documents([chunk.page_content for chunk in chunks])
+    vectorstore = FAISS.from_documents(documents=chunks, embedding=embedding_model)
+    vectorstore.save_local(faiss_index_path)
+    
 model_name = "google/flan-t5-base"  # You can choose other models
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cpu")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
