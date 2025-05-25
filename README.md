@@ -28,3 +28,6 @@ Alternatively, if docker can be utilized and port is available
 13. BeautifulSoup
 14. Transformers
 15. FAISS Vector DB
+
+## Contributions
+I am always looking for ways to improve the application and would love any suggestions on possible improvements. Feel free to submit pull requests so we can collaborate further.
