@@ -3,13 +3,13 @@
 > **Your One-Stop Full-Stack Stock Market Discovery Platform**
 
 ---
-
+### Starting Page
 ![Starting Page](screen_captures/photo_1.png)
-
+### Dynamic Real-Time Stock Analytics and Dashboard
 ![Stock Analytics](screen_captures/photo_2.png)
-
+### Advanced AI-Powered Chatbot
 ![AI-Powered Chatbot](screen_captures/photo_3.png)
-
+### Predictive Analytics
 ![Predictive Analytics](screen_captures/photo_4.png)
 
 
