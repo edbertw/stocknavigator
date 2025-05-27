@@ -44,7 +44,7 @@ faiss_index_path = "faiss"
 # Check if FAISS index exists
 if os.path.exists(faiss_index_path):
     # Load the persisted FAISS index
-    vectorstore = FAISS.load_local(faiss_index_path, embedding_model)
+    vectorstore = FAISS.load_local(faiss_index_path, embedding_model, allow_dangerous_deserialization=True)
 else:
     # Create the FAISS index and persist it
     embeddings = embedding_model.embed_documents([chunk.page_content for chunk in chunks])

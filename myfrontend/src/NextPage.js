@@ -127,7 +127,6 @@ const NextPage = () => {
       <div className="content-wrapper">
         {company && (
           <div className="company-info">
-            <img src={`/${company.logo}`} alt={`${company.name} logo`} className="next-page-logo" />
             <h1>{company.name}</h1>
             <p>{company.description}</p>
           </div>

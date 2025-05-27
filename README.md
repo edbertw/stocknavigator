@@ -4,7 +4,14 @@
 
 ---
 
-![Stock Market Banner](https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1350&q=80)
+![Starting Page](screen_captures/photo_1.png)
+
+![Stock Analytics](screen_captures/photo_2.png)
+
+![AI-Powered Chatbot](screen_captures/photo_3.png)
+
+![Predictive Analytics](screen_captures/photo_4.png)
+
 
 ---
 

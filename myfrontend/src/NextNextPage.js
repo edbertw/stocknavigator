@@ -69,7 +69,7 @@ const NextNextPage = () => {
         {company && (
           <div>
             <h1>Stock Price Forecasting for {company.name}</h1>
-            <h2>With a Seasonal ARIMA + Prophet Time Series Model</h2>
+            <h2>LSTM RNN architecture</h2>
             <p>Stock Symbol: {stockSymbol}</p>
             <p>Company: {company.name}</p>
           </div>
@@ -78,7 +78,7 @@ const NextNextPage = () => {
         <div className="dashboard-grid">
           {graphDataPredictions && (
             <div className="graph-card">
-              <h3>35-Day Stock Price Predictions</h3>
+              <h3>30-Day Stock Price Predictions</h3>
               <Plot
                 data={graphDataPredictions.data}
                 layout={{
@@ -96,12 +96,12 @@ const NextNextPage = () => {
         <div className="info-section">
           <h2>Forecasting Insights</h2>
           <p>
-            These predictions are generated using autoTS model limited to FBProphet and S/ARIMA 
+            These predictions are generated using Dual Layer LSTM architecture, trained on past 60 days of data
           </p>
 
           <div className="info-item">
             <h2>Model Insights</h2>
-            <p> ARIMA is a traditional method in statistical forecasting to capture various patterns in time series data. Prophet on the other hands, offers a more flexible approach and is particularly useful for handling data with strong seasonal effects and missing values.
+            <p> The model uses a Dual Layer LSTM architecture to predict stock prices based on historical data. It captures temporal dependencies and trends in the stock market, providing insights into future price movements.
             </p>
           </div>
 

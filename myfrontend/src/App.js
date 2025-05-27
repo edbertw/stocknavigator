@@ -3,8 +3,7 @@ import './App.css';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import NextPage from './NextPage'; // Import NextPage
 import NextNextPage from './NextNextPage'; // Import NextNextPage
-
-const logoImage = 'file.png'; 
+import { FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa'; // Import LinkedIn and Instagram icons
 
 const App = () => {
   const [selectedValue, setSelectedValue] = useState(''); // Selected stock
@@ -23,8 +22,8 @@ const App = () => {
       NDAQ: 'NASDAQ is an American stock exchange, the second-largest in the world by market cap.',
       TSLA: 'Tesla is a clean energy and electric vehicle company.',
       HSBC: 'HSBC is one of the world\'s largest banking and financial services organizations.',
-      JPM: 'JP Morgan is a global leader in financial services offering solutions to corporations, institutions, and governments.',
     };
+
     setDescription(descriptions[value] || '');
   };
 
@@ -52,65 +51,70 @@ const App = () => {
         }
         setLoading(false); // Hide loading
       })
-      .catch(() => {
-        setError('Error fetching company details'); // API call failed
+      .catch((err) => {
+        setError('An error occurred while submitting the stock.');
         setLoading(false); // Hide loading
       });
   };
 
   return (
-    <div className="app-container"> 
-      <Routes>
-        <Route path="/" element={
-          <div className="content">
-            <img src={logoImage} alt="Logo" className="app-logo" />
-            <h1>Stock Navigator</h1>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>📈 Stock Navigator</h1>
+        <p>Explore insights and predictions for your favorite stocks.</p>
+      </header>
 
-            {/* Application description */}
-            <div className="app-description">
-              <p>
-                Stock Navigator is a powerful tool to analyze and visualize stock data in real-time. 
-              </p>
-              <p>
-                Select a stock from the dropdown menu to view detailed analytics, including price trends, 
-                moving averages, predictions, and so much more.
-              </p>
-              <p>
-                We have additional features incoming, including a chatbot to handle personalized queries
-              </p>
-            </div>
+      <main className="app-main">
+        <div className="stock-selector">
+          <label htmlFor="stock-select">Select a Stock:</label>
+          <select
+            id="stock-select"
+            value={selectedValue}
+            onChange={handleSelectChange}
+            className="stock-dropdown"
+          >
+            <option value="">-- Choose a Stock --</option>
+            <option value="NVDA">NVIDIA</option>
+            <option value="NDAQ">NASDAQ</option>
+            <option value="TSLA">Tesla</option>
+            <option value="HSBC">HSBC</option>
+          </select>
+        </div>
 
-            {/* Dropdown container */}
-            <div className="dropdown-container">
-              <label htmlFor="dropdown">Choose a stock: </label>
-              <select id="dropdown" value={selectedValue} onChange={handleSelectChange}>
-                <option value="" disabled>Select a stock</option>
-                <option value="NVDA">NVIDIA</option>
-                <option value="NDAQ">NASDAQ</option>
-                <option value="TSLA">TESLA</option>
-                <option value="HSBC">HSBC</option>
-                <option value="JPM">JP Morgan</option>
-              </select>
-            </div>
-
-            {/* Description box */}
-            {description && (
-              <div className="description-box">
-                <p>{description}</p>
-              </div>
-            )}
-
-            {/* Submit button */}
-            <button onClick={handleSubmit} disabled={!selectedValue || loading}>
-              {loading ? 'Submitting...' : 'Submit'}
-            </button>
-
-            {/* Error message */}
-            {error && <p className="error">{error}</p>}
+        {description && (
+          <div className="stock-description">
+            <h3>About the Stock:</h3>
+            <p>{description}</p>
           </div>
-        } />
-        
-        {/* Next pages */}
+        )}
+
+        {error && <p className="error-message">{error}</p>}
+
+        <button
+          onClick={handleSubmit}
+          className="submit-button"
+          disabled={loading || !selectedValue}
+        >
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
+      </main>
+
+      <footer className="app-footer">
+        <p>© 2025 Stock Navigator. All rights reserved.</p>
+        <div className="social-icons">
+          <a href="https://www.linkedin.com/in/edbertwidjaja/" target="_blank" rel="noopener noreferrer">
+            <FaLinkedin size={24} style={{ marginRight: '10px', color: '#0077b5' }} />
+          </a>
+          <a href="https://www.instagram.com/edbert__wid/" target="_blank" rel="noopener noreferrer">
+            <FaInstagram size={24} style={{ marginRight: '10px', color: '#e4405f' }} />
+          </a>
+          <a href="https://github.com/edbertw" target="_blank" rel="noopener noreferrer">
+            <FaGithub size={24} style={{ color: '#333' }} />
+          </a>  
+        </div>
+      </footer>
+
+      <Routes>
         <Route path="/next-page" element={<NextPage />} />
         <Route path="/next-next-page" element={<NextNextPage />} />
       </Routes>

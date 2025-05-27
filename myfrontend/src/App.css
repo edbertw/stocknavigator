@@ -12,118 +12,116 @@ body {
 }
 
 .app-container {
-  background-size: cover; /* Ensure the image covers the entire background */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Do not repeat the background image */
-  background-attachment: fixed; /* Keep the background fixed on scroll */
-  height: auto; /* Full viewport height */
-  width: auto; /* Full viewport width */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.app-logo {
-  max-width: 300px; 
-  width: auto; /* Maintain aspect ratio */
-  height: auto; /* Maintain aspect ratio */
-  margin: 20px auto; /* Center with margin */
-  display: block; /* Ensure it's treated as a block element */
-}
-
-.content {
+  font-family: 'Arial', sans-serif;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 500px; /* Increased from 400px for better spacing */
-  margin: 20px auto; /* Center horizontally */
-  overflow: visible; /* Ensure nothing gets clipped */
-}
-/* Application description */
-.app-description {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.9); /* White background */
-  border-radius: 8px;
-  color: #333; /* Dark text */
-  font-size: 0.9rem;
-  line-height: 1.5;
-  text-align: left;
-}
-
-/* Description box */
-.description-box {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: rgba(255, 255, 255, 0.9); /* White background */
-  border-radius: 8px;
-  color: #333; /* Dark text */
-  font-size: 0.9rem;
-  line-height: 1.5;
-  text-align: left;
-}
-
-/* Dropdown container */
-.dropdown-container {
+  padding: 20px;
+  background-color: #f7f7fc;
+  color: #333;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the dropdown horizontally */
-  margin: 20px 0;
+  justify-content: space-between;
 }
 
-/* Dropdown box */
-select {
+.app-header {
+  background-color: #4caf50;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.app-header p {
+  margin: 5px 0 0;
+  font-size: 1.2rem;
+}
+
+.app-main {
+  margin: 20px auto;
+  max-width: 600px;
+  text-align: left;
+}
+
+.stock-selector {
+  display: flex;
+  flex-direction: column; /* Stack label and dropdown vertically */
+  align-items: center; /* Center them horizontally */
+  margin-top: 20px; /* Add some space above */
+}
+
+.stock-selector label {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: black; /* Set the label text color to black */
+}
+
+.stock-dropdown {
   padding: 10px;
-  border-radius: 8px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  width: 100%; /* Full width */
-  max-width: 300px; /* Limit width */
-  margin-top: 10px; /* Space above the dropdown */
+  border-radius: 4px;
 }
 
-/* Submit button */
-button {
-  padding: 12px 30px;
-  border: none;
-  border-radius: 8px;
-  background-color: #4CAF50; /* Green button */
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
+.stock-description {
   margin-top: 20px;
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background-color: #4caf50;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #12ed1a;
+  text-align: left;
 }
 
-button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: translateY(-3px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+.stock-description h3 {
+  margin: 0 0 10px;
 }
 
-button:disabled {
-  background-color: #a5d6a7; /* Light green when disabled */
-  cursor: not-allowed;
-}
-
-/* Error message */
-.error {
-  color: #ff6b6b; /* Red error text */
+.error-message {
+  color: red;
+  font-weight: bold;
   margin-top: 10px;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-  .content {
-    padding: 30px;
-    max-width: 90%;
-    margin-top: -50px; /* Adjust for smaller screens */
-  }
+.submit-button {
+  display: block; /* Make the button a block element */
+  margin: 30px auto; /* Center the button horizontally and add space above */
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.app-footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  text-decoration: none;
+}
 /* Styles for the next page */
 .next-page {
   display: flex;
