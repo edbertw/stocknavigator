@@ -23,7 +23,7 @@ def predict_stock(request):
     if stock_symbol:
         current = date.today()
         end = current.strftime("%Y-%m-%d")
-        start = (date.today() - timedelta(days = 365)).strftime("%Y-%m-%d")
+        start = (date.today() - timedelta(days = 1983)).strftime("%Y-%m-%d")
         try:
             stock = yf.download(stock_symbol, start = start, end = end, progress = False,multi_level_index=False )
             if stock.empty:
