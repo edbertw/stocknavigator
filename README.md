@@ -11,6 +11,10 @@
 ![Stock Analytics](screen_captures/photo_2.png)
 
 ---
+### Real-Time Market News and Sentiment Analysis
+![Sentiment Analysis](screen_captures/photo_5.png)
+
+---
 ### Advanced AI-Powered Chatbot
 ![AI-Powered Chatbot](screen_captures/photo_3.png)
 
@@ -26,6 +30,7 @@
 
 - 📈 **Comprehensive data**: From basic info to advanced statistical metrics.
 - 🧠 **AI-powered insights**: Ask our integrated RAG AI anything—answers are fetched from a rich, web-scraped knowledge base.
+- 🖼️ **Real-time Market Sentiment Analysis**: Read real-time market news on the company and use our system to analyze its sentiment.
 - 🔮 **Stock price prediction**: Interactive, LSTM-driven predictions with beautiful charting.
 - 🛠️ **Modern full-stack experience**: Fast, intuitive, and ready for your contributions!
 
@@ -84,8 +89,8 @@ Stock-Navigator is powered by an exciting tech stack:
 
 - **Frontend:** React.js, HTML, CSS, Plotly.js
 - **Backend:** Django, Django REST Framework
-- **Data Science:** Pandas, NumPy, TensorFlow, yFinance API
-- **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB
+- **Data Science:** Pandas, NumPy, TensorFlow, PyTorch, Yahoo Finance, FinnHub, Torch Script
+- **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Tokenizers, Paddings
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
 
@@ -97,7 +102,7 @@ Stock-Navigator is powered by an exciting tech stack:
 - **AI Chat Assistant:** Ask any stock question—get context-rich, AI-generated answers.
 - **Predictive Analytics:** Forecast prices using advanced RNN (LSTM) models.
 - **Curated Knowledge Base:** Answers are RAG-powered and sourced from the latest market info.
-
+- **Market Sentiment Analysis** Retrieve real-time market news on the company and analyse underlying sentiment
 ---
 
 ## 🌱 Contributing
