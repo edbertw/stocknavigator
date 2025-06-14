@@ -18,6 +18,7 @@ const NextPage = () => {
   const [graphDataBollinger, setGraphDataBollinger] = useState(null);
   const [graphDataMACD, setGraphDataMACD] = useState(null);
   const [graphDataCum, setGraphDataCum] = useState(null);
+  const [sentimentAnalysis, setSentimentAnalysis] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -63,8 +64,25 @@ const NextPage = () => {
         setError('Error fetching data');
         setLoading(false);
       });
-  }, [stockSymbol]);
 
+      fetch('http://localhost:8000/api/sen-display/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ stock_symbol: stockSymbol }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setSentimentAnalysis(data.response);
+        })
+        .catch((error) => {
+          console.error('Error fetching sentiment analysis:', error);
+          setSentimentAnalysis('Unable to fetch sentiment analysis');
+        });
+
+  }, [stockSymbol]);
+  
   const handleBack = () => {
     navigate(-1);
   };
@@ -195,6 +213,13 @@ const NextPage = () => {
             </div>
           )}
         </div>
+        {/* Sentiment Analysis Section */}
+        <div className="sentiment-container">
+          <h2>Market Sentiment Analysis for {company.name}</h2>
+          <div className="sentiment-box">
+            {sentimentAnalysis || "Loading sentiment analysis..."}
+          </div>
+        </div>  
 
         {/* Information Section */}
         <div className="info-section">

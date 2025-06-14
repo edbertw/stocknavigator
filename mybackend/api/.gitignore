@@ -1,0 +1,7 @@
+data.csv
+/data.csv
+
+__pycache__/
+migrations/
+.env
+__init__.py

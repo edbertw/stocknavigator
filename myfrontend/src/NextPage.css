@@ -225,3 +225,22 @@
       max-width: 100%; /* Allow full width on small screens */
     }
   }
+
+  /* Sentiment Analysis Styles */
+.sentiment-container {
+  width: 80%;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.sentiment-box {
+  white-space: pre-wrap;
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 15px;
+  text-align: left;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
