@@ -3,7 +3,16 @@
 > **Your One-Stop Full-Stack Stock Market Discovery Platform**
 
 ---
-### Starting Page
+### Login Page
+![Login Page](screen_captures/photo_7.png)
+
+---
+
+### Signup Page
+![Signup Page](screen_captures/photo_6.png)
+
+---
+### Home Page
 ![Starting Page](screen_captures/photo_1.png)
 
 ---
@@ -28,6 +37,7 @@
 
 **Stock-Navigator** is the all-in-one, containerized web application built for stock market enthusiasts, analysts, and curious investors. Dive deep into your favorite stocks with:
 
+- 🔐**Security & Data Privacy**: User authentication through username and passwords stored from our PostgreSQL database
 - 📈 **Comprehensive data**: From basic info to advanced statistical metrics.
 - 🧠 **AI-powered insights**: Ask our integrated RAG AI anything—answers are fetched from a rich, web-scraped knowledge base.
 - 🖼️ **Real-time Market Sentiment Analysis**: Read real-time market news on the company and use our system to analyze its sentiment.
@@ -48,7 +58,9 @@
     ```bash
     pip3 install -r requirements.txt
     ```
-3. **Navigate to backend and launch the server:**
+3. **Initialize a PostgreSQL database connection through Docker or 3-rd party apps**
+
+4. **Navigate to backend and launch the server:**
     ```bash
     cd mybackend
     python manage.py runserver
@@ -93,6 +105,8 @@ Stock-Navigator is powered by an exciting tech stack:
 - **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Tokenizers, Paddings
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
+- **Databases** PostgreSQL
+- **Security** JWT Tokens
 
 ---
 
