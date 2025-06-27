@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import NextPage from './NextPage'; // Import NextPage
@@ -10,7 +10,32 @@ const App = () => {
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(''); // Error state
   const [description, setDescription] = useState(''); // Description state
+  const [username, setUsername] = useState(null); // Username state
   const navigate = useNavigate(); // Navigation
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/user/info/', {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          
+          if (response.ok) {
+            const userData = await response.json();
+            setUsername(userData.username);
+          }
+        } catch (err) {
+          console.error('Error fetching user info:', err);
+        }
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   const handleSelectChange = (e) => {
     const value = e.target.value;
@@ -61,6 +86,11 @@ const App = () => {
     <div className="app-container">
       <header className="app-header">
         <h1>📈 Stock Navigator</h1>
+        {username && (
+          <div className="welcome-message">
+            Welcome, <span className="username">{username}</span>!
+          </div>
+        )}
         <p>Explore insights and predictions for your favorite stocks.</p>
       </header>
 

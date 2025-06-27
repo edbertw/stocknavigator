@@ -16,6 +16,7 @@ from rest_framework import generics
 from .serializers import UserSerializer, NoteSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Note
+from rest_framework.views import APIView
 
 
 class NoteListCreate(generics.ListCreateAPIView):
@@ -32,7 +33,16 @@ class NoteListCreate(generics.ListCreateAPIView):
         else:
             print(serializer.errors)
             
-           
+class UserInfoView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        return Response({
+            'username': user.username
+        })
+    
+          
 class NoteDelete(generics.DestroyAPIView):
     serializer_class = NoteSerializer
     permission_classes = [IsAuthenticated]

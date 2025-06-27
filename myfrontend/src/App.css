@@ -11,6 +11,25 @@ body {
   background-color: #f5f5f5; /* Gray-white background */
 }
 
+.welcome-message {
+  margin: 15px 0;
+  font-size: 1.3rem;
+  color: #2c3e50;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  order: 1; /* Ensures it appears below the header title */
+}
+
+.username {
+  font-weight: bold;
+  color: #4caf50;
+  text-transform: capitalize;
+}
+
 .app-container {
   font-family: 'Arial', sans-serif;
   text-align: center;
@@ -28,16 +47,23 @@ body {
   color: white;
   padding: 20px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative; /* For absolute positioning if needed */
 }
+
 
 .app-header h1 {
   margin: 0;
   font-size: 2.5rem;
+  order: 0; /* Ensures title comes first */
 }
 
 .app-header p {
   margin: 5px 0 0;
   font-size: 1.2rem;
+  order: 2; /* Ensures subtitle comes after welcome message */
 }
 
 .app-main {

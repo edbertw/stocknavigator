@@ -1,15 +1,4 @@
 /* AuthStyles.css */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f7fa;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #333;
-  }
   
   .auth-container, .container {
     background-color: white;
@@ -47,8 +36,8 @@ body {
     box-sizing: border-box;
   }
   
-  button {
-    background-color: #3498db;
+  .login-button, .signup-button {
+    background-color: #4caf50;
     color: white;
     border: none;
     padding: 12px 20px;
@@ -58,10 +47,10 @@ body {
     font-weight: 600;
     width: 100%;
     transition: background-color 0.3s;
-  }
+}
   
   button:hover {
-    background-color: #2980b9;
+    background-color: #4caf50;
   }
   
   .footer {

@@ -118,7 +118,7 @@ const Signup = () => {
         
         {error && <div className="error">{error}</div>}
         
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="signup-button">Sign Up</button>
       </form>
       
       <div className="switch-auth">
