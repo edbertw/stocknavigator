@@ -1,1 +1,0 @@
-The folder contains web-scraped data from the internet

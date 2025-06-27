@@ -37,7 +37,7 @@
 
 **Stock-Navigator** is the all-in-one, containerized web application built for stock market enthusiasts, analysts, and curious investors. Dive deep into your favorite stocks with:
 
-- 🔐**Security & Data Privacy**: User authentication through username and passwords stored from our PostgreSQL database
+- 🔐 **Security & Data Privacy**: User authentication through username and passwords stored from our PostgreSQL database
 - 📈 **Comprehensive data**: From basic info to advanced statistical metrics.
 - 🧠 **AI-powered insights**: Ask our integrated RAG AI anything—answers are fetched from a rich, web-scraped knowledge base.
 - 🖼️ **Real-time Market Sentiment Analysis**: Read real-time market news on the company and use our system to analyze its sentiment.
@@ -50,9 +50,9 @@
 
 ### 🐍 **Run Locally**
 
-1. **Activate the virtual environment** (located in the `mybackend` directory):
+1. **Activate virtual environment**:
     ```bash
-    source mybackend/venv/bin/activate
+    source .venv/bin/activate
     ```
 2. **Install dependencies:**
     ```bash
@@ -62,7 +62,7 @@
 
 4. **Navigate to backend and launch the server:**
     ```bash
-    cd mybackend
+    cd server
     python manage.py runserver
     ```
     > _No need to run a separate frontend server—everything is rendered for you!_
