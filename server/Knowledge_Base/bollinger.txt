@@ -1,0 +1,24 @@
+Great, you have saved this article to you My Learn Profile page.
+
+Clicking a link will open a new window.
+
+Bollinger Bands are a type of price envelope developed byJohn Bollinger. (Price envelopes define upper and lower price range levels.) Bollinger Bands are envelopes plotted at a standard deviation level above and below a simple moving average of the price. Because the distance of the bands is based on standard deviation, they adjust to volatility swings in the underlying price.
+
+Bollinger Bands use 2 parameters, Period and Standard Deviations,StdDev. The default values are 20 for period, and 2 for standard deviations, although you may customize the combinations.
+
+Bollinger bands help determine whether prices are high or low on a relative basis. They are used in pairs, both upper and lower bands and in conjunction with a moving average. Further, the pair of bands is not intended to be used on its own. Use the pair to confirm signals given with other indicators.
+
+First, calculate a simple moving average. Next, calculate the standard deviation over the same number of periods as the simple moving average. For the upper band, add the standard deviation to the moving average. For the lower band, subtract the standard deviation from the moving average.
+
+Typical values used:
+
+Short term: 10 day moving average, bands at 1.5 standard deviations. (1.5 times the standard dev. +/- the SMA)
+
+Medium term: 20 day moving average, bands at 2 standard deviations.
+
+Long term: 50 day moving average, bands at 2.5 standard deviations.
+
+Looking for more ideas and insights?You might like these too:
+
+Technical analysis focuses on market action — specifically, volume and price. Technical analysis is only one approach to analyzing stocks. When considering which stocks to buy or sell, you should use the approach that you're most comfortable with. As with all your investments, you must make your own determination as to whether an investment in any particular security or securities is right for you based on your investment objectives, risk tolerance, and financial situation. Past performance is no guarantee of future results.
+

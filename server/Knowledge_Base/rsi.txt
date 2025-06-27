@@ -1,0 +1,69 @@
+The relative strength index(RSI) is a technical indicator used in the analysis of financial markets. It is intended to chart the current and historical strength or weakness of a stock or market based on the closing prices of a recent trading period. The indicator should not be confused with relative strength.
+
+The RSI is classified as a momentum oscillator, measuring the velocity and magnitude of price movements. Momentum is the rate of the rise or fall in price. The relative strength RS is given as the ratio of higher closes to lower closes. Concretely, one computes two averages of absolute values of closing price changes, i.e. two sums involving the sizes of candles in a candle chart. The RSI computes momentum as the ratio of higher closes to overall closes: stocks which have had more or stronger positive changes have a higher RSI than stocks which have had more or stronger negative changes.
+
+The RSI is most typically used on a 14-day timeframe, measured on a scale from 0 to 100, with high and low levels marked at 70 and 30, respectively. Short or longer timeframes are used for alternately shorter or longer outlooks. High and low levels—80 and 20, or 90 and 10—occur less frequently but indicate stronger momentum.
+
+The relative strength index was developed by J. Welles Wilderand published in a 1978 book,New Concepts in Technical Trading Systems, and in Commodities magazine (nowModern Trader magazine) in the June 1978 issue.[1]It has become one of the most popular oscillator indices.[2]
+
+The RSI provides signals that tell investors to buy when the security or currency is oversold and to sell when it is overbought.[3]
+
+RSI with recommended parameters and its day-to-day optimization was tested and compared with other strategies in Marek and Šedivá (2017). The testing was randomised in time and companies (e.g.,Apple,Exxon Mobil,IBM,Microsoft) and showed that RSI can still produce good results; however, in longer time it is usually overcome by the simple buy-and-hold strategy.[4]
+
+For each trading period an upward changeUor downward changeDis calculated. Up periods are characterized by the close being higher than the previous close:
+
+Conversely, a down period is characterized by the close being lower than the previous period's close,
+
+If the last close is the same as the previous, both U and D are zero. Note that both U and D are nonnegative numbers.
+
+Averages are now calculated from sequences of suchUandD, using ann-periodsmoothed or modified moving average(SMMA or MMA), which is theexponentially smoothedmoving average withα = 1 / n. Those are positively weighted averages of those positive terms, and behave additively with respect to the partition.
+
+Wilder originally formulated the calculation of the moving average as:newval = (prevval * (n - 1) + newdata) / n, which is equivalent to the aforementioned exponential smoothing. So new data is simply divided byn, or multiplied byαand previous average values are modified by(n - 1) / n, i.e.1 - α.
+Some commercial packages, like AIQ, use a standardexponential moving average(EMA) as the average instead of Wilder's SMMA.
+The smoothed moving averages should be appropriately initialized with a simple moving average using the firstnvalues in the price series.
+
+The ratio of these averages is therelative strengthorrelative strength factor:
+
+The relative strength factor is then converted to a relative strength index between 0 and 100:[1]
+
+If the average ofUvalues is zero, both RS and RSI are also zero.
+If the average ofUvalues equals the average ofDvalues, the RS is 1 and RSI is 50.
+If the average ofUvalues is maximal, so that the average ofDvalues is zero, then the RS value diverges to infinity, while the RSI is 100.
+
+The RSI is presented on a graph above or below the price chart.  The indicator has an upper line and a lower line, typically at 70 and 30 respectively, and a dashed mid-line at 50. Wilder recommended a smoothing period of 14 (seeexponential smoothing, i.e.α= 1/14 orN= 14).
+
+Wilder posited[1]that when price moves up very rapidly, at some point it is considered overbought. Likewise, when price falls very rapidly, at some point it is considered oversold. In either case, Wilder deemed a reaction or reversal imminent.
+
+The level of the RSI is a measure of the stock's recent trading strength.  The slope of the RSI is directly proportional to the velocity of a change in the trend. The distance traveled by the RSI is proportional to the magnitude of the move.
+
+Wilder believed that tops and bottoms are indicated when RSI goes above 70 or drops below 30. Traditionally, RSI readings greater than the 70 level are considered to be in overbought territory, and RSI readings lower than the 30 level are considered to be in oversold territory. In between the 30 and 70 level is considered neutral, with the 50 level a sign of no trend.[5]
+
+Wilder further believed that divergence between RSI and price action is a very strong indication that a market turning point is imminent. Bearish divergence occurs when price makes a new high but the RSI makes a lower high, thus failing to confirm.Bullish divergence occurs when price makes a new low but RSI makes a higher low.[1]: 68
+
+Furthermore, traders often use "hidden" divergences to indicate possible trend reversals. A hidden bullish divergence occurs when the price makes a lower high, while the RSI makes a higher high. Conversely, a hidden bearish divergence occurs when price makes a higher low, but the RSI makes a lower low.[citation needed]
+
+Wilder thought that "failure swings" above 50 and below 50 on the RSI are strong indications of market reversals.[6]For example, assume the RSI hits 76, pulls back to 72, then rises to 77. If it falls below 72, Wilder would consider this a "failure swing" above 70.
+
+Finally, Wilder wrote that chart formations and areas of support and resistance could sometimes be more easily seen on the RSI chart as opposed to the price chart. The center line for the relative strength index is 50, which is often seen as both the support and resistance line for the indicator.
+
+In addition toWilder's original theories of RSI interpretation, Andrew Cardwell has developed several new interpretations of RSI to help determine and confirm trend. First, Cardwell noticed that uptrends generally traded between RSI 40 and 80, while downtrends usually traded between RSI 60 and 20. Cardwell observed when securities change from uptrend to downtrend and vice versa, the RSI will undergo a "range shift."
+
+Next, Cardwell noted that bearish divergence: 1) only occurs in uptrends, and 2) mostly only leads to a brief correction instead of a reversal in trend. Therefore, bearish divergence is a sign confirming an uptrend. Similarly, bullish divergence is a sign confirming a downtrend.
+
+Finally, Cardwell discovered the existence of positive and negative reversals in the RSI. Reversals are the opposite of divergence. For example, a positive reversal occurs when an uptrend price correction results in a higher low compared to the last price correction, while RSI results in a lower low compared to the prior correction. A negative reversal happens when a downtrend rally results in a lower high compared to the last downtrend rally, but RSI makes a higher high compared to the prior rally.
+
+In other words, despite stronger momentum as seen by the higher high or lower low in the RSI, price could not make a higher high or lower low. This is evidence the main trend is about to resume. Cardwell noted that positive reversals only happen in uptrends while negative reversals only occur in downtrends, and therefore their existence confirms the trend.
+
+A variation called Cutler's RSI is based on asimple moving averageofUandD,[7]instead of the exponential average above. Cutler had found that since Wilder used a smoothed moving average to calculate RSI, the value of Wilder's RSI depended upon where in the data file his calculations started. Cutler termed this Data Length Dependency. Cutler's RSI is not data length dependent, and returns consistent results regardless of the length of, or the starting point within a data file.
+
+Cutler's RSI generally comes out slightly different from the normal Wilder RSI, but the two are similar, since SMA and SMMA are also similar.
+
+In analysis,
+
+Now for1g>0{\displaystyle \mathbf {1} _{g>0}}defined as being equal to1{\displaystyle 1}if and only ifthe value ofg{\displaystyle g}is positive, the index⟨g(t)‖g‖1,1g>0⟩{\displaystyle \langle {\tfrac {g(t)}{\|g\|_{1}}},\mathbf {1} _{g>0}\rangle }is a quotient of two integrals and is a value that assigns a weight to the part ofg{\displaystyle g}that is positive. 
+A ratio of two averages over the same domainT{\displaystyle T}is also always computed as the ratio of two integrals or sums.
+
+Yet more specifically, for a real function on anordered setT{\displaystyle T}(e.g. a price curve), one may consider that function'sgradientg{\displaystyle g}, or some weighted variant thereof. In the case whereT={1,…,n}{\displaystyle T=\{1,\dots ,n\}}is an orderedfinite set(e.g. a sequence of timestamps), the gradient is given as thefinite difference.
+
+In therelative strength index,SMMA(U)SMMA(U+D){\displaystyle {\tfrac {{\text{SMMA}}(U)}{{\text{SMMA}}(U+D)}}}evaluates a sequenceg{\displaystyle g}derived from closing prices observed in an interval ofn{\displaystyle n}so called market periodst∈{1,…,n}{\displaystyle t\in \{1,\dots ,n\}}. The positive value|g(t)|{\displaystyle |g(t)|}equals the absolute price change|close(t)−close(t−1)|{\displaystyle |{\text{close}}(t)-{\text{close}}(t-1)|}, i.e.U+D{\displaystyle U+D}att{\displaystyle t}, multiplied by anexponential factoraccording to the SMMA weighting for that time. The denominator‖g‖1{\displaystyle \|g\|_{1}}is the sum of all those numbers. In the numerator one computes the SMMA of onlyU{\displaystyle U}, or in other wordsg{\displaystyle g}multiplied by the indicator function for the positive changes. The resulting index in this way weighsU{\displaystyle U}, which includes only the positive changes, over the changes in the whole interval.
+

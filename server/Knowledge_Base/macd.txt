@@ -1,0 +1,58 @@
+Moving Average Convergence-Divergence indicator is a bar that shows the association between two moving averages of a security's price to track trend momentum. You can use any moving average you want in this model, and it will back-test well on your security.
+
+MACD full form: Moving Average Convergence Divergence and is one of the most widely used momentum indicators in technical analysis. Gerald Appel was the creator of this indicator at the end of the 1970s. By computing the distinction between two time period intervals, which are a compilation of historical time series, this indicator is used to define momentum and its directional resilience. MACD uses moving averages of two distinct time intervals (most commonly historical closing prices of securities), and a momentum oscillator line is calculated by deducting the two moving averages, which is also known as 'divergence.'
+
+The fundamental criterion for choosing the two moving averages is that one should have a quicker period than the other. For this purpose, exponential moving averages (EMA) are commonly used.
+
+MACD is a momentum indicator, which follows trends and belongs to the oscillator family of technical indicators. It permits you to:
+
+The MACD indicator appears on a price chart as an oscillator with two moving averages, but it lacks the particular boundaries that the most common oscillators have. The indicator is completed with an extra MACD histogram that overlays the two moving averages.
+
+We must first study the meaning of the moving average (MA) before we can understand what MACD is and how it operates. When discussing bitcoin price fluctuations, MA refers to the line on a graph that depicts the average value of data collected over a specific time period.
+
+Simple moving averages (SMAs), which evaluate all incoming data equally, and exponential moving averages (EMAs), which give more weight to recent data, are the two main forms of MAs used by traders. MACD relies on the latter because it provides more relevant data for determining if the asset is worth buying or selling.
+
+The MACD indicator's simplicity is perhaps its strongest feature, as the indications it generates are clear even to complete novices.
+
+However, it's important to realize that depending simply on one signal should never be used to decide whether to purchase or sell a certain coin. Other trading indications, such as the Stochastic or RSI indicators, can benefit from the addition of MACD.
+
+It's crucial to comprehend the details of a MACD indicator on a graph before learning how to use it. Three key components make up the MACD indicator:
+
+1) MACD Line - the fastest moving average (short-term EMA)
+
+The MACD indicator is calculated with the subtraction of a short-term, 12-day EMA from a long-term, 26-day EMA. It is usually blue in colour.
+
+Line MACD = (12-day EMA minus 26-day EMA)
+
+2) Signal Line - the slowest moving average (long-term EMA)
+
+This is a 9-day line that is commonly painted in red to illustrate price activity turns.
+
+Signal Line = MACD Line's 9-day EMA
+
+3) MACD Histogram - swings above and below a zero line, allowing bullish and bearish momentum readings to be distinguished.
+
+The difference between the first two items is the histogram (MACD line minus signal line). The histogram is positive when MACD is above the signal line and vice versa.
+
+In order to correctly read the signal, one should check the following:
+
+Also Read:Difference Between Bull vs Bear Market
+
+This is the most fundamental signal that you can use. As previously indicated, the signal line depicts the MACD line's moving average (MA). This is why it is always late. The obvious intersections of these two lines indicate the possibility of significant movement. These lines' positions indicate whether a crossover is bullish or bearish:
+
+Look for the overall trend to enhance the signal even more. If it matches the crossover, the signal's dependability will be increased.
+
+This signal is very similar to the one before it. The MACD line, instead of crossing the signal line, crosses the zero level. It indicates a bullish trend when it gets positive. MACD indicates a bearish trend when it crosses the zero line in the downward direction and becomes negative.
+
+The stronger the trend will be when it is further away from the zero line.
+
+Vaishnavi Tech Park, South Tower, 3rd Floor
+
+Sarjapur Main Road, Bellandur
+
+Bengaluru – 560103
+
+Karnataka
+
+Contact Us
+
