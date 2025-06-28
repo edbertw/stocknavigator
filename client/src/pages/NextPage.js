@@ -33,10 +33,11 @@ const NextPage = () => {
       setLoading(false);
       return;
     }
-
+    // might need to implement authorization in the backend APIs
     fetch('http://localhost:8000/api/submit-stock/', {
       method: 'POST',
       headers: {
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ stock_symbol: stockSymbol }),
