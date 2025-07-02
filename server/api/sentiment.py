@@ -19,11 +19,12 @@ import os
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-model_path = "/Users/edbertwidjaja/Downloads/STOCKNAVIGATOR/server/api/sentiment_rnn.pt"
+model_path = os.path.join(os.path.dirname(__file__), "api/sentiment_rnn.pt")
 model = torch.jit.load(model_path, map_location=torch.device('cpu'))
 
 # Load the dataset
-data = pd.read_csv("/Users/edbertwidjaja/Downloads/STOCKNAVIGATOR/server/api/data.csv")
+csv_path = os.path.join(os.path.dirname(__file__), "api/data.csv")  # Relative to the script
+data = pd.read_csv(csv_path)
 #print(data.head())
 
 from string import punctuation
