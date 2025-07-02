@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  DOCKER_IMAGE: edbertwid/STOCKNAVIGATOR
+  DOCKER_IMAGE: edbertwid/stock-navigator
   DB_HOST: localhost
   DB_PORT: 5432  
   DB_USER: postgres
