@@ -105,9 +105,9 @@ Stock-Navigator is powered by an exciting tech stack:
 - **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Tokenizers
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
-- **Databases** PostgreSQL
-- **Security** JWT Tokens
-- **CI/CD** GitHub Actions
+- **Databases:** PostgreSQL
+- **Security:** JWT Tokens
+- **CI/CD Integration:** GitHub Actions
 
 ---
 
