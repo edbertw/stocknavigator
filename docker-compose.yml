@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PWD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:${DB_PORT}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    env_file: .env
+    command: >
+      sh -c "python -c 'import os; from time import sleep; import psycopg2;
+      print(\"Waiting for PostgreSQL...\");
+      while True:
+        try:
+          conn = psycopg2.connect(
+            dbname=os.getenv(\"DB_NAME\"),
+            user=os.getenv(\"DB_USER\"),
+            password=os.getenv(\"DB_PWD\"),
+            host=\"db\",
+            port=os.getenv(\"DB_PORT\"));
+          conn.close(); break;
+        except: sleep(1)' &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./server:/app
+      - ./server/static:/app/static
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
