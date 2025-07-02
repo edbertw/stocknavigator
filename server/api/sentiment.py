@@ -24,7 +24,7 @@ model = torch.jit.load(model_path, map_location=torch.device('cpu'))
 
 # Load the dataset
 csv_path = os.path.join(os.path.dirname(__file__), "data.csv")  
-data = pd.read_csv(csv_path)
+data = pd.read_csv("server/api/data.csv")
 #print(data.head())
 
 from string import punctuation
