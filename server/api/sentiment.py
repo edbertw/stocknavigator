@@ -6,6 +6,8 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords 
 from collections import Counter
 import string
@@ -18,8 +20,6 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-import nltk
-nltk.download('stopwords')
 
 model_path = os.path.join(os.path.dirname(__file__), "sentiment_rnn.pt")
 model = torch.jit.load(model_path, map_location=torch.device('cpu'))
