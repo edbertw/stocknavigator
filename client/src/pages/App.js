@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import '../styles/App.css';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import NextPage from './NextPage'; // Import NextPage
 import NextNextPage from './NextNextPage'; // Import NextNextPage

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './NextPage.css'; // Import the CSS file for styling
+import '../styles/NextPage.css';
 
 const NextPage = () => {
   const location = useLocation();
@@ -24,8 +24,8 @@ const NextPage = () => {
   const [error, setError] = useState('');
 
   // Chatbox state
-  const [messages, setMessages] = useState([]); // Chat messages
-  const [inputText, setInputText] = useState(''); // Input text for chat
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState('');
 
   useEffect(() => {
     if (!stockSymbol) {
@@ -33,7 +33,7 @@ const NextPage = () => {
       setLoading(false);
       return;
     }
-    // might need to implement authorization in the backend APIs
+
     fetch('http://localhost:8000/api/submit-stock/', {
       method: 'POST',
       headers: {
@@ -66,22 +66,21 @@ const NextPage = () => {
         setLoading(false);
       });
 
-      fetch('http://localhost:8000/api/sen-display/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ stock_symbol: stockSymbol }),
+    fetch('http://localhost:8000/api/sen-display/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ stock_symbol: stockSymbol }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSentimentAnalysis(data.response);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          setSentimentAnalysis(data.response);
-        })
-        .catch((error) => {
-          console.error('Error fetching sentiment analysis:', error);
-          setSentimentAnalysis('Unable to fetch sentiment analysis');
-        });
-
+      .catch((error) => {
+        console.error('Error fetching sentiment analysis:', error);
+        setSentimentAnalysis('Unable to fetch sentiment analysis');
+      });
   }, [stockSymbol]);
   
   const handleBack = () => {
@@ -92,18 +91,15 @@ const NextPage = () => {
     navigate('/next-next-page', { state: { stockSymbol, company } });
   };
 
-  // Handle chat input submission
   const handleChatSubmit = async (e) => {
     e.preventDefault();
     if (inputText.trim()) {
-      // Add user message to chat
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: inputText, sender: 'user' },
       ]);
   
       try {
-        // Send the user's message to the DJANGO backend
         const response = await fetch('http://localhost:8000/api/ask-chatbot/', {
           method: 'POST',
           headers: {
@@ -112,167 +108,151 @@ const NextPage = () => {
           body: JSON.stringify({ question: inputText }),
         });
         
-        if (!response.ok) {
-          throw new Error('Failed to fetch bot response');
-        }
+        if (!response.ok) throw new Error('Failed to fetch bot response');
 
         const data = await response.json();
-        console.log("Response status:", response.status);
-        console.log("Response data:", data);
-        
-        // Add bot's response to chat
         setMessages((prevMessages) => [
           ...prevMessages,
           { text: data.response, sender: 'bot' },
         ]);
       } catch (error) {
         console.error('Error fetching bot response:', error);
-        // Add an error message to chat
         setMessages((prevMessages) => [
           ...prevMessages,
           { text: 'Error: Could not fetch bot response.', sender: 'bot' },
         ]);
       }
-  
-      setInputText(''); // Clear input field
+      setInputText('');
     }
-};
+  };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <div className="next-page-loading">Loading...</div>;
+  if (error) return <div className="next-page-error">{error}</div>;
 
   return (
-    <div className="next-page">
-      <div className="content-wrapper">
+    <div className="next-page-container">
+      <div className="next-page-content">
         {company && (
-          <div className="company-info">
+          <div className="next-page-company-info">
             <h1>{company.name}</h1>
             <p>{company.description}</p>
           </div>
         )}
 
-        {/* Dashboard Grid */}
-        <div className="dashboard-grid">
+        <div className="next-page-grid">
           {graphDataStock && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Stock Prices</h3>
-              <Plot data={graphDataStock.data} layout={{ ...graphDataStock.layout, autosize: true, height: 300, width: 400 }} config={graphDataStock.config} />
+              <Plot data={graphDataStock.data} layout={{ ...graphDataStock.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataMomentum && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Momentum</h3>
-              <Plot data={graphDataMomentum.data} layout={{ ...graphDataMomentum.layout, autosize: true, height: 300, width: 400 }} config={graphDataMomentum.config} />
+              <Plot data={graphDataMomentum.data} layout={{ ...graphDataMomentum.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataMA10 && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Moving Average (10-day)</h3>
-              <Plot data={graphDataMA10.data} layout={{ ...graphDataMA10.layout, autosize: true, height: 300, width: 400 }} config={graphDataMA10.config} />
+              <Plot data={graphDataMA10.data} layout={{ ...graphDataMA10.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataMA20 && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Moving Average (20-day)</h3>
-              <Plot data={graphDataMA20.data} layout={{ ...graphDataMA20.layout, autosize: true, height: 300, width: 400 }} config={graphDataMA20.config} />
+              <Plot data={graphDataMA20.data} layout={{ ...graphDataMA20.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataCandlestick && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Candlestick</h3>
-              <Plot data={graphDataCandlestick.data} layout={{ ...graphDataCandlestick.layout, autosize: true, height: 300, width: 400 }} config={graphDataCandlestick.config} />
+              <Plot data={graphDataCandlestick.data} layout={{ ...graphDataCandlestick.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataRSI && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Relative Strength Index (RSI)</h3>
-              <Plot data={graphDataRSI.data} layout={{ ...graphDataRSI.layout, autosize: true, height: 300, width: 400 }} config={graphDataRSI.config} />
+              <Plot data={graphDataRSI.data} layout={{ ...graphDataRSI.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataCorr && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Feature Correlations</h3>
-              <Plot data={graphDataCorr.data} layout={{ ...graphDataCorr.layout, autosize: true, height: 300, width: 400 }} config={graphDataCorr.config} />
+              <Plot data={graphDataCorr.data} layout={{ ...graphDataCorr.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataBollinger && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Bollinger Bands</h3>
-              <Plot data={graphDataBollinger.data} layout={{ ...graphDataBollinger.layout, autosize: true, height: 300, width: 400 }} config={graphDataBollinger.config} />
+              <Plot data={graphDataBollinger.data} layout={{ ...graphDataBollinger.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataMACD && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>MACD</h3>
-              <Plot data={graphDataMACD.data} layout={{ ...graphDataMACD.layout, autosize: true, height: 300, width: 400 }} config={graphDataMACD.config} />
+              <Plot data={graphDataMACD.data} layout={{ ...graphDataMACD.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
           {graphDataCum && (
-            <div className="graph-card">
+            <div className="next-page-graph-card">
               <h3>Cumulative Returns</h3>
-              <Plot data={graphDataCum.data} layout={{ ...graphDataCum.layout, autosize: true, height: 300, width: 400 }} config={graphDataCum.config} />
+              <Plot data={graphDataCum.data} layout={{ ...graphDataCum.layout, autosize: true, height: 300, width: 400 }} />
             </div>
           )}
         </div>
-        {/* Sentiment Analysis Section */}
-        <div className="sentiment-container">
+
+        <div className="next-page-sentiment">
           <h2>Market Sentiment Analysis for {company.name}</h2>
-          <div className="sentiment-box">
+          <div className="next-page-sentiment-box">
             {sentimentAnalysis || "Loading sentiment analysis..."}
           </div>
-        </div>  
+        </div>
 
-        {/* Information Section */}
-        <div className="info-section">
+        <div className="next-page-info-section">
           <h2>Additional Information</h2>
           <p>
-            These charts give a comprehensive view of {company.name}'s stock performance, showing trends over time,
-            price volatility, momentum, and potential price patterns. This data can help inform your investment decisions.
+          These charts give a comprehensive view of {company.name}'s stock performance, showing trends over time,
+          price volatility, momentum, and potential price patterns. This data can help inform your investment decisions.
           </p>
 
-          <div className="info-grid">
-            <div className="info-item">
+          <div className="next-page-info-grid">
+            <div className="next-page-info-item">
               <h2>Momentum</h2>
               <p>Rate of acceleration of {company.name}'s stock prices. A strong momentum suggests that a price trend is likely to continue and vice versa. A positive momentum often reflects bullish sentiment among investors; otherwise bearish sentiment.</p>
             </div>
-
-            <div className="info-item">
+            <div className="next-page-info-item">
               <h2>Moving Average</h2>
               <p>Smooths out {company.name}'s stock price data to identify trends over a specific period. An upward trend sloping moving average indicates a bullish trend and vice versa. It also acts as dynamic support and resistance levels. Prices may bounce off the moving average, indicating potential reversal points.</p>
             </div>
-
-            <div className="info-item">
+            <div className="next-page-info-item">
               <h2>Relative Strength Index</h2>
               <p>A momentum oscillator that measures speed and change of {company.name}'s stock price movements. An RSI of above 70 indicates a stock may be overbought, indicating a potential price correction and vice versa. An RSI of above 50 typically indicates a strong upward trend and vice versa.</p>
             </div>
-
-            <div className="info-item">
+            <div className="next-page-info-item">
               <h2>Feature Correlations</h2>
               <p>Correlations identify relationships between different features of {company.name}'s stocks, such as Closing Price and Volume. Understanding these relationships can inform trading strategies. Strong correlations between features can serve as potential predictors for stock price movements.</p>
             </div>
-
-            <div className="info-item">
+            <div className="next-page-info-item">
               <h2>Bollinger Bands</h2>
               <p>A technical analysis tool that consists of a middle band and two outer bands. Wider bands indicate increased volatility and potential price swings and vice versa. When {company.name}'s stock closing price touches or exceeds the upper band, it may indicate that the stock is overbought and vice versa.</p>
             </div>
-
-            <div className="info-item">
-              <h2>MACD or Moving Average Convergence Divergence</h2>
+            <div className="next-page-info-item">
+              <h2>MACD</h2>
               <p>A popular momentum indicator used for technical {company.name}'s stock analysis. If this line is above zero, it indicates a bullish trend; otherwise, a bearish trend. When the MACD line crosses above the signal line, a bullish signal will be generated.</p>
             </div>
           </div>
         </div>
 
-        {/* Chatbox */}
-        <div className="chatbox">
-          <div className="chat-messages">
+        <div className="next-page-chatbox">
+          <div className="next-page-chat-messages">
             {messages.map((message, index) => (
-              <div key={message.id || index} className={`message ${message.sender}`}>
+              <div key={index} className={`next-page-message next-page-${message.sender}`}>
                 {message.text}
               </div>
             ))}
           </div>
-          <form onSubmit={handleChatSubmit} className="chat-input">
+          <form onSubmit={handleChatSubmit} className="next-page-chat-input">
             <input
               type="text"
               value={inputText}
@@ -283,10 +263,9 @@ const NextPage = () => {
           </form>
         </div>
 
-        {/* Back and Next Buttons */}
-        <div className="button-container">
-          <button onClick={handleBack} className="back-button">BACK</button>
-          <button onClick={handleNext} className="next-button">PREDICT</button>
+        <div className="next-page-button-container">
+          <button onClick={handleBack} className="next-page-back-button">BACK</button>
+          <button onClick={handleNext} className="next-page-next-button">PREDICT</button>
         </div>
       </div>
     </div>
