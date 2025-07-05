@@ -2,7 +2,7 @@
 from django.urls import path
 from . import views
 from .views import submit_stock
-from .views2 import predict_stock
+from .predict_views import predict_stock
 from .rag_main import ask_chatbot
 from .sentiment import sen_display
 

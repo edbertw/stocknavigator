@@ -3,23 +3,13 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
-from langchain_community.llms import HuggingFacePipeline
+from langchain_huggingface import HuggingFacePipeline
 from langchain.chains import RetrievalQA
 import os
-'''
-file_paths = [
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/candlestick.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/ma.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/momentum.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/rsi.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/bollinger.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/corr.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/cumul.txt",
-        "/Users/edbertwidjaja/Downloads/Stock-Navigator-main/Knowledge_Base/macd.txt"]
-'''
+
 file_paths = [
         "Knowledge_Base/candlestick.txt",
         "Knowledge_Base/ma.txt",
@@ -28,7 +18,8 @@ file_paths = [
         "Knowledge_Base/bollinger.txt",
         "Knowledge_Base/corr.txt",
         "Knowledge_Base/cumul.txt",
-        "Knowledge_Base/macd.txt"]
+        "Knowledge_Base/macd.txt"
+]
 
 documents = []
 for file_path in file_paths:
