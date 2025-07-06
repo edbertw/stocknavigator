@@ -1,0 +1,26 @@
+Question,Answers 
+What is a candlestick chart?,"A candlestick chart (also called Japanese candlestick chart or K-line) is a style of financial chart used to describe price movements of a security, derivative, or currency.  "
+How does a candlestick chart differ from a bar chart?,"While similar in appearance, each candlestick represents four key pieces of information: open, close (thick body), high, and low (wick). Bar charts display the same data but in a different visual format.  "
+What information does a single candlestick represent?,"1. Open & Close (body), 2. High & Low (wicks/shadows). The color/fill indicates whether the price rose or fell during the period.  "
+Who developed candlestick charts?,"They were thought to be developed in the 18th century by Munehisa Homma, a Japanese rice trader, but evidence suggests they likely emerged in the late 1800s during Japan’s Meiji period.  "
+How were candlestick charts introduced to the Western world?,Steve Nison popularized them in his 1991 book *Japanese Candlestick Charting Techniques*.  
+What is the 'real body' in a candlestick?,The area between the open and close prices. Hollow/green means close > open (price rose); filled/red means close < open (price fell).  
+What do the wicks (shadows) represent?,The highest and lowest traded prices during the candlestick’s time frame.  
+How is the price range of a candlestick calculated?,Range = High price − Low price.  
+How do modern charting tools customize candlesticks?,"Users can modify colors, body/wick styles, and even adjust candle width based on volume.  "
+What is a hollow candlestick chart?,"A variation where color and fill distinguish price relationships (e.g., hollow = price rise, filled = price drop).  "
+Can a candlestick lack a body or wick?,Yes. A missing body means open = close; missing wicks mean high/low = open/close.  
+What does a long candlestick body indicate?,"Strong buying or selling pressure, reflecting intense trading activity.  "
+How do candlesticks help traders?,"They visually convey price action, trends, and potential reversals by showing opening/closing prices and volatility (via wicks).  "
+What is a candlestick pattern?,"A specific sequence of candlesticks used to identify trends or reversals (e.g., Doji, Hammer, Engulfing).  "
+What is Heikin-Ashi?,"A modified candlestick type using averaged prices: Close = (Open+High+Low+Close)/4, Open = (Prior Open + Prior Close)/2. It smooths price noise.  "
+How does Heikin-Ashi differ from regular candlesticks?,"Heikin-Ashi candles may not reflect actual open/close prices, and long wicks often indicate stronger trends.  "
+Can candlesticks be volume-based?,"Yes. Some charts use open/high/low/close values for a set volume range (e.g., per 100,000 shares).  "
+Which markets use candlestick charts?,"Stocks, forex, commodities, and options—primarily for technical analysis.  "
+What does a white/green candle with a long body signify?,Strong bullish sentiment (buyers dominated the period).  
+What does a black/red candle with a long body indicate?,Strong bearish sentiment (sellers dominated the period).  
+Why are candlestick charts popular in technical analysis?,"They densely pack price data, making trends, reversals, and volatility easy to interpret visually.  "
+Do candlesticks show real-time price movements?,"Yes, as they form, they update to reflect current price action within the selected timeframe.  "
+Are candlestick patterns reliable alone?,"No, they should be combined with other indicators (e.g., moving averages, RSI) for confirmation.  "
+Who disputed Homma’s role in candlestick creation?,Steve Nison noted in *Beyond Candlesticks* that Homma likely didn’t use them; they emerged later in the 1800s.  
+How do wicks indicate market sentiment?,Long upper wicks suggest rejection of higher prices (selling pressure); long lower wicks indicate buying interest at lows.  

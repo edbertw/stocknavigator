@@ -42,19 +42,20 @@ else:
     vectorstore = FAISS.from_documents(documents=chunks, embedding=embedding_model)
     vectorstore.save_local(faiss_index_path)
     
-model_name = "google/flan-t5-base"  # You can choose other models
+model_name = "edbertw/tuned_flanT5"  # You can choose other models
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cpu")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 hf_pipeline = pipeline(
     "text2text-generation",
     model=model,
     tokenizer=tokenizer,
-    max_length=512,  # Max token length for output
-    device = -1,
+    max_length=128,  # Max token length for output
+    device = "cpu",
     num_beams=5,     # Beam search for better answers, change from 3
     temperature = 0.5,
     do_sample = True,
-    top_p = 0.9 #nucleus sampling
+    top_p = 0.9, #nucleus sampling
+    early_stopping=True
 )
 
         # Wrap the pipeline for LangChain
@@ -64,8 +65,9 @@ retriever = vectorstore.as_retriever()
         # Create a RetrievalQA chain
 rag_pipeline = RetrievalQA.from_chain_type(
 llm=llm,
-chain_type="refine",  # "map_reduce", "refine", "map_rerank", etc.
-retriever=retriever
+chain_type="stuff",  # "map_reduce", "refine", "map_rerank", etc.
+retriever=retriever,
+verbose=True
 )
 @csrf_exempt
 @api_view(['POST'])
@@ -73,13 +75,14 @@ def ask_chatbot(request):
     
     try:
         question = request.data.get("question")
+        question = "answer the question: " + question
         if not question:
             return Response({'error': 'No question provided.'}, status=400)
         print("Running.....")
-        response_bot = rag_pipeline.run(question)
+        response_bot = rag_pipeline.invoke(question)
         print("Success response!")
         print(response_bot)
-        return Response({'response': response_bot}, status=200)
+        return Response({'response': response_bot['result']}, status=200)
         
         
     except Exception as e:

@@ -1,0 +1,21 @@
+Question,Answers 
+What is correlation trading?,"Correlation trading is a strategy where investors take exposure to the average correlation of an index, betting on whether future realized correlation will differ from the implied correlation derived from derivatives.  "
+What is the key to successful correlation trading?,The ability to predict whether future realized correlation among stocks in an index will be higher or lower than the implied correlation priced in by the market.  
+How does diversification relate to correlation trading?,Diversification reduces portfolio volatility when correlations between stocks are low. This statistical principle (not Modern Portfolio Theory) underpins correlation trading strategies.  
+What happens to portfolio volatility when correlations decrease?,Portfolio volatility decreases because the variances of uncorrelated or negatively correlated assets offset each other when combined.  
+How can investors 'sell correlation'?,"By shorting index volatility (e.g., selling index options) while going long on individual stock volatility (e.g., buying single-stock options), profiting if correlations decline.  "
+What instruments are commonly used in correlation trading?,"Exchange-traded funds (ETFs) are often used as proxies for indices, alongside options on indices and single stocks.  "
+What is dispersion trading?,"A strategy that exploits the difference between index volatility and the volatility of its constituent stocks, betting that index volatility is overpriced relative to single-stock volatility.  "
+Why does an index typically have lower volatility than its stocks?,"Due to diversification: individual stock volatilities partially cancel out when combined in an index, assuming less-than-perfect correlations.  "
+What market misconception does dispersion trading target?,"The overestimation of future stock correlations, which inflates implied index volatility compared to realized volatility.  "
+How do structured product sellers influence correlation perceptions?,"They often take long correlation positions (buying index volatility), pushing implied correlation higher than what dispersion traders believe is justified.  "
+What is a 'long dispersion' trade?,"Shorting index volatility (e.g., selling index options) while buying single-stock volatility (e.g., purchasing options on individual stocks).  "
+What happens in a 2-stock index with perfect correlation?,Index volatility equals stock volatilities (no diversification benefit). Dispersion traders lose if correlations remain high.  
+What happens in a 2-stock index with negative correlation?,Index volatility drops to near zero (full diversification). Dispersion traders profit if correlations are lower than implied.  
+What drives the profitability of dispersion trading?,The gap between implied correlation (priced into options) and realized correlation (actual market movements).  
+Why is dispersion trading popular among hedge funds?,It capitalizes on systematic overpricing of index volatility due to structured product demand and market overestimations of correlation.  
+How does overall market volatility affect dispersion trades?,"High market volatility can compress correlation spreads, making the strategy less effective. Ideal conditions include stable markets with mispriced correlations.  "
+What is the role of financial models in correlation trading?,"Models calculate implied correlation from index and single-stock options, helping traders identify mispricings.  "
+What is the main risk of dispersion trading?,"Correlations may remain high or rise further, causing losses on short index volatility positions.  "
+How do ETFs simplify correlation trading?,"ETFs provide liquid exposure to indices, avoiding the complexity of trading all constituent stocks directly.  "
+What is the difference between implied and realized correlation?,Implied correlation is derived from options prices (market expectation); realized correlation is the actual correlation observed over time.  

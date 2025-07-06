@@ -1,0 +1,172 @@
+Question,Answers
+What is a 'Golden Cross'?,"When short-term MA crosses above medium/long-term MA, signaling potential bullish continuation."
+What does a positive MACD histogram indicate?,Bullish momentum (MACD Line above Signal Line).
+What are limitations of RSI?,1) Whipsaws in ranging markets 2) Lagging in strong trends 3) Requires confirmation with other indicators.
+What's the key limitation of cumulative returns?,Doesn't reveal volatility or sequence of returns - identical cumulative returns can have very different risk profiles.
+Are Bollinger Bands used alone for trading signals?,"No, they should be used in conjunction with other indicators to confirm signals, as they are not meant to be a standalone tool.  "
+Can a candlestick lack a body or wick?,Yes. A missing body means open = close; missing wicks mean high/low = open/close.  
+Who developed candlestick charts?,"They were thought to be developed in the 18th century by Munehisa Homma, a Japanese rice trader, but evidence suggests they likely emerged in the late 1800s during Japan’s Meiji period.  "
+What are typical short-term Bollinger Band settings?,A 10-day moving average with bands set at 1.5 standard deviations.  
+How does diversification relate to correlation trading?,Diversification reduces portfolio volatility when correlations between stocks are low. This statistical principle (not Modern Portfolio Theory) underpins correlation trading strategies.  
+How does momentum differ from swing trading?,"Momentum trading focuses strictly on continuing existing trends, typically with shorter holding periods."
+What is the relationship between Bollinger Bands and volatility?,"When volatility increases, the bands widen; when volatility decreases, the bands contract.  "
+Who developed Bollinger Bands?,"They were developed by John Bollinger, a well-known technical analyst.  "
+What is a 'Death Cross'?,"When short-term MA crosses below medium/long-term MA, signaling potential bearish continuation."
+What is a Moving Average (MA)?,A technical indicator that connects the arithmetic mean of market prices (usually closing prices) over consecutive days to predict short/medium/long-term price trends.
+What is a bullish MACD crossover?,"When the MACD Line crosses above the Signal Line, suggesting a potential uptrend."
+Why might two investments with same cumulative return differ in attractiveness?,"Risk levels, tax implications, or liquidity differences may make one preferable despite equal returns."
+Why do people invest if there's a chance of no returns?,"Investments are made with the expectation of positive returns. While risk exists, potential rewards motivate investors to take calculated risks."
+Why is timing critical in momentum trading?,Trends can reverse abruptly; traders must enter early in the trend and exit at the first signs of weakening.
+What are hidden divergences?,Hidden bullish: Lower price high + higher RSI high. Hidden bearish: Higher price low + lower RSI low.
+What's an example of momentum trading?,"Buying a stock after it breaks resistance with high volume, expecting the uptrend to continue."
+Should Bollinger Bands be the sole basis for investment decisions?,"No, investors should consider their financial goals, risk tolerance, and other analysis methods before making decisions.  "
+What is the key to successful correlation trading?,The ability to predict whether future realized correlation among stocks in an index will be higher or lower than the implied correlation priced in by the market.  
+Why use cumulative return instead of simple averages?,It reflects actual investor experience by accounting for compounding and volatility sequences.
+What is the typical color coding for MACD components?,"MACD Line (blue), Signal Line (red), Histogram (green/red bars)."
+What are the three key components of the MACD indicator?,1. MACD Line (12-day EMA - 26-day EMA) 2. Signal Line (9-day EMA of MACD Line) 3. Histogram (MACD Line - Signal Line).
+Why are EMAs preferred over SMAs in MACD?,"EMAs give more weight to recent price data, making them more responsive to current trends."
+Why are 120-day and 250-day MAs important?,120-day = semi-annual trend (aligns with financial reporting); 250-day = annual trend for long-term investors.
+How does MA help identify bull/bear markets?,Bull: Price > Short-term MA > Medium-term MA > Long-term MA. Bear: Reverse order with price at bottom.
+What instruments are commonly used in correlation trading?,"Exchange-traded funds (ETFs) are often used as proxies for indices, alongside options on indices and single stocks.  "
+Why is cumulative total return important?,"It includes reinvestments, showing true investment performance beyond just price appreciation."
+What happens to portfolio volatility when correlations decrease?,Portfolio volatility decreases because the variances of uncorrelated or negatively correlated assets offset each other when combined.  
+Can candlesticks be volume-based?,"Yes. Some charts use open/high/low/close values for a set volume range (e.g., per 100,000 shares).  "
+Why use multiple MAs simultaneously?,"To identify trend alignment (e.g., all MAs ascending = strong uptrend) and potential reversal points."
+What are the two main EMAs used in MACD calculation?,A 12-day EMA (short-term) and a 26-day EMA (long-term).
+How is momentum calculated?,"Momentum = (Current Price / Price X months ago). Typical periods: 6 or 12 months (e.g., 1.25 = 25% increase over 12 months)."
+How do ETFs simplify correlation trading?,"ETFs provide liquid exposure to indices, avoiding the complexity of trading all constituent stocks directly.  "
+What's considered a good long-term stock market ROI?,"Historically, 10%+ average annual return is considered strong for long-term equity investments."
+What happens in a 2-stock index with perfect correlation?,Index volatility equals stock volatilities (no diversification benefit). Dispersion traders lose if correlations remain high.  
+What is the difference between implied and realized correlation?,Implied correlation is derived from options prices (market expectation); realized correlation is the actual correlation observed over time.  
+What are common RSI trading strategies?,1) Overbought sell/oversold buy 2) Divergence trades 3) 50-level trend confirmation 4) Failure swings.
+Why use moving averages in momentum trading?,"Crossovers (e.g., 50-day MA above 200-day MA) help confirm trend direction and strength."
+How does MACD help identify trend strength?,"The farther the MACD Line is from the zero line, the stronger the trend."
+When is cumulative return additive?,Only for single-period returns across sub-portfolios; multi-period returns compound non-additively.
+What is momentum trading?,An investment strategy that capitalizes on the continuation of existing market trends by buying assets moving strongly upward and selling/shorting those moving downward.
+How to calculate cumulative daily returns?,Multiply daily percentage changes sequentially: (1 + Day1 Return) × (1 + Day2 Return)... - 1.
+How is the price range of a candlestick calculated?,Range = High price − Low price.  
+What happens in a 2-stock index with negative correlation?,Index volatility drops to near zero (full diversification). Dispersion traders profit if correlations are lower than implied.  
+Can MACD be used alone for trading decisions?,"No, it should be combined with other indicators (e.g., RSI, Stochastic) and trend analysis for confirmation."
+How can traders enhance MACD signals?,By aligning crossovers with the overall trend and confirming with volume/other indicators.
+How is RSI used in trading?,1) Overbought/oversold signals 2) Divergences 3) Centerline (50) crossovers 4) Trend confirmation.
+What do the wicks (shadows) represent?,The highest and lowest traded prices during the candlestick’s time frame.  
+What are the risks of momentum trading?,1. Sudden trend reversals 2. Overvaluation 3. Whipsaws in choppy markets 4. Requires precise timing.
+How is RSI calculated?,"RSI = 100 - [100/(1 + RS)], where RS = Avg(U)/Avg(D). U=upward closes, D=downward closes over n periods."
+How were candlestick charts introduced to the Western world?,Steve Nison popularized them in his 1991 book *Japanese Candlestick Charting Techniques*.  
+What type of analysis do Bollinger Bands belong to?,"They are part of technical analysis, which focuses on price and volume data rather than fundamental factors.  "
+What is the primary purpose of the MACD?,To identify momentum and directional strength by calculating the difference between two exponential moving averages (EMAs).
+What is a candlestick chart?,"A candlestick chart (also called Japanese candlestick chart or K-line) is a style of financial chart used to describe price movements of a security, derivative, or currency.  "
+Which markets use candlestick charts?,"Stocks, forex, commodities, and options—primarily for technical analysis.  "
+What does a black/red candle with a long body indicate?,Strong bearish sentiment (sellers dominated the period).  
+What's the risk of trading MA rebound signals?,"False breakouts common - requires confirmation (e.g., volume) as overall downtrend may persist."
+How did Andrew Cardwell expand RSI interpretation?,"Noted trends trade in ranges (40-80 uptrends, 20-60 downtrends) and introduced reversal concepts."
+What psychological traits help momentum traders?,Discipline to cut losses quickly and patience to wait for high-probability setups.
+What are the two primary approaches to momentum trading?,1. Buying assets with strong upward momentum 2. Short-selling assets with strong downward momentum.
+What are the three types of Moving Averages?,"Short-term (5/10-day), Medium-term (20/30/60-day), Long-term (120/250-day)."
+How can investors 'sell correlation'?,"By shorting index volatility (e.g., selling index options) while going long on individual stock volatility (e.g., buying single-stock options), profiting if correlations decline.  "
+What theory is the Moving Average based on?,"Dow Jones Theory, digitized to quantify price trend predictions."
+How is cumulative return calculated for dividend-paying assets?,Use adjusted closing prices (accounts for dividends/splits): (Adjusted End Price - Adjusted Start Price) / Adjusted Start Price.
+What's wrong with dividing cumulative return by years for annualized return?,It ignores compounding. Correct method: RA = [(1 + RC)^(1/n)] - 1 (n=number of years).
+What drives the profitability of dispersion trading?,The gap between implied correlation (priced into options) and realized correlation (actual market movements).  
+Can Bollinger Bands be customized?,"Yes, traders can adjust the period and standard deviation values based on their trading strategy and time frame.  "
+What are the limitations of MACD?,"Lagging (based on EMAs), prone to whipsaws in volatile markets, less effective in ranging conditions."
+What are three common MA sell signals?,1. MA flattens after rise + price breaks below 2. Failed rally above declining MA 3. Price surges far above rising MA (overbought).
+What is Cutler's RSI variation?,Uses simple moving averages (SMA) instead of Wilder's SMMA to eliminate data length dependency.
+How to compare investments using cumulative returns?,Compare same-period cumulative returns across assets to identify outperformance.
+Who created the MACD indicator?,Gerald Appel created the MACD indicator in the late 1970s.
+What does a 40% 5-year cumulative return imply?,"$10,000 grew to $14,000 (40% total), but annualized return is ~6.96% (not 40%/5 = 8%)."
+How do Bollinger Bands adjust to market conditions?,"Since the distance of the bands is based on standard deviation, they automatically adjust to volatility swings in the underlying price.  "
+How to initialize RSI calculations?,First n-period values use simple moving average before switching to SMMA/EMA smoothing.
+What are common momentum trading strategies?,"Breakout trading, trend-following, moving average crossovers, and relative strength analysis."
+Why is RSI considered a leading indicator?,"Momentum often changes before price, making RSI useful for anticipating reversals."
+Who developed RSI and when?,J. Welles Wilder introduced it in 1978 in his book 'New Concepts in Technical Trading Systems'.
+How do modern charting tools customize candlesticks?,"Users can modify colors, body/wick styles, and even adjust candle width based on volume.  "
+How to calculate total return rate?,(Ending Value - Beginning Value) / Beginning Value. Basis for deriving annualized returns.
+What are optimal market conditions for RSI?,Works best in ranging markets; less reliable in strong trending markets without adjustments.
+What is the 'real body' in a candlestick?,The area between the open and close prices. Hollow/green means close > open (price rose); filled/red means close < open (price fell).  
+What is the significance of the moving average in Bollinger Bands?,"The SMA acts as a baseline, while the bands provide dynamic support/resistance levels based on market volatility.  "
+What does a white/green candle with a long body signify?,Strong bullish sentiment (buyers dominated the period).  
+What are typical overbought/oversold levels?,70 (overbought) and 30 (oversold). Stronger trends may use 80/20 or 90/10 thresholds.
+How does a candlestick chart differ from a bar chart?,"While similar in appearance, each candlestick represents four key pieces of information: open, close (thick body), high, and low (wick). Bar charts display the same data but in a different visual format.  "
+What does a negative MACD histogram indicate?,Bearish momentum (MACD Line below Signal Line).
+What is a cumulative return?,"The total return an investment generates over a specified period, representing overall gain/loss regardless of time duration."
+What is dispersion trading?,"A strategy that exploits the difference between index volatility and the volatility of its constituent stocks, betting that index volatility is overpriced relative to single-stock volatility.  "
+What does RSI=50 indicate?,Neutral momentum - equal average gains/losses over the period.
+How does RSI behave in strong trends?,Can remain overbought/oversold for extended periods - Cardwell's range shift concept applies.
+What do Bollinger Bands indicate about price levels?,They help determine whether prices are relatively high (near the upper band) or low (near the lower band) based on recent volatility.  
+Why is cumulative return expressed as a percentage?,Standardizes performance comparison across different investment sizes and timeframes.
+What are typical medium-term Bollinger Band settings?,A 20-day moving average with bands set at 2 standard deviations.  
+How is the MACD line calculated?,MACD Line = 12-day EMA - 26-day EMA.
+What is relative strength in momentum trading?,Comparing an asset's performance to peers/index to identify outperforming assets with strong momentum.
+What is the core principle of momentum trading?,"Prices tend to persist in their current direction (up or down) in the short-term, allowing traders to ride the trend."
+What are three common MA buy signals?,1. MA flattens after decline + price breaks above 2. Price rebounds sharply after false breakdown 3. Extreme price drop below MA (risky short-term play).
+How is cumulative return calculated for non-dividend assets?,(Current Value - Purchase Price) / Purchase Price. Used for growth stocks/precious metals without dividends.
+What market misconception does dispersion trading target?,"The overestimation of future stock correlations, which inflates implied index volatility compared to realized volatility.  "
+How do traders adjust RSI parameters?,"Shorter periods (e.g., 7) increase sensitivity; longer periods (e.g., 21) reduce false signals."
+What are positive/negative reversals?,Positive: Higher price low + lower RSI low confirms uptrend. Negative: Lower price high + higher RSI high confirms downtrend.
+How do momentum traders select assets?,"They avoid sideways-moving assets and focus on those with clear, strong directional trends confirmed by volume."
+What information does a single candlestick represent?,"1. Open & Close (body), 2. High & Low (wicks/shadows). The color/fill indicates whether the price rose or fell during the period.  "
+What is correlation trading?,"Correlation trading is a strategy where investors take exposure to the average correlation of an index, betting on whether future realized correlation will differ from the implied correlation derived from derivatives.  "
+What does a long candlestick body indicate?,"Strong buying or selling pressure, reflecting intense trading activity.  "
+Why is MA5 significant in stock markets?,"Represents weekly trend (5 trading days), acting as strong support/resistance. Key for short-term trading."
+How do stock splits affect cumulative return calculations?,"Adjusted closing prices automatically account for splits, ensuring accurate historical comparisons."
+How does MACD behave in a trending vs. ranging market?,Effective in trending markets; may give false signals in sideways/ranging markets.
+How does MA represent market costs?,MA on day X shows the average market cost over X days. Rising MA = increasing buyer costs; Falling MA = decreasing seller prices.
+What is the MACD indicator?,"The MACD (Moving Average Convergence Divergence) is a momentum indicator that shows the relationship between two moving averages of a security's price, used to track trend momentum."
+Are candlestick patterns reliable alone?,"No, they should be combined with other indicators (e.g., moving averages, RSI) for confirmation.  "
+How does MA reflect market trends?,It represents price fluctuation trends and maintains direction unless a strong reversal occurs.
+How does reinvestment affect cumulative returns?,Reinvested dividends/capital gains increase the effective cumulative return through compounding.
+Do candlesticks show real-time price movements?,"Yes, as they form, they update to reflect current price action within the selected timeframe.  "
+How does RSI complement other indicators?,"Often paired with MACD, moving averages, or Bollinger Bands for confluence."
+Why is dispersion trading popular among hedge funds?,It capitalizes on systematic overpricing of index volatility due to structured product demand and market overestimations of correlation.  
+How does the zero-line crossover signal work?,A bullish signal occurs when MACD crosses above zero; bearish when it crosses below zero. Distance from zero indicates trend strength.
+What is a 'long dispersion' trade?,"Shorting index volatility (e.g., selling index options) while buying single-stock volatility (e.g., purchasing options on individual stocks).  "
+What does MA10 indicate?,Reflects short-term average cost trends. Bullish stocks rarely close below MA10; bearish stocks struggle to rise above it.
+What timeframe is best for MACD?,Works across timeframes but most commonly used on daily charts for swing trading.
+What are typical long-term Bollinger Band settings?,A 50-day moving average with bands set at 2.5 standard deviations.  
+What's the difference between RSI and relative strength?,RSI measures internal momentum; relative strength compares asset performance to benchmark/index.
+What's the formula for multi-period cumulative returns?,"Rc = (1 + R1)(1 + R2)...(1 + Rn) - 1, where R1,R2,...Rn are returns for each period."
+What is the standard RSI timeframe?,"14 periods (days/hours/etc.), though traders may adjust for shorter/longer outlooks."
+Who disputed Homma’s role in candlestick creation?,Steve Nison noted in *Beyond Candlesticks* that Homma likely didn’t use them; they emerged later in the 1800s.  
+What are 'failure swings' in RSI?,Reversal signals when RSI fails to exceed prior peak (above 70) or trough (below 30).
+How do structured product sellers influence correlation perceptions?,"They often take long correlation positions (buying index volatility), pushing implied correlation higher than what dispersion traders believe is justified.  "
+Is momentum trading suitable for beginners?,High-risk and fast-paced; requires experience in technical analysis and discipline to follow strict rules.
+What markets suit momentum trading?,"Stocks, forex, commodities - any liquid market with strong trending behavior."
+How does volume affect RSI interpretation?,RSI doesn't incorporate volume - traders often combine with volume indicators for confirmation.
+What's the mathematical basis of RSI?,Ratio of exponentially weighted positive price changes to total absolute price changes over n periods.
+Why is MA5 a strong resistance in bear markets?,Represents recent seller dominance - prices often reject at this level during weak rebounds.
+What is the Signal Line in MACD?,"A 9-day EMA of the MACD Line, used to identify potential buy/sell signals."
+How are Bollinger Bands calculated?,"1. Calculate a simple moving average (SMA) over the chosen period. 2. Calculate the standard deviation over the same period. 3. For the upper band, add (StdDev × SMA). 4. For the lower band, subtract (StdDev × SMA).  "
+What are false breakouts?,"When price appears to start a new trend but quickly reverses, trapping momentum traders."
+Do Bollinger Bands guarantee future price performance?,"No, past performance is no guarantee of future results. They are a statistical tool and should be used with risk management strategies.  "
+What are Bollinger Bands?,Bollinger Bands are a type of price envelope developed by John Bollinger. They define upper and lower price range levels based on standard deviations from a simple moving average (SMA).  
+What is a candlestick pattern?,"A specific sequence of candlesticks used to identify trends or reversals (e.g., Doji, Hammer, Engulfing).  "
+Why combine momentum with other indicators?,"Confirms signals (e.g., RSI for overbought/oversold conditions) to reduce false signals."
+How does Heikin-Ashi differ from regular candlesticks?,"Heikin-Ashi candles may not reflect actual open/close prices, and long wicks often indicate stronger trends.  "
+How do wicks indicate market sentiment?,Long upper wicks suggest rejection of higher prices (selling pressure); long lower wicks indicate buying interest at lows.  
+What are the two main parameters used in Bollinger Bands?,"The two parameters are Period (length of the moving average) and Standard Deviations (StdDev), which determine the width of the bands.  "
+How to manage risk in momentum trading?,"Use stop-loss orders, position sizing, and avoid overleveraging to limit downside during reversals."
+What is divergence in MACD?,"When price and MACD move in opposite directions, signaling potential reversals (bullish/bearish divergence)."
+What's the difference between cumulative and annualized return?,Cumulative shows total growth; annualized converts it to an equivalent yearly compounded rate.
+Why are candlestick charts popular in technical analysis?,"They densely pack price data, making trends, reversals, and volatility easy to interpret visually.  "
+How can traders use Bollinger Bands effectively?,"Traders often look for price reversals when the price touches the bands, confirm breakouts, or use them alongside other indicators like RSI or MACD.  "
+How does overall market volatility affect dispersion trades?,"High market volatility can compress correlation spreads, making the strategy less effective. Ideal conditions include stable markets with mispriced correlations.  "
+What is the main risk of dispersion trading?,"Correlations may remain high or rise further, causing losses on short index volatility positions.  "
+What are the 5 key elements of successful momentum investing?,1. Trend identification 2. Entry/exit timing 3. Risk management 4. Position sizing 5. Performance review.
+What is the 'Helping Up/Down' effect?,"When price breaks MA, it tends to continue in that direction due to MA's support/resistance role."
+What are bullish/bearish divergences?,"Bullish: Price makes new low, RSI makes higher low. Bearish: Price makes new high, RSI makes lower high."
+Why does MA lag behind price movements?,"Due to its calculation method (averaging past data), causing delayed reactions to trend reversals."
+What is a high-momentum stock?,"A stock exhibiting strong, sustained price movement in one direction over a short period (weeks/months)."
+How does Wilder's smoothing differ from EMA?,Uses SMMA: newval = (prevval*(n-1) + newdata)/n. Some platforms use standard EMA instead.
+What does the MACD histogram represent?,The difference between the MACD Line and Signal Line (MACD Line - Signal Line). It oscillates above/below a zero line to show momentum shifts.
+What tools help identify momentum?,"Technical indicators like RSI, MACD, moving averages, and volume analysis."
+How do candlesticks help traders?,"They visually convey price action, trends, and potential reversals by showing opening/closing prices and volatility (via wicks).  "
+What are the four key characteristics of Moving Averages?,1. Trendliness 2. Hysteresis & Stability 3. Helping Up/Down Effect 4. Market Average Cost-Effectiveness.
+What do 20-day and 60-day MAs represent?,20-day = monthly trend; 60-day (seasonal line) = smoother medium-term trend with clear tracking trajectory.
+What is the Relative Strength Index (RSI)?,"A momentum oscillator measuring velocity/magnitude of price movements on a 0-100 scale, indicating overbought/oversold conditions."
+What is a bearish MACD crossover?,"When the MACD Line crosses below the Signal Line, suggesting a potential downtrend."
+What is Heikin-Ashi?,"A modified candlestick type using averaged prices: Close = (Open+High+Low+Close)/4, Open = (Prior Open + Prior Close)/2. It smooths price noise.  "
+What is the role of financial models in correlation trading?,"Models calculate implied correlation from index and single-stock options, helping traders identify mispricings.  "
+What is a hollow candlestick chart?,"A variation where color and fill distinguish price relationships (e.g., hollow = price rise, filled = price drop).  "
+Why does an index typically have lower volatility than its stocks?,"Due to diversification: individual stock volatilities partially cancel out when combined in an index, assuming less-than-perfect correlations.  "
+What are the default values for Bollinger Bands?,The default values are a 20-period moving average and 2 standard deviations.  

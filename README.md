@@ -39,7 +39,7 @@
 
 - 🔐 **Security & Data Privacy**: User authentication through username and passwords stored from our PostgreSQL database
 - 📈 **Comprehensive data**: From basic info to advanced statistical metrics.
-- 🧠 **AI-powered insights**: Ask our integrated RAG AI anything—answers are fetched from a rich, web-scraped knowledge base.
+- 🧠 **AI-powered insights**: Ask our integrated RAG + Fine-tuned AI anything—answers are fetched from a rich, web-scraped knowledge base.
 - 🖼️ **Real-time Market Sentiment Analysis**: Read real-time market news on the company and use our system to analyze its sentiment.
 - 🔮 **Stock price prediction**: Interactive, LSTM-driven predictions with beautiful charting.
 - 🛠️ **Modern full-stack experience**: Fast, intuitive, and ready for your contributions!
@@ -102,7 +102,7 @@ Stock-Navigator is powered by an exciting tech stack:
 - **Frontend:** React.js, HTML, CSS, Plotly.js
 - **Backend:** Django, Django REST Framework
 - **Data Science:** Pandas, NumPy, TensorFlow, PyTorch, Yahoo Finance, FinnHub, Torch Script
-- **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Tokenizers
+- **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Seq2seq Trainers
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
 - **Databases:** PostgreSQL
