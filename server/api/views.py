@@ -101,9 +101,6 @@ def submit_stock(request):
         start = (date.today() - timedelta(days = 365)).strftime("%Y-%m-%d")
         try:
             stock = yf.download(stock_symbol, start = start, end = end, progress = False,multi_level_index=False)
-            #stock = stock.stack().reset_index().rename(index=str, columns={"level_1": "Symbol"}).sort_values(['Symbol','Date'])
-            #stock = stock.reset_index()
-            #print(stock)
             if stock.empty:
                 return Response({'error': 'No stock data found'}, status=404)
             
@@ -126,14 +123,13 @@ def submit_stock(request):
             name=f'{stock_symbol} Candlestick'
             )])
             fig_candlestick.update_layout(
-            title=f'{stock_symbol} Candlestick Chart',  # Set the chart title
             xaxis_title='Date',  # Label for x-axis
             yaxis_title='Price',  # Label for y-axis
-            plot_bgcolor='rgba(43, 43, 43, 0.85)',  # Dark background for plot
-            paper_bgcolor='rgba(43, 43, 43, 0.85)',  # Dark background for outer paper
-            font=dict(color='#eaeaea'),  # Font color (for dark theme)
-            xaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),  # X-axis settings
-            yaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),  # Y-axis settings
+            plot_bgcolor='white',  # Dark background for plot
+            paper_bgcolor='white',  # Dark background for outer paper
+            font=dict(color='black'),  # Font color (for dark theme)
+            xaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),  # X-axis settings
+            yaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),  # Y-axis settings
             )
             
             delta = stock['Close'].diff()
@@ -146,10 +142,9 @@ def submit_stock(request):
             corr_matrix = stock[['Open', 'High', 'Low', 'Close', 'Volume']].corr()
             fig_corr = ff.create_annotated_heatmap(z=np.around(corr_matrix.values, decimals = 4), x=list(corr_matrix.columns), y=list(corr_matrix.index), colorscale='Viridis')
             fig_corr.update_layout(
-            title=f'{stock_symbol} Feature Correlation',
-            plot_bgcolor='rgba(43, 43, 43, 0.85)',
-            paper_bgcolor='rgba(43, 43, 43, 0.85)',
-            font=dict(color='#eaeaea'),
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            font=dict(color='darkgreen'),
             )
             print(stock)
             # Get the Date and Close columns
@@ -157,7 +152,7 @@ def submit_stock(request):
             print(dates)
             close_prices = stock['Close']
 
-#   Calculate the 20-day moving average
+            #  Calculate the 20-day moving average
             ma_20 = close_prices.rolling(window=20).mean()
 
             # Calculate the standard deviation
@@ -167,7 +162,7 @@ def submit_stock(request):
             upper_band = ma_20 + (std_dev_20 * 2)
             lower_band = ma_20 - (std_dev_20 * 2)
 
-# Create Bollinger Bands chart
+            # Create Bollinger Bands chart
             fig_bollinger = go.Figure()
             fig_bollinger.add_trace(go.Scatter(x=stock_data["Date"], y=close_prices, name='Stock Price'))
             fig_bollinger.add_trace(go.Scatter(x=stock_data["Date"], y=upper_band, name='Upper Band', fill=None, mode='lines'))
@@ -175,21 +170,20 @@ def submit_stock(request):
 
             # Customize layout
             fig_bollinger.update_layout(
-            title=f'{stock_symbol} Bollinger Bands',
-            plot_bgcolor='rgba(43, 43, 43, 0.85)',
-            paper_bgcolor='rgba(43, 43, 43, 0.85)',
-            font=dict(color='#eaeaea'),
-            xaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),
-            yaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            font=dict(color='darkgreen'),
+            xaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),
+            yaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),
             )
             
-            fig_rsi = px.line(stock, x='Date', y='RSI', title=f'{stock_symbol} Relative Strength Index (14-day)')
+            fig_rsi = px.line(stock, x='Date', y='RSI')
             fig_rsi.update_layout(
-            plot_bgcolor='rgba(43, 43, 43, 0.85)',
-            paper_bgcolor='rgba(43, 43, 43, 0.85)',
-            font=dict(color='#eaeaea'),
-            xaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),
-            yaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),)
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            font=dict(color='darkgreen'),
+            xaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),
+            yaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),)
             
             stock_data['12-Day EMA'] = stock_data['Close'].ewm(span=12, adjust=False).mean()
             stock_data['26-Day EMA'] = stock_data['Close'].ewm(span=26, adjust=False).mean()
@@ -200,38 +194,36 @@ def submit_stock(request):
             fig_macd.add_trace(go.Scatter(x=stock_data['Date'], y=stock_data['Signal Line'], name='Signal Line'))
             
             fig_macd.update_layout(
-            title=f'{stock_symbol} Moving Average Convergence Divergence (MACD)',
-            plot_bgcolor='rgba(43, 43, 43, 0.85)',
-            paper_bgcolor='rgba(43, 43, 43, 0.85)',
-            font=dict(color='#eaeaea'),
-            xaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),
-            yaxis=dict(gridcolor='rgba(255, 255, 255, 0.2)', color='#eaeaea'),
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            font=dict(color='darkgreen'),
+            xaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),
+            yaxis=dict(gridcolor='rgba(0,0,0,0.1)', color='darkgreen', title_font=dict(color='darkgreen')),
             )
         
-            fig_ma10 = px.line(stock_data_2, x='Date', y="MA10", title = f'{stock_symbol} Moving Average of 10 days Over Time')
-            fig_ma20 = px.line(stock_data_3, x='Date', y="MA20", title = f'{stock_symbol} Moving Average of 20 days Over Time')
-            fig_momentum = px.line(stock_data_1, x='Date', y='Momentum', title=f'{stock_symbol} Momentum Over Time')
-            fig = px.line(stock_data, x='Date', y='Close', title=f'{stock_symbol} Stock Price Over Time')
-            
+            fig_ma10 = px.line(stock_data_2, x='Date', y="MA10")
+            fig_ma20 = px.line(stock_data_3, x='Date', y="MA20")
+            fig_momentum = px.line(stock_data_1, x='Date', y='Momentum')
+            fig = px.line(stock_data, x='Date', y='Close')
+           
             stock_data['Daily Return'] = stock_data['Close'].pct_change()
             stock_data['Cumulative Return'] = (1 + stock_data['Daily Return']).cumprod()
             fig_cumulative_return = go.Figure(data=[
             go.Scatter(x=stock_data['Date'], y=stock_data['Cumulative Return'], mode='lines', name='Cumulative Return')
             ])
             fig_cumulative_return.update_layout(
-            title=f'Cumulative Returns of {stock_symbol}',
             xaxis_title='Date',
             yaxis_title='Cumulative Return',
-            plot_bgcolor='rgba(43, 43, 43, 0.85)',  # Dark background
-            paper_bgcolor='rgba(43, 43, 43, 0.85)',
-            font=dict(color='#eaeaea'))
+            plot_bgcolor='white',  
+            paper_bgcolor='white',
+            font=dict(color='darkgreen'))
             
             common_layout = {
-            'plot_bgcolor': 'rgba(43, 43, 43, 0.85)',  # Graph background
-            'paper_bgcolor': 'rgba(43, 43, 43, 0.85)',  # Outer paper background
-            'font': {'color': '#eaeaea'},  # Font color for labels and titles
-            'xaxis': {'gridcolor': 'rgba(255, 255, 255, 0.2)', 'color': '#eaeaea'},
-            'yaxis': {'gridcolor': 'rgba(255, 255, 255, 0.2)', 'color': '#eaeaea'},
+            'plot_bgcolor': 'white',  # Graph background
+            'paper_bgcolor': 'white',  # Outer paper background
+            'font': {'color': 'darkgreen'},  # Font color for labels and titles
+            'xaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
+            'yaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
             'hovermode': 'x',}
             
             fig.update_layout(**common_layout)

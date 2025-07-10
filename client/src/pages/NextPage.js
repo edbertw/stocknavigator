@@ -143,61 +143,61 @@ const NextPage = () => {
           {graphDataStock && (
             <div className="next-page-graph-card">
               <h3>Stock Prices</h3>
-              <Plot data={graphDataStock.data} layout={{ ...graphDataStock.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataStock.data} layout={{ ...graphDataStock.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataMomentum && (
             <div className="next-page-graph-card">
               <h3>Momentum</h3>
-              <Plot data={graphDataMomentum.data} layout={{ ...graphDataMomentum.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataMomentum.data} layout={{ ...graphDataMomentum.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataMA10 && (
             <div className="next-page-graph-card">
               <h3>Moving Average (10-day)</h3>
-              <Plot data={graphDataMA10.data} layout={{ ...graphDataMA10.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataMA10.data} layout={{ ...graphDataMA10.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataMA20 && (
             <div className="next-page-graph-card">
               <h3>Moving Average (20-day)</h3>
-              <Plot data={graphDataMA20.data} layout={{ ...graphDataMA20.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataMA20.data} layout={{ ...graphDataMA20.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataCandlestick && (
             <div className="next-page-graph-card">
               <h3>Candlestick</h3>
-              <Plot data={graphDataCandlestick.data} layout={{ ...graphDataCandlestick.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataCandlestick.data} layout={{ ...graphDataCandlestick.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataRSI && (
             <div className="next-page-graph-card">
               <h3>Relative Strength Index (RSI)</h3>
-              <Plot data={graphDataRSI.data} layout={{ ...graphDataRSI.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataRSI.data} layout={{ ...graphDataRSI.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataCorr && (
             <div className="next-page-graph-card">
               <h3>Feature Correlations</h3>
-              <Plot data={graphDataCorr.data} layout={{ ...graphDataCorr.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataCorr.data} layout={{ ...graphDataCorr.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataBollinger && (
             <div className="next-page-graph-card">
               <h3>Bollinger Bands</h3>
-              <Plot data={graphDataBollinger.data} layout={{ ...graphDataBollinger.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataBollinger.data} layout={{ ...graphDataBollinger.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataMACD && (
             <div className="next-page-graph-card">
               <h3>MACD</h3>
-              <Plot data={graphDataMACD.data} layout={{ ...graphDataMACD.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataMACD.data} layout={{ ...graphDataMACD.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
           {graphDataCum && (
             <div className="next-page-graph-card">
               <h3>Cumulative Returns</h3>
-              <Plot data={graphDataCum.data} layout={{ ...graphDataCum.layout, autosize: true, height: 300, width: 400 }} />
+              <Plot data={graphDataCum.data} layout={{ ...graphDataCum.layout, autosize: true, height: 400, width: 500 }} />
             </div>
           )}
         </div>

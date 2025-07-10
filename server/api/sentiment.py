@@ -112,9 +112,9 @@ def predict(net, test_review, sequence_length=500):
         output, h= model(feature_tensor,h)
     #print('Prediction value: {:.6f}'.format(output.item()))
     if(output.item() > 0.5):
-        return f"Positive market sentiment detected! With probability of: {output.item()}"
+        return f"Positive market sentiment detected! With probability of: {output.item()}", output.item()
     else:
-        return f"Negative market sentiment detected! With probability of: {(1 - output.item())}"
+        return f"Negative market sentiment detected! With probability of: {(1- output.item())}", 1 - output.item()
         
 @csrf_exempt
 @api_view(['POST'])
@@ -135,11 +135,30 @@ def sen_display(request):
             all_text.append(text)
             
         output = ""
-        count = 1
+        count = 0
+        pos_count = 0
+        pos_score = 0
+        neg_count = 0
+        neg_score = 0
+        sen_count = 0
         for text in all_text:
-            output += f"Company News (Past Day) #{count} : " + f"{text}\n" + f"{predict(model, text, 500)}\n\n"
             count += 1
-        
+            prediction, score = predict(model, text, 500)
+            if prediction.startswith("Positive"):
+                pos_count += 1
+                pos_score += score
+            elif prediction.startswith("Negative"):
+                neg_count += 1
+                neg_score += score
+            output += f"Company News (Past Day) #{count} : " + f"{text}\n" + f"{prediction}\n\n"
+
+        if pos_score > neg_score:
+            output += f"Overall Sentiment: Positive with score of {(pos_score - neg_score)/count} equivalent to {pos_count} positive news and {neg_count} negative news.\n"
+        elif neg_score > pos_score:
+            output += f"Overall Sentiment: Negative with score of {(neg_score - pos_score)/count} equivalent to {neg_count} negative news and {pos_count} positive news.\n"
+        else:
+            output += f"Overall Sentiment: Neutral with equal positive and negative news.\n"
+        output += f"Total News Articles Analyzed: {count}\n"
         return Response({'response': output}, status=200)
     
     except Exception as e:

@@ -103,11 +103,11 @@ def predict_stock(request):
             )
             
             common_layout = {
-            'plot_bgcolor': 'rgba(43, 43, 43, 0.85)', 
-            'paper_bgcolor': 'rgba(43, 43, 43, 0.85)',  
-            'font': {'color': '#eaeaea'},  
-            'xaxis': {'gridcolor': 'rgba(255, 255, 255, 0.2)', 'color': '#eaeaea'},
-            'yaxis': {'gridcolor': 'rgba(255, 255, 255, 0.2)', 'color': '#eaeaea'},
+            'plot_bgcolor': 'white',  # Graph background
+            'paper_bgcolor': 'white',  # Outer paper background
+            'font': {'color': 'darkgreen'},  # Font color for labels and titles
+            'xaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
+            'yaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
             'hovermode': 'x',}
             
             fig.update_layout(**common_layout)
