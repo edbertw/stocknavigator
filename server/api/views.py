@@ -88,7 +88,47 @@ company_data = {
         'name': 'JP Morgan',
         'description': 'JP Morgan is a global leader in financial services offering solutions to corporations, institutions, and governments.',
         'logo': 'jpmorgan.png'
-    }
+    },
+    'MS': {
+        'name': 'Morgan Stanley',
+        'description': 'Morgan Stanley is a global financial services firm providing investment banking, securities, wealth management, and investment management services.',
+        'logo': 'morgan_stanley.png'
+    },
+    'AAPL': {
+        'name': 'Apple',
+        'description': 'Apple is a multinational technology company that designs, manufactures, and markets consumer electronics, software, and services.',
+        'logo': 'apple.png'
+    },
+    'AMZN': {
+        'name': 'Amazon',
+        'description': 'Amazon is a multinational technology company focusing on e-commerce, cloud computing, and artificial intelligence.',
+        'logo': 'amazon.png'
+    },
+    'GOOGL': {
+        'name': 'Google',
+        'description': 'Google is a multinational technology company specializing in Internet-related services and products, including search engines, online advertising, and cloud computing.',
+        'logo': 'google.png'
+    },
+    'META': {
+        'name': 'Meta (Formerly Facebook)',
+        'description': 'Meta Platforms is a technology company that focuses on social media and virtual reality.',
+        'logo': 'meta.png'
+    },
+    'MSFT': {
+        'name': 'Microsoft',
+        'description': 'Microsoft is a multinational technology company that develops, licenses, and supports a wide range of software products and services.',
+        'logo': 'microsoft.png'
+    },
+    'NFLX': {
+        'name': 'Netflix',
+        'description': 'Netflix is a media-services provider and production company known for its streaming service.',
+        'logo': 'netflix.png'
+    },
+    'DIS': {
+        'name': 'Disney',
+        'description': 'The Walt Disney Company is a diversified international family entertainment and media enterprise.',
+        'logo': 'disney.png'
+    }   
 }
 @csrf_exempt
 @api_view(['POST'])

@@ -92,6 +92,15 @@ Currently, Stock-Navigator brings you insights on:
 | 2  | HSBC     |
 | 3  | NASDAQ   |
 | 4  | TESLA    |
+| 5  | JPMORGAN |
+| 6  | MORGAN S.|
+| 7  | APPLE    |
+| 8  | GOOGLE   |
+| 9  | AMAZON   |
+| 10 | META     |
+| 11 | MICROSOFT|
+| 12 | NETFLIX  |
+| 13 | DISNEY   |
 
 ---
 

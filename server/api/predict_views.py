@@ -99,7 +99,7 @@ def predict_stock(request):
                 forecast, 
                 x=forecast.index, 
                 y='Prediction', 
-                    title=f'{stock_symbol} Stock Price Predictions for 30 days'
+                title=f'{stock_symbol} Stock Price Predictions for 30 days'
             )
             
             common_layout = {

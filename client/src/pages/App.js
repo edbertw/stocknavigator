@@ -48,7 +48,16 @@ const App = () => {
       NVDA: 'NVIDIA is a leading manufacturer of GPUs for gaming and AI computing.',
       NDAQ: 'NASDAQ is an American stock exchange, the second-largest in the world by market cap.',
       TSLA: 'Tesla is a clean energy and electric vehicle company.',
+      JPM: 'JPMorgan Chase & Co. is a leading global financial services firm and investment bank.',
+      MS: 'Morgan Stanley is a global financial services firm providing investment banking, securities, wealth management, and investment management services.',
       HSBC: 'HSBC is one of the world\'s largest banking and financial services organizations.',
+      APPL: 'Apple Inc. is a multinational technology company that designs, manufactures, and markets consumer electronics, software, and services.',
+      GOOGL: 'Google LLC is a multinational technology company specializing in Internet-related services and products.',
+      AMZN: 'Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, and artificial intelligence.',
+      META: 'Meta Platforms, Inc. is a technology conglomerate that owns Facebook, Instagram, and WhatsApp.',
+      MSFT: 'Microsoft Corporation is a multinational technology company that produces computer software, consumer electronics, and personal computers.',
+      NFLX: 'Netflix, Inc. is an American subscription streaming service and production company.',
+      DIS: 'The Walt Disney Company is a diversified multinational mass media and entertainment conglomerate.',
     };
 
     setDescription(descriptions[value] || '');
@@ -108,8 +117,17 @@ const App = () => {
             <option value="">-- Choose a Stock --</option>
             <option value="NVDA">NVIDIA</option>
             <option value="NDAQ">NASDAQ</option>
-            <option value="TSLA">Tesla</option>
+            <option value="TSLA">TESLA</option>
             <option value="HSBC">HSBC</option>
+            <option value="JPM">JPMORGAN</option>
+            <option value="MS">MORGAN STANLEY</option>
+            <option value="APPL">APPLE</option>
+            <option value="GOOGL">GOOGLE</option>
+            <option value="AMZN">AMAZON</option>
+            <option value="META">META</option>
+            <option value="MSFT">MICROSOFT</option>
+            <option value="NFLX">NETFLIX</option>
+            <option value="DIS">DISNEY</option>
           </select>
         </div>
 
