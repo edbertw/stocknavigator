@@ -66,69 +66,88 @@ def index(request):
 company_data = {
     'NVDA': {
         'name': 'NVIDIA',
-        'description': 'NVIDIA is a leading manufacturer of GPUs for gaming and AI computing.',
-        'logo': 'nvidia.png'
+        'description': 'NVIDIA is a leading manufacturer of GPUs for gaming and AI computing.'
     },
     'NDAQ': {
         'name': 'NASDAQ',
         'description': 'NASDAQ is an American stock exchange, the second-largest in the world by market cap.',
-        'logo': 'nasdaq.jpeg'
     },
     'TSLA': {
         'name': 'Tesla',
         'description': 'Tesla is a clean energy and electric vehicle company.',
-        'logo': 'tesla.jpeg'
     },
     'HSBC': {
         'name': 'HSBC',
         'description': 'HSBC is one of the world\'s largest banking and financial services organizations.',
-        'logo': 'hsbc.jpg'
     },
     'JPM': {
         'name': 'JP Morgan',
         'description': 'JP Morgan is a global leader in financial services offering solutions to corporations, institutions, and governments.',
-        'logo': 'jpmorgan.png'
     },
     'MS': {
         'name': 'Morgan Stanley',
         'description': 'Morgan Stanley is a global financial services firm providing investment banking, securities, wealth management, and investment management services.',
-        'logo': 'morgan_stanley.png'
+    },
+    'GS': {
+        'name': 'Goldman Sachs',
+        'description': 'Goldman Sachs is a leading global investment banking, securities, and investment management firm.',
+    },
+    'JEF': {
+        'name': 'Jefferies',
+        'description': 'Jefferies is a global investment banking firm that provides financial services to institutional clients.',
     },
     'AAPL': {
         'name': 'Apple',
         'description': 'Apple is a multinational technology company that designs, manufactures, and markets consumer electronics, software, and services.',
-        'logo': 'apple.png'
     },
     'AMZN': {
         'name': 'Amazon',
         'description': 'Amazon is a multinational technology company focusing on e-commerce, cloud computing, and artificial intelligence.',
-        'logo': 'amazon.png'
     },
     'GOOGL': {
         'name': 'Google',
         'description': 'Google is a multinational technology company specializing in Internet-related services and products, including search engines, online advertising, and cloud computing.',
-        'logo': 'google.png'
     },
     'META': {
         'name': 'Meta (Formerly Facebook)',
         'description': 'Meta Platforms is a technology company that focuses on social media and virtual reality.',
-        'logo': 'meta.png'
     },
     'MSFT': {
         'name': 'Microsoft',
         'description': 'Microsoft is a multinational technology company that develops, licenses, and supports a wide range of software products and services.',
-        'logo': 'microsoft.png'
     },
     'NFLX': {
         'name': 'Netflix',
         'description': 'Netflix is a media-services provider and production company known for its streaming service.',
-        'logo': 'netflix.png'
     },
     'DIS': {
         'name': 'Disney',
         'description': 'The Walt Disney Company is a diversified international family entertainment and media enterprise.',
-        'logo': 'disney.png'
-    }   
+    },
+    'V': {
+        'name': 'Visa',
+        'description': 'Visa is a global payments technology company that connects consumers, businesses, banks, and governments.',
+    },
+    'C': {
+        'name': 'Citigroup',
+        'description': 'Citigroup is a multinational investment bank and financial services corporation.',
+    },
+    'BLK':{
+        'name': 'BlackRock',
+        'description': 'BlackRock is an American global investment management corporation.',
+    },
+    'IBM':{
+        'name': 'IBM',
+        'description': 'International Business Machines Corporation is an American multinational technology company.',
+    },
+    'UBER':{
+        'name': 'Uber',
+        'description': 'Uber Technologies, Inc. is an American technology company that offers ride-hailing, food delivery, and freight transportation services.',
+    },
+    'ORCL':{
+        'name': 'Oracle',
+        'description': 'Oracle Corporation is an American multinational computer technology corporation that offers software, cloud solutions, and hardware products.',
+    }
 }
 @csrf_exempt
 @api_view(['POST'])

@@ -50,6 +50,7 @@ const App = () => {
       TSLA: 'Tesla is a clean energy and electric vehicle company.',
       JPM: 'JPMorgan Chase & Co. is a leading global financial services firm and investment bank.',
       MS: 'Morgan Stanley is a global financial services firm providing investment banking, securities, wealth management, and investment management services.',
+      GS: 'Goldman Sachs Group, Inc. is an American multinational investment bank and financial services company.',
       HSBC: 'HSBC is one of the world\'s largest banking and financial services organizations.',
       APPL: 'Apple Inc. is a multinational technology company that designs, manufactures, and markets consumer electronics, software, and services.',
       GOOGL: 'Google LLC is a multinational technology company specializing in Internet-related services and products.',
@@ -58,6 +59,13 @@ const App = () => {
       MSFT: 'Microsoft Corporation is a multinational technology company that produces computer software, consumer electronics, and personal computers.',
       NFLX: 'Netflix, Inc. is an American subscription streaming service and production company.',
       DIS: 'The Walt Disney Company is a diversified multinational mass media and entertainment conglomerate.',
+      C: 'Citigroup Inc. is a multinational investment bank and financial services corporation.',
+      V: 'Visa Inc. is a multinational financial services corporation that facilitates electronic funds transfers.',
+      BLK: 'BlackRock, Inc. is an American global investment management corporation.',
+      IBM: 'International Business Machines Corporation is an American multinational technology and consulting company.',
+      UBER: 'Uber Technologies, Inc. is an American technology company that offers ride-hailing, food delivery, and freight transportation services.',
+      ORCL: 'Oracle Corporation is an American multinational computer technology corporation that offers software, cloud solutions, and hardware products.',
+      JEF: 'Jefferies Financial Group Inc. is an American multinational independent investment bank and financial services company.',
     };
 
     setDescription(descriptions[value] || '');
@@ -121,6 +129,8 @@ const App = () => {
             <option value="HSBC">HSBC</option>
             <option value="JPM">JPMORGAN</option>
             <option value="MS">MORGAN STANLEY</option>
+            <option value="GS">GOLDMAN SACHS</option>
+            <option value="JEF">JEFFERIES</option>
             <option value="APPL">APPLE</option>
             <option value="GOOGL">GOOGLE</option>
             <option value="AMZN">AMAZON</option>
@@ -128,6 +138,12 @@ const App = () => {
             <option value="MSFT">MICROSOFT</option>
             <option value="NFLX">NETFLIX</option>
             <option value="DIS">DISNEY</option>
+            <option value="C">CITI</option>
+            <option value="V">VISA</option>
+            <option value="BLK">BLACKROCK</option>
+            <option value="IBM">IBM</option>
+            <option value="UBER">UBER</option>
+            <option value="ORCL">ORACLE</option>
           </select>
         </div>
 

@@ -14,7 +14,7 @@
 ---
 ### Home Page
 ![Starting Page](screen_captures/photo_1.png)
-
+![Starting Page 2](screen_captures/photo_1_s2.png)
 ---
 ### Dynamic Real-Time Stock Analytics and Dashboard
 ![Stock Analytics](screen_captures/photo_2.png)
@@ -84,7 +84,7 @@
 
 ## 💹 Supported Stocks
 
-Currently, Stock-Navigator brings you insights on:
+Currently, Stock-Navigator brings you insights on 21 S&P500 corporations:
 
 | #  | Company  |
 |----|----------|
@@ -93,7 +93,7 @@ Currently, Stock-Navigator brings you insights on:
 | 3  | NASDAQ   |
 | 4  | TESLA    |
 | 5  | JPMORGAN |
-| 6  | MORGAN S.|
+| 6  | MORGAN S |
 | 7  | APPLE    |
 | 8  | GOOGLE   |
 | 9  | AMAZON   |
@@ -101,6 +101,16 @@ Currently, Stock-Navigator brings you insights on:
 | 11 | MICROSOFT|
 | 12 | NETFLIX  |
 | 13 | DISNEY   |
+| 14 | GOLDMAN S|
+| 15 | JEFFERIES|
+| 16 | CITI     |
+| 17 | VISA     |
+| 18 | BLACKROCK|
+| 19 | IBM      |
+| 20 | UBER     |
+| 21 | ORACLE   |
+
+
 
 ---
 
