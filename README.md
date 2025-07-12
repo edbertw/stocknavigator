@@ -85,7 +85,7 @@
 
 ## 💹 Supported Stocks
 
-Currently, Stock-Navigator brings you insights on 54 S&P500 and HK corporations:
+Currently, Stock-Navigator brings you insights on 64 S&P500 and HK corporations:
 
 | #  | Ticker   | Company Name                 |
 |----|----------|------------------------------|
