@@ -84,31 +84,64 @@
 
 ## 💹 Supported Stocks
 
-Currently, Stock-Navigator brings you insights on 21 S&P500 corporations:
+Currently, Stock-Navigator brings you insights on 54 S&P500 and HK corporations:
 
-| #  | Company  |
-|----|----------|
-| 1  | NVIDIA   |
-| 2  | HSBC     |
-| 3  | NASDAQ   |
-| 4  | TESLA    |
-| 5  | JPMORGAN |
-| 6  | MORGAN S |
-| 7  | APPLE    |
-| 8  | GOOGLE   |
-| 9  | AMAZON   |
-| 10 | META     |
-| 11 | MICROSOFT|
-| 12 | NETFLIX  |
-| 13 | DISNEY   |
-| 14 | GOLDMAN S|
-| 15 | JEFFERIES|
-| 16 | CITI     |
-| 17 | VISA     |
-| 18 | BLACKROCK|
-| 19 | IBM      |
-| 20 | UBER     |
-| 21 | ORACLE   |
+| #  | Ticker   | Company Name                 |
+|----|----------|------------------------------|
+| 1  | NVDA     | NVIDIA                       |
+| 2  | HSBC     | HSBC                         |
+| 3  | NDAQ     | NASDAQ                       |
+| 4  | TSLA     | Tesla                        |
+| 5  | JPM      | JPMorgan Chase               |
+| 6  | MS       | Morgan Stanley               |
+| 7  | AAPL     | Apple                        |
+| 8  | GOOGL    | Google (Alphabet)            |
+| 9  | AMZN     | Amazon                       |
+| 10 | META     | Meta                         |
+| 11 | MSFT     | Microsoft                    |
+| 12 | NFLX     | Netflix                      |
+| 13 | DIS      | Disney                       |
+| 14 | GS       | Goldman Sachs                |
+| 15 | JEF      | Jefferies                    |
+| 16 | C        | Citigroup                    |
+| 17 | V        | Visa                         |
+| 18 | BLK      | BlackRock                    |
+| 19 | IBM      | IBM                          |
+| 20 | UBER     | Uber                         |
+| 21 | ORCL     | Oracle                       |
+| 22 | WMT      | Walmart                      |
+| 23 | MA       | Mastercard                   |
+| 24 | XOM      | ExxonMobil                   |
+| 25 | COST     | Costco                       |
+| 26 | BAC      | Bank of America              |
+| 27 | PLTR     | Palantir                     |
+| 28 | KO       | Coca-Cola                    |
+| 29 | PEP      | PepsiCo                      |
+| 30 | UNH      | UnitedHealth Group           |
+| 31 | CRM      | Salesforce                   |
+| 32 | MCD      | McDonald's                   |
+| 33 | ACN      | Accenture                    |
+| 34 | BA       | Boeing                       |
+| 35 | ABNB     | Airbnb                       |
+| 36 | AON      | Aon                          |
+| 37 | DASH     | DoorDash                     |
+| 38 | INTC     | Intel                        |
+| 39 | ZM       | Zoom                         |
+| 40 | SBUX     | Starbucks                    |
+| 41 | NKE      | Nike                         |
+| 42 | CB       | Chubb                        |
+| 43 | CRWD     | CrowdStrike                  |
+| 44 | BX       | Blackstone                   |
+| 45 | MFC      | Manulife                     |
+| 46 | 1299.HK  | AIA Group (Hong Kong)        |
+| 47 | 0388.HK  | HKEX (Hong Kong Exchange)    |
+| 48 | 0700.HK  | Tencent (Hong Kong)          |
+| 49 | 2318.HK  | Ping An Insurance (Hong Kong)|
+| 50 | 0939.HK  | China Construction Bank      |
+| 51 | 0005.HK  | HSBC Holdings (Hong Kong)    |
+| 52 | 0001.HK  | CK Hutchison Holdings        |
+| 53 | 0002.HK  | CLP Holdings                 |
+| 54 | 0011.HK  | MTR Corporation              |
 
 
 

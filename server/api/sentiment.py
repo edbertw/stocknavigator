@@ -127,7 +127,10 @@ def sen_display(request):
         current_date = datetime.today()
         start_date = current_date - relativedelta(days=1)
         finnhub_client = finnhub.Client(api_key=os.getenv("FINNHUB_API_KEY"))
-        ALL_NEWS = finnhub_client.company_news(stock_symbol, _from=start_date.strftime('%Y-%m-%d'), to=current_date.strftime('%Y-%m-%d'))
+        try:
+            ALL_NEWS = finnhub_client.company_news(stock_symbol, _from=start_date.strftime('%Y-%m-%d'), to=current_date.strftime('%Y-%m-%d'))
+        except Exception as e:
+            return Response({'response': 'No news articles found for the given stock symbol.'}, status=404)
         
         all_text = []
         for news in ALL_NEWS:

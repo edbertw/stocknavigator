@@ -45,27 +45,60 @@ const App = () => {
 
     // Update description based on selected stock
     const descriptions = {
-      NVDA: 'NVIDIA is a leading manufacturer of GPUs for gaming and AI computing.',
-      NDAQ: 'NASDAQ is an American stock exchange, the second-largest in the world by market cap.',
-      TSLA: 'Tesla is a clean energy and electric vehicle company.',
-      JPM: 'JPMorgan Chase & Co. is a leading global financial services firm and investment bank.',
-      MS: 'Morgan Stanley is a global financial services firm providing investment banking, securities, wealth management, and investment management services.',
-      GS: 'Goldman Sachs Group, Inc. is an American multinational investment bank and financial services company.',
-      HSBC: 'HSBC is one of the world\'s largest banking and financial services organizations.',
-      APPL: 'Apple Inc. is a multinational technology company that designs, manufactures, and markets consumer electronics, software, and services.',
-      GOOGL: 'Google LLC is a multinational technology company specializing in Internet-related services and products.',
-      AMZN: 'Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, and artificial intelligence.',
-      META: 'Meta Platforms, Inc. is a technology conglomerate that owns Facebook, Instagram, and WhatsApp.',
-      MSFT: 'Microsoft Corporation is a multinational technology company that produces computer software, consumer electronics, and personal computers.',
-      NFLX: 'Netflix, Inc. is an American subscription streaming service and production company.',
-      DIS: 'The Walt Disney Company is a diversified multinational mass media and entertainment conglomerate.',
-      C: 'Citigroup Inc. is a multinational investment bank and financial services corporation.',
-      V: 'Visa Inc. is a multinational financial services corporation that facilitates electronic funds transfers.',
-      BLK: 'BlackRock, Inc. is an American global investment management corporation.',
-      IBM: 'International Business Machines Corporation is an American multinational technology and consulting company.',
-      UBER: 'Uber Technologies, Inc. is an American technology company that offers ride-hailing, food delivery, and freight transportation services.',
-      ORCL: 'Oracle Corporation is an American multinational computer technology corporation that offers software, cloud solutions, and hardware products.',
-      JEF: 'Jefferies Financial Group Inc. is an American multinational independent investment bank and financial services company.',
+      NVDA: 'NVIDIA is a leading manufacturer of GPUs for gaming, AI, and data center computing.',
+      NDAQ: 'NASDAQ is the second-largest stock exchange in the world, known for its tech-heavy listings.',
+      TSLA: 'Tesla is an electric vehicle and clean energy company led by Elon Musk.',
+      HSBC: 'HSBC is a British multinational banking and financial services company with a strong presence in Asia.',
+      JPM: 'JPMorgan Chase is a global financial services firm and the largest bank in the U.S. by assets.',
+      MS: 'Morgan Stanley is a leading investment bank specializing in wealth management and institutional securities.',
+      GS: 'Goldman Sachs is a top-tier investment bank and financial services firm serving corporations and high-net-worth clients.',
+      JEF: 'Jefferies is a global investment banking firm focused on equities, fixed income, and advisory services.',
+      APPL: 'Apple is a tech giant known for its iPhones, Macs, and services like Apple Music and iCloud.',
+      GOOGL: 'Google (Alphabet Inc.) dominates online search, advertising, cloud computing, and AI through products like YouTube and Android.',
+      AMZN: 'Amazon is the world’s largest e-commerce company and a leader in cloud computing (AWS).',
+      META: 'Meta (formerly Facebook) owns social platforms like Facebook, Instagram, and WhatsApp, and invests heavily in VR/AR.',
+      MSFT: 'Microsoft is a software leader (Windows, Office, Azure) and a major player in cloud computing and AI.',
+      NFLX: 'Netflix is the leading global streaming service, producing original films and TV shows.',
+      DIS: 'Disney is a media and entertainment powerhouse, owning Marvel, Star Wars, ESPN, and theme parks.',
+      C: 'Citi is a global bank offering consumer banking, investment services, and corporate finance.',
+      V: 'Visa is the world’s largest payment processor, enabling digital transactions worldwide.',
+      BLK: 'BlackRock is the world’s largest asset manager, known for its iShares ETFs.',
+      IBM: 'IBM is a legacy tech company focusing on hybrid cloud, AI (Watson), and enterprise solutions.',
+      UBER: 'Uber is a ride-hailing and food delivery (Uber Eats) platform operating globally.',
+      ORCL: 'Oracle provides enterprise software, cloud solutions, and database management systems.',
+      WMT: 'Walmart is the world’s largest retailer, operating hypermarkets and e-commerce platforms.',
+      MA: 'Mastercard is a global payments technology company, second only to Visa in transaction volume.',
+      XOM: 'ExxonMobil is one of the largest publicly traded oil and gas companies.',
+      COST: 'Costco operates membership-based warehouse clubs offering bulk retail goods.',
+      BAC: 'Bank of America is a major U.S. bank providing consumer banking, investing, and corporate services.',
+      PLTR: 'Palantir provides big data analytics and AI software for governments and enterprises.',
+      KO: 'Coca-Cola is the world’s largest beverage company, famous for its soft drinks.',
+      PEP: 'PepsiCo is a global food and beverage leader (Pepsi, Lay’s, Gatorade).',
+      UNH: 'UnitedHealth Group is the largest U.S. health insurer and a provider of healthcare services.',
+      CRM: 'Salesforce is the leading CRM (customer relationship management) software provider.',
+      MCD: 'McDonald’s is the world’s largest fast-food chain, known for its burgers and fries.',
+      ACN: 'Accenture is a global IT services and consulting firm specializing in digital transformation.',
+      BA: 'Boeing is a major aerospace company manufacturing commercial jets and defense systems.',
+      ABNB: 'Airbnb operates an online marketplace for short-term lodging and travel experiences.',
+      AON: 'Aon is a professional services firm offering risk management and insurance solutions.',
+      DASH: 'DoorDash is a leading food delivery platform in the U.S. and other markets.',
+      INTC: 'Intel is a semiconductor leader, producing CPUs for PCs, servers, and data centers.',
+      ZM: 'Zoom provides video conferencing software widely used for remote work and education.',
+      SBUX: 'Starbucks is the world’s largest coffeehouse chain, offering beverages and food.',
+      NKE: 'Nike is a global leader in athletic footwear, apparel, and sports equipment.',
+      CB: 'Chubb is a multinational insurer specializing in property, casualty, and reinsurance.',
+      CRWD: 'CrowdStrike is a cybersecurity firm offering cloud-based endpoint protection.',
+      BX: 'Blackstone is a leading private equity and alternative investment firm.',
+      MFC: 'Manulife is a Canadian insurance and financial services company with global operations.',
+      '1299.HK': 'AIA Group is a pan-Asian life insurance giant headquartered in Hong Kong.',
+      '0388.HK': 'Hong Kong Exchanges & Clearing (HKEX) operates the Hong Kong Stock Exchange.',
+      '0700.HK': 'Tencent is a Chinese tech conglomerate known for WeChat, gaming, and fintech.',
+      '2318.HK': 'Ping An Insurance is a Chinese financial services group focusing on insurance and banking.',
+      '0939.HK': 'China Construction Bank (CCB) is one of China’s "Big Four" state-owned banks.',
+      '0005.HK': 'HSBC Holdings is the Hong Kong-listed entity of the global HSBC banking group.',
+      '0001.HK': 'CK Hutchison Holdings is a Hong Kong conglomerate with global ports, retail, and telecom interests.',
+      '0002.HK': 'CLP Holdings is a Hong Kong-based electric utility company operating in Asia.',
+      '0011.HK': 'MTR Corporation operates Hong Kong’s metro system and has international rail investments.',
     };
 
     setDescription(descriptions[value] || '');
@@ -143,7 +176,45 @@ const App = () => {
             <option value="BLK">BLACKROCK</option>
             <option value="IBM">IBM</option>
             <option value="UBER">UBER</option>
-            <option value="ORCL">ORACLE</option>
+            <option value="ORCL">ORACLE</option> 
+            <option value="WMT"> WALMART</option>
+            <option value="MA">MASTERCARD</option>
+            <option value="XOM">EXXONMOBIL</option>
+            <option value="COST">COSTCO</option>
+            <option value="BAC">BANK OF AMERICA</option>
+            <option value="PLTR">PALANTIR TECHNOLOGIES</option>
+            <option value="KO">COCA-COLA</option>
+            <option value="PEP">PEPSICO</option>
+            <option value="UNH">UNITED HEALTHCARE</option>
+            <option value="CRM">SALESFORCE</option>
+            <option value="MCD">MCDONALDS</option>
+            <option value="ACN">ACCENTURE</option>
+            <option value="BA">BOEING</option>
+            <option value="ABNB">AIRBNB</option>
+            <option value="AON">AON</option>
+            <option value="DASH">DOORDASH</option>
+            <option value="INTC">INTEL</option>
+            <option value="ZM">ZOOM</option>
+            <option value="SBUX">STARBUCKS</option>
+            <option value="NKE">NIKE</option>
+            <option value="CB">CHUBB LIMITED</option>
+            <option value="CRWD">CROWDSTRIKE</option>
+            <option value="BX">BLACKSTONE</option>
+            <option value="MFC">MANULIFE US</option>
+            <option value="1299.HK">AIA HK</option>
+            <option value="0388.HK">HKEX</option>
+            <option value="0700.HK">TENCENT HK</option>
+            <option value="2318.HK">PING AN HK</option>
+            <option value="0939.HK">CITIC BANK HK</option>
+            <option value="0005.HK">HSBC HK</option>
+            <option value="0001.HK">CKH HOLDINGS HK</option>
+            <option value="0002.HK">CLP HOLDINGS HK</option>
+            <option value="0011.HK">MTR CORPORATION HK</option>
+
+
+
+
+
           </select>
         </div>
 

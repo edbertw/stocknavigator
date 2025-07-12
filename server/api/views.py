@@ -61,94 +61,225 @@ class createUserView(generics.CreateAPIView):
 def index(request):
     return render(request, "index.html")
 
-
-
 company_data = {
     'NVDA': {
         'name': 'NVIDIA',
-        'description': 'NVIDIA is a leading manufacturer of GPUs for gaming and AI computing.'
+        'description': 'NVIDIA is a leading manufacturer of GPUs for gaming, AI, and data center computing.'
     },
     'NDAQ': {
         'name': 'NASDAQ',
-        'description': 'NASDAQ is an American stock exchange, the second-largest in the world by market cap.',
+        'description': 'NASDAQ is the second-largest stock exchange in the world, known for its tech-heavy listings.'
     },
     'TSLA': {
         'name': 'Tesla',
-        'description': 'Tesla is a clean energy and electric vehicle company.',
+        'description': 'Tesla is an electric vehicle and clean energy company led by Elon Musk.'
     },
     'HSBC': {
         'name': 'HSBC',
-        'description': 'HSBC is one of the world\'s largest banking and financial services organizations.',
+        'description': 'HSBC is a British multinational banking and financial services company with a strong presence in Asia.'
     },
     'JPM': {
-        'name': 'JP Morgan',
-        'description': 'JP Morgan is a global leader in financial services offering solutions to corporations, institutions, and governments.',
+        'name': 'JPMorgan Chase',
+        'description': 'JPMorgan Chase is a global financial services firm and the largest bank in the U.S. by assets.'
     },
     'MS': {
         'name': 'Morgan Stanley',
-        'description': 'Morgan Stanley is a global financial services firm providing investment banking, securities, wealth management, and investment management services.',
+        'description': 'Morgan Stanley is a leading investment bank specializing in wealth management and institutional securities.'
     },
     'GS': {
         'name': 'Goldman Sachs',
-        'description': 'Goldman Sachs is a leading global investment banking, securities, and investment management firm.',
+        'description': 'Goldman Sachs is a top-tier investment bank serving corporations and high-net-worth clients.'
     },
     'JEF': {
         'name': 'Jefferies',
-        'description': 'Jefferies is a global investment banking firm that provides financial services to institutional clients.',
+        'description': 'Jefferies is a global investment banking firm focused on equities, fixed income, and advisory services.'
     },
     'AAPL': {
         'name': 'Apple',
-        'description': 'Apple is a multinational technology company that designs, manufactures, and markets consumer electronics, software, and services.',
+        'description': 'Apple is a tech giant known for iPhones, Macs, and services like Apple Music and iCloud.'
+    },
+    'GOOGL': {
+        'name': 'Google (Alphabet)',
+        'description': 'Google dominates online search, advertising, cloud computing, and AI through products like YouTube and Android.'
     },
     'AMZN': {
         'name': 'Amazon',
-        'description': 'Amazon is a multinational technology company focusing on e-commerce, cloud computing, and artificial intelligence.',
-    },
-    'GOOGL': {
-        'name': 'Google',
-        'description': 'Google is a multinational technology company specializing in Internet-related services and products, including search engines, online advertising, and cloud computing.',
+        'description': 'Amazon is the world’s largest e-commerce company and a leader in cloud computing (AWS).'
     },
     'META': {
-        'name': 'Meta (Formerly Facebook)',
-        'description': 'Meta Platforms is a technology company that focuses on social media and virtual reality.',
+        'name': 'Meta',
+        'description': 'Meta owns Facebook, Instagram, and WhatsApp, and invests heavily in VR/AR technologies.'
     },
     'MSFT': {
         'name': 'Microsoft',
-        'description': 'Microsoft is a multinational technology company that develops, licenses, and supports a wide range of software products and services.',
+        'description': 'Microsoft is a software leader (Windows, Office, Azure) and a major player in cloud computing and AI.'
     },
     'NFLX': {
         'name': 'Netflix',
-        'description': 'Netflix is a media-services provider and production company known for its streaming service.',
+        'description': 'Netflix is the leading global streaming service, producing original films and TV shows.'
     },
     'DIS': {
         'name': 'Disney',
-        'description': 'The Walt Disney Company is a diversified international family entertainment and media enterprise.',
-    },
-    'V': {
-        'name': 'Visa',
-        'description': 'Visa is a global payments technology company that connects consumers, businesses, banks, and governments.',
+        'description': 'Disney is a media powerhouse, owning Marvel, Star Wars, ESPN, and theme parks.'
     },
     'C': {
         'name': 'Citigroup',
-        'description': 'Citigroup is a multinational investment bank and financial services corporation.',
+        'description': 'Citigroup is a global bank offering consumer banking, investment services, and corporate finance.'
     },
-    'BLK':{
+    'V': {
+        'name': 'Visa',
+        'description': 'Visa is the world’s largest payment processor, enabling digital transactions worldwide.'
+    },
+    'BLK': {
         'name': 'BlackRock',
-        'description': 'BlackRock is an American global investment management corporation.',
+        'description': 'BlackRock is the world’s largest asset manager, known for its iShares ETFs.'
     },
-    'IBM':{
+    'IBM': {
         'name': 'IBM',
-        'description': 'International Business Machines Corporation is an American multinational technology company.',
+        'description': 'IBM focuses on hybrid cloud, AI (Watson), and enterprise solutions.'
     },
-    'UBER':{
+    'UBER': {
         'name': 'Uber',
-        'description': 'Uber Technologies, Inc. is an American technology company that offers ride-hailing, food delivery, and freight transportation services.',
+        'description': 'Uber is a ride-hailing and food delivery (Uber Eats) platform operating globally.'
     },
-    'ORCL':{
+    'ORCL': {
         'name': 'Oracle',
-        'description': 'Oracle Corporation is an American multinational computer technology corporation that offers software, cloud solutions, and hardware products.',
+        'description': 'Oracle provides enterprise software, cloud solutions, and database management systems.'
+    },
+    'WMT': {
+        'name': 'Walmart',
+        'description': 'Walmart is the world’s largest retailer, operating hypermarkets and e-commerce platforms.'
+    },
+    'MA': {
+        'name': 'Mastercard',
+        'description': 'Mastercard is a global payments technology company, second only to Visa in transaction volume.'
+    },
+    'XOM': {
+        'name': 'ExxonMobil',
+        'description': 'ExxonMobil is one of the largest publicly traded oil and gas companies.'
+    },
+    'COST': {
+        'name': 'Costco',
+        'description': 'Costco operates membership-based warehouse clubs offering bulk retail goods.'
+    },
+    'BAC': {
+        'name': 'Bank of America',
+        'description': 'Bank of America is a major U.S. bank providing consumer banking, investing, and corporate services.'
+    },
+    'PLTR': {
+        'name': 'Palantir',
+        'description': 'Palantir provides big data analytics and AI software for governments and enterprises.'
+    },
+    'KO': {
+        'name': 'Coca-Cola',
+        'description': 'Coca-Cola is the world’s largest beverage company, famous for its soft drinks.'
+    },
+    'PEP': {
+        'name': 'PepsiCo',
+        'description': 'PepsiCo is a global food and beverage leader (Pepsi, Lay’s, Gatorade).'
+    },
+    'UNH': {
+        'name': 'UnitedHealth Group',
+        'description': 'UnitedHealth Group is the largest U.S. health insurer and a provider of healthcare services.'
+    },
+    'CRM': {
+        'name': 'Salesforce',
+        'description': 'Salesforce is the leading CRM (customer relationship management) software provider.'
+    },
+    'MCD': {
+        'name': 'McDonald’s',
+        'description': 'McDonald’s is the world’s largest fast-food chain, known for its burgers and fries.'
+    },
+    'ACN': {
+        'name': 'Accenture',
+        'description': 'Accenture is a global IT services and consulting firm specializing in digital transformation.'
+    },
+    'BA': {
+        'name': 'Boeing',
+        'description': 'Boeing is a major aerospace company manufacturing commercial jets and defense systems.'
+    },
+    'ABNB': {
+        'name': 'Airbnb',
+        'description': 'Airbnb operates an online marketplace for short-term lodging and travel experiences.'
+    },
+    'AON': {
+        'name': 'Aon',
+        'description': 'Aon is a professional services firm offering risk management and insurance solutions.'
+    },
+    'DASH': {
+        'name': 'DoorDash',
+        'description': 'DoorDash is a leading food delivery platform in the U.S. and other markets.'
+    },
+    'INTC': {
+        'name': 'Intel',
+        'description': 'Intel is a semiconductor leader, producing CPUs for PCs, servers, and data centers.'
+    },
+    'ZM': {
+        'name': 'Zoom',
+        'description': 'Zoom provides video conferencing software widely used for remote work and education.'
+    },
+    'SBUX': {
+        'name': 'Starbucks',
+        'description': 'Starbucks is the world’s largest coffeehouse chain, offering beverages and food.'
+    },
+    'NKE': {
+        'name': 'Nike',
+        'description': 'Nike is a global leader in athletic footwear, apparel, and sports equipment.'
+    },
+    'CB': {
+        'name': 'Chubb',
+        'description': 'Chubb is a multinational insurer specializing in property, casualty, and reinsurance.'
+    },
+    'CRWD': {
+        'name': 'CrowdStrike',
+        'description': 'CrowdStrike is a cybersecurity firm offering cloud-based endpoint protection.'
+    },
+    'BX': {
+        'name': 'Blackstone',
+        'description': 'Blackstone is a leading private equity and alternative investment firm.'
+    },
+    'MFC': {
+        'name': 'Manulife',
+        'description': 'Manulife is a Canadian insurance and financial services company with global operations.'
+    },
+    '1299.HK': {
+        'name': 'AIA Group',
+        'description': 'AIA Group is a pan-Asian life insurance giant headquartered in Hong Kong.'
+    },
+    '0388.HK': {
+        'name': 'HKEX',
+        'description': 'Hong Kong Exchanges & Clearing operates the Hong Kong Stock Exchange.'
+    },
+    '0700.HK': {
+        'name': 'Tencent',
+        'description': 'Tencent is a Chinese tech conglomerate known for WeChat, gaming, and fintech.'
+    },
+    '2318.HK': {
+        'name': 'Ping An Insurance',
+        'description': 'Ping An Insurance is a Chinese financial services group focusing on insurance and banking.'
+    },
+    '0939.HK': {
+        'name': 'China Construction Bank',
+        'description': 'China Construction Bank is one of China’s "Big Four" state-owned banks.'
+    },
+    '0005.HK': {
+        'name': 'HSBC Holdings',
+        'description': 'HSBC Holdings is the Hong Kong-listed entity of the global HSBC banking group.'
+    },
+    '0001.HK': {
+        'name': 'CK Hutchison Holdings',
+        'description': 'CK Hutchison is a Hong Kong conglomerate with global ports, retail, and telecom interests.'
+    },
+    '0002.HK': {
+        'name': 'CLP Holdings',
+        'description': 'CLP Holdings is a Hong Kong-based electric utility company operating in Asia.'
+    },
+    '0011.HK': {
+        'name': 'MTR Corporation',
+        'description': 'MTR Corporation operates Hong Kong’s metro system and has international rail investments.'
     }
 }
+
 @csrf_exempt
 @api_view(['POST'])
 def submit_stock(request):
