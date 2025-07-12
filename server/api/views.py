@@ -277,7 +277,47 @@ company_data = {
     '0011.HK': {
         'name': 'MTR Corporation',
         'description': 'MTR Corporation operates Hong Kong’s metro system and has international rail investments.'
-    }
+    },
+        '3988.HK': {
+        'name': 'Bank of China (HK)',
+        'description': 'Bank of China (Hong Kong) is a leading commercial bank in Hong Kong and a subsidiary of China\'s state-owned Bank of China.'
+    },
+    '0003.HK': {
+        'name': 'Hang Seng Bank',
+        'description': 'Hang Seng Bank is a major Hong Kong-based commercial bank and a subsidiary of HSBC, specializing in retail and corporate banking.'
+    },
+    '9888.HK': {
+        'name': 'Baidu',
+        'description': 'Baidu is China\'s leading search engine and AI company, often called "China\'s Google".'
+    },
+    '9988.HK': {
+        'name': 'Alibaba Group',
+        'description': 'Alibaba Group is China\'s largest e-commerce company, operating platforms like Taobao and AliExpress, with major cloud computing operations.'
+    },
+    '9618.HK': {
+        'name': 'Meituan',
+        'description': 'Meituan is a Chinese tech giant dominating food delivery, hotel bookings, and local services.'
+    },
+    '8147.HK': {
+        'name': 'Millennium Pacific Group Holdings Ltd.',
+        'description': 'Millennium HK is a financial services firm providing investment and wealth management solutions.'
+    },
+    '1828.HK': {
+        'name': 'FWD Group',
+        'description': 'FWD Group is a pan-Asian life insurer headquartered in Hong Kong, serving over 10 million customers across Asia.'
+    },
+    '2628.HK': {
+        'name': 'China Life Insurance',
+        'description': 'China Life Insurance is China\'s largest state-owned life insurer with dominant domestic market share and growing international presence.'
+    },
+    '0966.HK': {
+        'name': 'China Taiping Insurance',
+        'description': 'China Taiping Insurance is a Chinese state-owned insurer with operations in life/property insurance and asset management.'
+    },
+    '1508.HK': {
+        'name': 'China Reinsurance Group',
+        'description': 'China Reinsurance Group is China\'s only national reinsurer, providing risk coverage for insurance companies across Asia.'
+    },
 }
 
 @csrf_exempt

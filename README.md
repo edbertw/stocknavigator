@@ -15,6 +15,7 @@
 ### Home Page
 ![Starting Page](screen_captures/photo_1.png)
 ![Starting Page 2](screen_captures/photo_1_s2.png)
+![Starting Page 3](screen_captures/photo_1_s3.png)
 ---
 ### Dynamic Real-Time Stock Analytics and Dashboard
 ![Stock Analytics](screen_captures/photo_2.png)
@@ -142,6 +143,16 @@ Currently, Stock-Navigator brings you insights on 54 S&P500 and HK corporations:
 | 52 | 0001.HK  | CK Hutchison Holdings        |
 | 53 | 0002.HK  | CLP Holdings                 |
 | 54 | 0011.HK  | MTR Corporation              |
+| 55 | 3988.HK  | Bank of China (Hong Kong)    |
+| 56 | 0003.HK  | Hang Seng Bank               |
+| 57 | 9888.HK  | Baidu                        |
+| 58 | 9988.HK  | Alibaba Group                |
+| 59 | 9618.HK  | Meituan                      |
+| 60 | 8147.HK  | Millennium Pacific Group     |
+| 61 | 1828.HK  | FWD Group                    |
+| 62 | 2628.HK  | China Life Insurance         |
+| 63 | 0966.HK  | China Taiping Insurance      |
+| 64 | 1508.HK  | China Reinsurance Group      |
 
 
 

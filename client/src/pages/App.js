@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/App.css';
+import Footer from '../components/Footer';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import NextPage from './NextPage'; // Import NextPage
 import NextNextPage from './NextNextPage'; // Import NextNextPage
@@ -99,6 +100,16 @@ const App = () => {
       '0001.HK': 'CK Hutchison Holdings is a Hong Kong conglomerate with global ports, retail, and telecom interests.',
       '0002.HK': 'CLP Holdings is a Hong Kong-based electric utility company operating in Asia.',
       '0011.HK': 'MTR Corporation operates Hong Kong’s metro system and has international rail investments.',
+      '3988.HK': 'Bank of China (Hong Kong) is a leading commercial bank in Hong Kong and a subsidiary of Bank of China.',
+      '0003.HK': 'Hang Seng Bank is a Hong Kong-based banking and financial services company, majority-owned by HSBC.',
+      '9888.HK': 'Baidu is a Chinese multinational technology company specializing in Internet-related services and AI.',
+      '9988.HK': 'Alibaba Group is a Chinese multinational technology company focusing on e-commerce, retail, and cloud computing.',
+      '9618.HK': 'Meituan is a Chinese e-commerce platform for services including food delivery, hotels, and other local services.',
+      '8147.HK': 'Millennium Pacific Group Holdings Ltd is an investment holding company primarily engaged in R&D, Manufacture and etc.',
+      '1828.HK': 'FWD Group is a pan-Asian life insurance company headquartered in Hong Kong.',
+      '2628.HK': 'China Life Insurance is the largest state-owned life insurance company in mainland China.',
+      '0966.HK': 'China Taiping Insurance is a Chinese state-owned insurance and financial services company.',
+      '1508.HK': 'China Reinsurance Group is the sole national reinsurance company in China.'
     };
 
     setDescription(descriptions[value] || '');
@@ -210,11 +221,16 @@ const App = () => {
             <option value="0001.HK">CKH HOLDINGS HK</option>
             <option value="0002.HK">CLP HOLDINGS HK</option>
             <option value="0011.HK">MTR CORPORATION HK</option>
-
-
-
-
-
+            <option value="3988.HK">BANK OF CHINA HK</option>
+            <option value="0003.HK">HANG SENG BANK HK</option>
+            <option value="9888.HK">BAIDU INC</option>
+            <option value="9988.HK">ALIBABA GROUP</option>
+            <option value="9618.HK">MEITUAN</option>
+            <option value="8147.HK">MILLENNIUM PACIFIC HOLDINGS</option>
+            <option value="1828.HK">FWD GROUP</option>
+            <option value="2628.HK">CHINA LIFE INSURANCE</option>
+            <option value="0966.HK">CHINA TAIPING INSURANCE</option>
+            <option value="1508.HK">CHINA REINSURANCE GROUP</option>
           </select>
         </div>
 
@@ -236,20 +252,7 @@ const App = () => {
         </button>
       </main>
 
-      <footer className="app-footer">
-        <p>© 2025 Stock Navigator. All rights reserved.</p>
-        <div className="social-icons">
-          <a href="https://www.linkedin.com/in/edbertwidjaja/" target="_blank" rel="noopener noreferrer">
-            <FaLinkedin size={24} style={{ marginRight: '10px', color: '#0077b5' }} />
-          </a>
-          <a href="https://www.instagram.com/edbert__wid/" target="_blank" rel="noopener noreferrer">
-            <FaInstagram size={24} style={{ marginRight: '10px', color: '#e4405f' }} />
-          </a>
-          <a href="https://github.com/edbertw" target="_blank" rel="noopener noreferrer">
-            <FaGithub size={24} style={{ color: '#333' }} />
-          </a>  
-        </div>
-      </footer>
+      <Footer />
 
       <Routes>
         <Route path="/next-page" element={<NextPage />} />

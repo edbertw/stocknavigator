@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AuthStyles.css';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -80,9 +81,7 @@ const Login = () => {
         Don't have an account? <button className="link-button" onClick={() => navigate('/signup')}>Sign up</button>
       </div>
       
-      <div className="footer">
-        © 2025 Stock Navigator. All rights reserved.
-      </div>
+      <Footer />
     </div>
   );
 };

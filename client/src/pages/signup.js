@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AuthStyles.css';
+import Footer from '../components/Footer';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -125,9 +126,7 @@ const Signup = () => {
         Already have an account? <button className="link-button" onClick={() => navigate('/login')}>Log in</button>
       </div>
       
-      <div className="footer">
-        © 2025 Stock Navigator. All rights reserved.
-      </div>
+      <Footer />
     </div>
   );
 };

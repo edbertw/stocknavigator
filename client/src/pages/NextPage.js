@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/NextPage.css';
+import Footer from '../components/Footer';
 
 const NextPage = () => {
   const location = useLocation();
@@ -268,6 +269,7 @@ const NextPage = () => {
           <button onClick={handleNext} className="next-page-next-button">PREDICT</button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

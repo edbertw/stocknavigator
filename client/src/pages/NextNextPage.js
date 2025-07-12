@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/NextNextPage.css';
+import Footer from '../components/Footer';
 
 const NextNextPage = () => {
   const location = useLocation();
@@ -106,6 +107,7 @@ const NextNextPage = () => {
 
         <button onClick={handleBack} className="prediction-page-back-button">BACK</button>
       </div>
+      <Footer />
     </div>
   );
 };

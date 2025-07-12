@@ -132,22 +132,6 @@ body {
   background-color: #45a049;
 }
 
-.app-footer {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #666;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.social-icons {
-  margin-top: 10px;
-}
-
-.social-icons a {
-  text-decoration: none;
-}
 /* Styles for the next page */
 .next-page {
   display: flex;
