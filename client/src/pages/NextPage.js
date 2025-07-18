@@ -3,6 +3,7 @@ import Plot from 'react-plotly.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/NextPage.css';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const NextPage = () => {
   const location = useLocation();
@@ -132,6 +133,10 @@ const NextPage = () => {
 
   return (
     <div className="next-page-container">
+      <Header 
+        showPredict={true}
+        onPredict={handleNext}
+      />
       <div className="next-page-content">
         {company && (
           <div className="next-page-company-info">

@@ -16,9 +16,10 @@
 ![Starting Page](screen_captures/photo_1.png)
 ![Starting Page 2](screen_captures/photo_1_s2.png)
 ![Starting Page 3](screen_captures/photo_1_s3.png)
+
 ---
 ### Dynamic Real-Time Stock Analytics and Dashboard
-![Stock Analytics](screen_captures/photo_2.png)
+![Stock Analytics](screen_captures/photo_2_s2.png)
 
 ---
 ### Real-Time Market News and Sentiment Analysis
@@ -31,6 +32,7 @@
 ---
 ### Predictive Analytics
 ![Predictive Analytics](screen_captures/photo_4.png)
+![Predictive Analytics 2](screen_captures/photo_4_s2.png)
 
 ---
 
