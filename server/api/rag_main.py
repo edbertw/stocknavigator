@@ -10,85 +10,102 @@ from langchain_huggingface import HuggingFacePipeline
 from langchain.chains import RetrievalQA
 import os
 
-file_paths = [
-        "Knowledge_Base/candlestick.txt",
-        "Knowledge_Base/ma.txt",
-        "Knowledge_Base/momentum.txt",
-        "Knowledge_Base/rsi.txt",
-        "Knowledge_Base/bollinger.txt",
-        "Knowledge_Base/corr.txt",
-        "Knowledge_Base/cumul.txt",
-        "Knowledge_Base/macd.txt"
-]
-
-documents = []
-for file_path in file_paths:
-    loader = TextLoader(file_path)
-    documents.extend(loader.load())
-
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-chunks = text_splitter.split_documents(documents)
+class FinancialChatbotRAG:
+    def __init__(self):
+        self.file_paths = [
+            "Knowledge_Base/candlestick.txt",
+            "Knowledge_Base/ma.txt",
+            "Knowledge_Base/momentum.txt",
+            "Knowledge_Base/rsi.txt",
+            "Knowledge_Base/bollinger.txt",
+            "Knowledge_Base/corr.txt",
+            "Knowledge_Base/cumul.txt",
+            "Knowledge_Base/macd.txt"
+        ]
+        self.embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        self.faiss_index_path = "faiss"
+        self.vectorstore = None
+        self.llm = None
+        self.rag_pipeline = None
         
-embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-faiss_index_path = "faiss"
-
-# Check if FAISS index exists
-if os.path.exists(faiss_index_path):
-    # Load the persisted FAISS index
-    vectorstore = FAISS.load_local(faiss_index_path, embedding_model, allow_dangerous_deserialization=True)
-else:
-    # Create the FAISS index and persist it
-    embeddings = embedding_model.embed_documents([chunk.page_content for chunk in chunks])
-    vectorstore = FAISS.from_documents(documents=chunks, embedding=embedding_model)
-    vectorstore.save_local(faiss_index_path)
+    def initialize(self):
+        # Load and process documents
+        documents = []
+        for file_path in self.file_paths:
+            loader = TextLoader(file_path)
+            documents.extend(loader.load())
+        
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+        chunks = text_splitter.split_documents(documents)
+        
+        # Initialize vector store
+        if os.path.exists(self.faiss_index_path):
+            self.vectorstore = FAISS.load_local(
+                self.faiss_index_path, 
+                self.embedding_model, 
+                allow_dangerous_deserialization=True
+            )
+        else:
+            self.vectorstore = FAISS.from_documents(
+                documents=chunks, 
+                embedding=self.embedding_model
+            )
+            self.vectorstore.save_local(self.faiss_index_path)
+        
+        # Initialize LLM pipeline
+        model_name = "edbertw/tuned_flanT5"
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cpu")
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        hf_pipeline = pipeline(
+            "text2text-generation",
+            model=model,
+            tokenizer=tokenizer,
+            max_length=128,
+            device="cpu",
+            num_beams=5,
+            temperature=0.5,
+            do_sample=True,
+            top_p=0.9,
+            early_stopping=True
+        )
+        
+        self.llm = HuggingFacePipeline(pipeline=hf_pipeline)
+        retriever = self.vectorstore.as_retriever()
+        
+        # Create RAG pipeline
+        self.rag_pipeline = RetrievalQA.from_chain_type(
+            llm=self.llm,
+            chain_type="stuff",
+            retriever=retriever,
+            verbose=True
+        )
     
-model_name = "edbertw/tuned_flanT5"  # You can choose other models
-model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cpu")
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-hf_pipeline = pipeline(
-    "text2text-generation",
-    model=model,
-    tokenizer=tokenizer,
-    max_length=128,  # Max token length for output
-    device = "cpu",
-    num_beams=5,     # Beam search for better answers, change from 3
-    temperature = 0.5,
-    do_sample = True,
-    top_p = 0.9, #nucleus sampling
-    early_stopping=True
-)
+    def ask_question(self, question):
+        """Process a question through the RAG pipeline"""
+        if not question:
+            raise ValueError("No question provided")
+        
+        question = "answer the question: " + question
+        response = self.rag_pipeline.invoke(question)
+        return response['result']
 
-        # Wrap the pipeline for LangChain
-llm = HuggingFacePipeline(pipeline=hf_pipeline)
-retriever = vectorstore.as_retriever()
+# Initialize the chatbot instance
+chatbot = FinancialChatbotRAG()
+chatbot.initialize()
 
-        # Create a RetrievalQA chain
-rag_pipeline = RetrievalQA.from_chain_type(
-llm=llm,
-chain_type="stuff",  # "map_reduce", "refine", "map_rerank", etc.
-retriever=retriever,
-verbose=True
-)
 @csrf_exempt
 @api_view(['POST'])
 def ask_chatbot(request):
-    
     try:
         question = request.data.get("question")
-        question = "answer the question: " + question
         if not question:
             return Response({'error': 'No question provided.'}, status=400)
+        
         print("Running.....")
-        response_bot = rag_pipeline.invoke(question)
+        response_bot = chatbot.ask_question(question)
         print("Success response!")
         print(response_bot)
-        return Response({'response': response_bot['result']}, status=200)
-        
+        return Response({'response': response_bot}, status=200)
         
     except Exception as e:
         return Response({'error': str(e)}, status=500)
-        
-        
-        
-        
-    

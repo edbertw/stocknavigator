@@ -6,117 +6,156 @@ import pandas as pd
 import numpy as np
 import datetime
 from datetime import date, timedelta
-from autots import AutoTS
 import plotly.express as px 
 import plotly.io as pio
-import plotly.graph_objects as go
-import plotly.figure_factory as ff
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
+
+class StockPredictor:
+    def __init__(self):
+        self.common_layout = {
+            'plot_bgcolor': 'white',
+            'paper_bgcolor': 'white',
+            'font': {'color': 'darkgreen'},
+            'xaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
+            'yaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
+            'hovermode': 'x'
+        }
+    
+    def get_stock_data(self, stock_symbol, days_back=1983):
+        """Download historical stock data"""
+        current = date.today()
+        end = current.strftime("%Y-%m-%d")
+        start = (current - timedelta(days=days_back)).strftime("%Y-%m-%d")
+        
+        stock = yf.download(
+            stock_symbol, 
+            start=start, 
+            end=end, 
+            progress=False,
+            multi_level_index=False
+        )
+        
+        if stock.empty:
+            raise ValueError("No stock data found")
+            
+        return stock[["Close"]]
+    
+    def prepare_data(self, data, train_ratio=0.8, lookback=60):
+        """Prepare data for LSTM model"""
+        # Scale data
+        scaler = MinMaxScaler(feature_range=(0, 1))
+        scaled_data = scaler.fit_transform(data)
+        
+        # Split into training and test sets
+        training_data_len = int(np.ceil(len(scaled_data) * train_ratio))
+        train_data = scaled_data[0:training_data_len, :]
+        
+        # Create training sequences
+        x_train, y_train = [], []
+        for i in range(lookback, len(train_data)):
+            x_train.append(train_data[i-lookback:i, 0])
+            y_train.append(train_data[i, 0])
+            
+        # Convert to numpy arrays and reshape
+        x_train = np.array(x_train)
+        y_train = np.array(y_train)
+        x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+        
+        return scaler, x_train, y_train, scaled_data
+    
+    def build_model(self, input_shape):
+        """Build LSTM model"""
+        model = Sequential([
+            LSTM(units=50, return_sequences=True, input_shape=input_shape),
+            Dropout(0.2),
+            LSTM(units=50, return_sequences=False),
+            Dropout(0.2),
+            Dense(units=25),
+            Dense(units=1)
+        ])
+        
+        model.compile(optimizer='adam', loss='mean_squared_error')
+        return model
+    
+    def make_predictions(self, model, scaler, last_data, days_to_predict=30):
+        """Make future predictions"""
+        future_predictions = []
+        x_future = last_data.reshape((1, last_data.shape[0], 1))
+        
+        for _ in range(days_to_predict):
+            pred = model.predict(x_future)
+            future_predictions.append(pred[0, 0])
+            x_future = np.append(x_future[:, 1:, :], [[pred[0]]], axis=1)
+        
+        # Inverse transform predictions
+        future_predictions = scaler.inverse_transform(
+            np.array(future_predictions).reshape(-1, 1)
+        )
+        
+        return future_predictions
+    
+    def create_forecast_df(self, predictions, last_date):
+        """Create DataFrame with forecast dates"""
+        forecast_dates = pd.date_range(
+            start=last_date + pd.Timedelta(days=1),
+            periods=len(predictions),
+            freq='B'
+        )
+        return pd.DataFrame(predictions, index=forecast_dates, columns=['Prediction'])
+    
+    def generate_plot(self, forecast_df, stock_symbol):
+        """Generate Plotly figure"""
+        fig = px.line(
+            forecast_df, 
+            x=forecast_df.index, 
+            y='Prediction', 
+            title=f'{stock_symbol} Stock Price Predictions for Next 30 Days'
+        )
+        fig.update_layout(**self.common_layout)
+        return pio.to_json(fig)
+    
+    def predict(self, stock_symbol):
+        """Main prediction pipeline"""
+        # Get data
+        closing_prices = self.get_stock_data(stock_symbol)
+        
+        # Prepare data
+        scaler, x_train, y_train, scaled_data = self.prepare_data(closing_prices)
+        
+        # Build and train model
+        model = self.build_model((x_train.shape[1], 1))
+        model.fit(x_train, y_train, batch_size=2, epochs=50)
+        
+        # Make predictions
+        last_60_days = scaled_data[-60:]
+        predictions = self.make_predictions(model, scaler, last_60_days)
+        
+        # Create forecast DataFrame
+        forecast_df = self.create_forecast_df(predictions, closing_prices.index[-1])
+        
+        # Generate plot
+        return self.generate_plot(forecast_df, stock_symbol)
+
+# Initialize the stock predictor
+stock_predictor = StockPredictor()
 
 @csrf_exempt
 @api_view(['POST'])
 def predict_stock(request):
-    stock_symbol = request.data.get('stock_symbol')
-    if stock_symbol:
-        current = date.today()
-        end = current.strftime("%Y-%m-%d")
-        start = (date.today() - timedelta(days = 1983)).strftime("%Y-%m-%d")
-        try:
-            stock = yf.download(stock_symbol, start = start, end = end, progress = False,multi_level_index=False )
-            if stock.empty:
-                return Response({'error': 'No stock data found'}, status=404)
-            '''
-            stock["Date"] = stock.index
-            stock["Date"] = pd.to_datetime(stock["Date"])
-            stock = stock.reset_index(drop = True)
-            stock = stock[["Date", "Close"]]
-            closing_prices = stock['Close'].values.reshape(-1
-            '''
-            closing_prices = stock[["Close"]]
-            scaler = MinMaxScaler(feature_range=(0, 1))
-            scaled_data = scaler.fit_transform(closing_prices)
-            training_data_len = int(np.ceil(len(scaled_data) * 0.8))
-            train_data = scaled_data[0:int(training_data_len), :]
-
-
-            # Create empty lists for features (x_train) and target (y_train)
-
-            x_train = []
-
-            y_train = []
-
-            # Populate x_train with 60 days of data and y_train with the following day’s closing price
-
-            for i in range(60, len(train_data)):
-                x_train.append(train_data[i-60:i, 0])  # Past 60 days
-                y_train.append(train_data[i, 0])       # Target: the next day’s close price
-
-
-            # Convert lists to numpy arrays for model training
-
-            x_train, y_train = np.array(x_train), np.array(y_train)
-            # Reshape x_train to the format [samples, time steps, features] required for LSTM
-            x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-            
-            model = Sequential()
-            # First LSTM layer with 50 units and return sequences
-            model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
-            model.add(Dropout(0.2))  # Dropout layer to prevent overfitting
-            # Second LSTM layer
-            model.add(LSTM(units=50, return_sequences=False))
-            model.add(Dropout(0.2))  # Dropout layer to prevent overfitting
-            # Dense layer with 25 units
-            model.add(Dense(units=25))
-            # Output layer with 1 unit (the predicted price)
-            model.add(Dense(units=1))
-            # Compile the model using Adam optimizer and mean squared error as the loss function
-
-            model.compile(optimizer='adam', loss='mean_squared_error')
-            model.fit(x_train, y_train, batch_size=2, epochs=50)
-            last_60_days = scaled_data[-60:]
-            # Reshape last_60_days to fit the model input shape (1 sample, 60 timesteps, 1 feature)
-            x_future = last_60_days.reshape((1, last_60_days.shape[0], 1))
-            # Create an empty list to store predictions for the next 30 days
-
-            future_predictions = []
-
-            for _ in range(30):  # Change 30 to predict for 60 days
-
-            # Predict the next day’s closing price based on the last 60 days
-                pred = model.predict(x_future)
-                future_predictions.append(pred[0, 0])  # Add prediction to the list
-            # Update x_future with the new prediction by removing the first value and adding the new prediction
-                x_future = np.append(x_future[:, 1:, :], [[pred[0]]], axis=1)
-
-            # Convert the scaled predictions back to the original scale using inverse_transform
-            future_predictions = scaler.inverse_transform(np.array(future_predictions).reshape(-1, 1))
-            forecast_dates = pd.date_range(start=closing_prices.index[-1] + pd.Timedelta(days=1), periods=30, freq='B')
-            forecast = pd.DataFrame(future_predictions, index=forecast_dates, columns=['Prediction'])
-            fig = px.line(
-                forecast, 
-                x=forecast.index, 
-                y='Prediction', 
-                title=f'{stock_symbol} Stock Price Predictions for 30 days'
-            )
-            
-            common_layout = {
-            'plot_bgcolor': 'white',  # Graph background
-            'paper_bgcolor': 'white',  # Outer paper background
-            'font': {'color': 'darkgreen'},  # Font color for labels and titles
-            'xaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
-            'yaxis': {'gridcolor': 'rgba(0,0,0,0.1)', 'color': 'darkgreen'},
-            'hovermode': 'x',}
-            
-            fig.update_layout(**common_layout)
-            graph_json_pred = pio.to_json(fig)
-            return Response({"graph_json_pred": graph_json_pred})
-        except Exception as e:
-            return Response({'error': str(e)}, status=500)
-    else:
-        return Response({'error': 'Company not found'}, status=404)
+    try:
+        stock_symbol = request.data.get('stock_symbol')
+        if not stock_symbol:
+            return Response({'error': 'Stock symbol not provided'}, status=400)
+        
+        graph_json_pred = stock_predictor.predict(stock_symbol)
+        return Response({"graph_json_pred": graph_json_pred})
+    
+    except ValueError as e:
+        return Response({'error': str(e)}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
             
     
     
