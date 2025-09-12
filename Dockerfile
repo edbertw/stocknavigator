@@ -1,5 +1,5 @@
 # Stage 1: Build React frontend
-FROM node:18-alpine as react-build
+FROM node:18-alpine AS react-build
 
 WORKDIR /app
 ENV NODE_ENV=production
@@ -7,7 +7,8 @@ COPY client/package.json client/package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 COPY client/ ./
-RUN npm run build
+# Avoid CRA failing the build on warnings under CI
+RUN CI= npm run build
 
 # Stage 2: Build Django backend
 FROM python:3.11-slim
@@ -40,7 +41,7 @@ COPY --from=react-build /app/build /app/server/static/frontend
 
 # The command will be overridden by docker-compose
 # The default command can be overridden by docker-compose via DJANGO_CMD
-ENV DJANGO_SETTINGS_MODULE=server.settings
+ENV DJANGO_SETTINGS_MODULE=mybackend.settings
 CMD ["sh", "-c", "${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"]
 #CMD sh -c "gunicorn --bind 0.0.0.0:8000 \
     #--workers ${GUNICORN_WORKERS} \
