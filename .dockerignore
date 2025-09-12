@@ -1,0 +1,46 @@
+# Node
+client/node_modules
+client/.next
+client/build
+client/.cache
+*.log
+
+# Python
+server/.venv
+server/venv
+server/.mypy_cache
+server/.pytest_cache
+server/__pycache__
+server/**/*.pyc
+
+# Django
+server/staticfiles
+server/media
+server/db.sqlite3
+
+# Git
+.git
+.gitignore
+
+# OS/editor
+.DS_Store
+.idea
+.vscode
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+
+# Misc
+*.swp
+*.swo
+node_modules
+__pycache__
+*.pyc
+.git
+*.log
+client/build
+server/staticfiles_build
+screen_captures
+server/notebooks
+server/finetuning

@@ -2,8 +2,9 @@
 FROM node:18-alpine as react-build
 
 WORKDIR /app
+ENV NODE_ENV=production
 COPY client/package.json client/package-lock.json ./
-RUN npm install
+RUN npm ci --no-audit --no-fund
 
 COPY client/ ./
 RUN npm run build
@@ -12,18 +13,24 @@ RUN npm run build
 FROM python:3.11-slim
 
 WORKDIR /app
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_NO_CACHE_DIR=1 \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     python3-dev \
     libpq-dev \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies (including psycopg2-binary for Python 3.11)
-COPY server/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt psycopg2-binary python-dotenv
+COPY server/requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt psycopg2-binary python-dotenv gunicorn
 
 # Copy Django project
 COPY server/ .
@@ -32,7 +39,9 @@ COPY server/ .
 COPY --from=react-build /app/build /app/server/static/frontend
 
 # The command will be overridden by docker-compose
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# The default command can be overridden by docker-compose via DJANGO_CMD
+ENV DJANGO_SETTINGS_MODULE=server.settings
+CMD ["sh", "-c", "${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"]
 #CMD sh -c "gunicorn --bind 0.0.0.0:8000 \
     #--workers ${GUNICORN_WORKERS} \
     #--threads ${GUNICORN_THREADS} \

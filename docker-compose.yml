@@ -8,42 +8,42 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PWD}
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:${DB_PORT}"
+      - "${DB_PORT:-5432}:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
+    networks:
+      - backend
 
   web:
     build: .
     env_file: .env
     command: >
-      sh -c "python -c 'import os; from time import sleep; import psycopg2;
-      print(\"Waiting for PostgreSQL...\");
-      while True:
-        try:
-          conn = psycopg2.connect(
-            dbname=os.getenv(\"DB_NAME\"),
-            user=os.getenv(\"DB_USER\"),
-            password=os.getenv(\"DB_PWD\"),
-            host=\"db\",
-            port=os.getenv(\"DB_PORT\"));
-          conn.close(); break;
-        except: sleep(1)' &&
-      python manage.py migrate &&
-      python manage.py runserver 0.0.0.0:8000"
+      sh -c "until pg_isready -h db -p 5432 -U ${DB_USER}; do echo waiting for db; sleep 1; done && \
+      python manage.py migrate && \
+      ${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"
     volumes:
       - ./server:/app
       - ./server/static:/app/static
     ports:
-      - "8000:8000"
+      - "${WEB_PORT:-8000}:8000"
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - backend
 
 volumes:
   postgres_data:
+    driver: local
+networks:
+  backend:
+    driver: bridge

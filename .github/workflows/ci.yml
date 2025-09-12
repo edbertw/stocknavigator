@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U testuser -d testdb" \
+          --health-interval=5s \
+          --health-timeout=5s \
+          --health-retries=5
+
+    env:
+      DB_NAME: testdb
+      DB_USER: testuser
+      DB_PWD: testpass
+      DB_PORT: 5432
+      DJANGO_SETTINGS_MODULE: server.settings
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: server/requirements.txt
+
+      - name: Install Python dependencies
+        working-directory: server
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt psycopg2-binary
+
+      - name: Run migrations
+        working-directory: server
+        run: |
+          python manage.py migrate --noinput
+
+      - name: Run tests
+        working-directory: server
+        run: |
+          python manage.py test --verbosity=2
+
+      - name: Build Docker image (with cache)
+        run: |
+          docker build \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t stocknavigator:ci .
+
+
