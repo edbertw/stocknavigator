@@ -39,6 +39,7 @@ class UserInfoView(APIView):
     def get(self, request):
         user = request.user
         return Response({
+            'id': user.id,
             'username': user.username
         })
     
@@ -486,5 +487,57 @@ def submit_stock(request):
             
     else:
         return Response({'error': 'Company not found'}, status=404)
+
+
+# Chat Session Management Views
+from .models import ChatSession, ChatMessage
+from .serializers import ChatSessionSerializer, ChatSessionCreateSerializer, ChatMessageSerializer
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+
+class ChatSessionListCreate(generics.ListCreateAPIView):
+    """List and create chat sessions for authenticated users"""
+    serializer_class = ChatSessionCreateSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return ChatSession.objects.filter(user=self.request.user, is_active=True).order_by('-updated_at')
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class ChatSessionDetail(generics.RetrieveDestroyAPIView):
+    """Retrieve and delete specific chat sessions"""
+    serializer_class = ChatSessionSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return ChatSession.objects.filter(user=self.request.user)
+    
+    def perform_destroy(self, instance):
+        # Mark as inactive instead of deleting
+        instance.is_active = False
+        instance.save()
+
+class ChatMessageList(generics.ListAPIView):
+    """List messages for a specific chat session"""
+    serializer_class = ChatMessageSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        session_id = self.kwargs['session_id']
+        session = get_object_or_404(ChatSession, id=session_id, user=self.request.user)
+        return ChatMessage.objects.filter(session=session).order_by('timestamp')
+
+class UserChatSessions(generics.ListAPIView):
+    """Get all active chat sessions for a user"""
+    serializer_class = ChatSessionSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return ChatSession.objects.filter(
+            user=self.request.user, 
+            is_active=True
+        ).order_by('-updated_at')
 
 

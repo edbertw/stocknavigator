@@ -4,11 +4,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/NextPage.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import ChatSessionManager from '../components/ChatSessionManager';
+import ChatInterface from '../components/ChatInterface';
+import { useUser } from '../contexts/UserContext';
 
 const NextPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { stockSymbol, company } = location.state || {};
+  const { user, currentSessionId, selectSession, endCurrentSession } = useUser();
 
   const [graphDataStock, setGraphDataStock] = useState(null);
   const [graphDataMomentum, setGraphDataMomentum] = useState(null);
@@ -24,10 +28,7 @@ const NextPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  // Chatbox state
-  const [messages, setMessages] = useState([]);
-  const [inputText, setInputText] = useState('');
+  const [showChatPanel, setShowChatPanel] = useState(false);
 
   useEffect(() => {
     if (!stockSymbol) {
@@ -93,39 +94,18 @@ const NextPage = () => {
     navigate('/next-next-page', { state: { stockSymbol, company } });
   };
 
-  const handleChatSubmit = async (e) => {
-    e.preventDefault();
-    if (inputText.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: inputText, sender: 'user' },
-      ]);
-  
-      try {
-        const response = await fetch('http://localhost:8000/api/ask-chatbot/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ question: inputText }),
-        });
-        
-        if (!response.ok) throw new Error('Failed to fetch bot response');
+  const handleSessionSelect = (sessionId) => {
+    selectSession(sessionId);
+    setShowChatPanel(true);
+  };
 
-        const data = await response.json();
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: data.response, sender: 'bot' },
-        ]);
-      } catch (error) {
-        console.error('Error fetching bot response:', error);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: 'Error: Could not fetch bot response.', sender: 'bot' },
-        ]);
-      }
-      setInputText('');
-    }
+  const handleSessionEnd = (sessionId) => {
+    endCurrentSession();
+    setShowChatPanel(false);
+  };
+
+  const toggleChatPanel = () => {
+    setShowChatPanel(!showChatPanel);
   };
 
   if (loading) return <div className="next-page-loading">Loading...</div>;
@@ -250,23 +230,35 @@ const NextPage = () => {
           </div>
         </div>
 
-        <div className="next-page-chatbox">
-          <div className="next-page-chat-messages">
-            {messages.map((message, index) => (
-              <div key={index} className={`next-page-message next-page-${message.sender}`}>
-                {message.text}
-              </div>
-            ))}
+        <div className="next-page-chat-section">
+          <div className="chat-toggle-container">
+            <button 
+              className="chat-toggle-btn"
+              onClick={toggleChatPanel}
+            >
+              {showChatPanel ? 'Hide' : 'Show'} AI Financial Advisor Chat
+            </button>
           </div>
-          <form onSubmit={handleChatSubmit} className="next-page-chat-input">
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder="Type a message..."
-            />
-            <button type="submit">Send</button>
-          </form>
+          
+          {showChatPanel && (
+            <div className="chat-panel">
+              <div className="chat-session-sidebar">
+                <ChatSessionManager
+                  userId={user?.id}
+                  onSessionSelect={handleSessionSelect}
+                  currentSessionId={currentSessionId}
+                  onSessionEnd={handleSessionEnd}
+                />
+              </div>
+              <div className="chat-interface-main">
+                <ChatInterface
+                  sessionId={currentSessionId}
+                  userId={user?.id}
+                  onSessionEnd={handleSessionEnd}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="next-page-button-container">

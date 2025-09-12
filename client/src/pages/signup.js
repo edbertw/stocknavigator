@@ -3,21 +3,25 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AuthStyles.css';
 import Footer from '../components/Footer';
+import { useUser } from '../contexts/UserContext';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     if (password !== password2) {
       setError("Passwords don't match");
+      setLoading(false);
       return;
     }
 
@@ -30,7 +34,6 @@ const Signup = () => {
         },
         body: JSON.stringify({
           username,
-          email,
           password,
         }),
       });
@@ -40,8 +43,6 @@ const Signup = () => {
         let errorMessage = 'Registration failed';
         if (errorData.username) {
           errorMessage = errorData.username[0];
-        } else if (errorData.email) {
-          errorMessage = errorData.email[0];
         } else if (errorData.password) {
           errorMessage = errorData.password[0];
         }
@@ -49,31 +50,17 @@ const Signup = () => {
       }
 
       // Automatically log in after registration
-      const loginResponse = await fetch('http://127.0.0.1:8000/api/token/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-
-      if (!loginResponse.ok) {
+      const result = await login(username, password);
+      
+      if (result.success) {
+        navigate('/app');
+      } else {
         throw new Error('Registration successful but automatic login failed. Please log in manually.');
       }
-
-      const data = await loginResponse.json();
-      
-      // Store tokens
-      localStorage.setItem('access_token', data.access);
-      localStorage.setItem('refresh_token', data.refresh);
-      
-      // Redirect to stock navigator
-      navigate('/app');
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,7 +106,9 @@ const Signup = () => {
         
         {error && <div className="error">{error}</div>}
         
-        <button type="submit" className="signup-button">Sign Up</button>
+        <button type="submit" className="signup-button" disabled={loading}>
+          {loading ? 'Creating Account...' : 'Sign Up'}
+        </button>
       </form>
       
       <div className="switch-auth">

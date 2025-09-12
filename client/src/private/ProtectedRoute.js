@@ -1,15 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 function ProtectedRoute({ children }) {
     const [isAuthorized, setIsAuthorized] = useState(null);
 
-    useEffect(() => {
-        auth().catch(() => setIsAuthorized(false));
-    }, []);
-
-    const refreshToken = async () => {
+    const refreshToken = useCallback(async () => {
         const refreshToken = localStorage.getItem("refresh_token");
         try {
             const response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
@@ -33,9 +29,9 @@ function ProtectedRoute({ children }) {
             console.log(error);
             setIsAuthorized(false);
         }
-    };
+    }, []);
 
-    const auth = async () => {
+    const auth = useCallback(async () => {
         const token = localStorage.getItem("access_token");
         if (!token) {
             setIsAuthorized(false);
@@ -51,7 +47,11 @@ function ProtectedRoute({ children }) {
         } else {
             setIsAuthorized(true);
         }
-    };
+    }, [refreshToken]);
+
+    useEffect(() => {
+        auth().catch(() => setIsAuthorized(false));
+    }, [auth]);
 
     if (isAuthorized === null) {
         return <div>Loading...</div>;

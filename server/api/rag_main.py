@@ -8,9 +8,18 @@ from langchain_community.vectorstores import FAISS
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 from langchain_huggingface import HuggingFacePipeline
 from langchain.chains import RetrievalQA
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationalRetrievalChain
+from .models import ChatSession, ChatMessage
+from django.contrib.auth.models import User
 import os
+import uuid
+from datetime import datetime, timedelta
+from collections import OrderedDict
+import time
+import torch
 
-class FinancialChatbotRAG:
+class MemoryAwareFinancialChatbotRAG:
     def __init__(self):
         self.file_paths = [
             "Knowledge_Base/candlestick.txt",
@@ -25,8 +34,13 @@ class FinancialChatbotRAG:
         self.embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         self.faiss_index_path = "faiss"
         self.vectorstore = None
+        self.retriever = None
         self.llm = None
         self.rag_pipeline = None
+        self.session_memories = {}  # Store memories for each session
+        # Simple in-memory cache: {(session_id, normalized_question): (answer, expire_epoch)}
+        self.response_cache = OrderedDict()
+        self.cache_ttl_seconds = 300  # 5 minutes
         
     def initialize(self):
         # Load and process documents
@@ -35,7 +49,8 @@ class FinancialChatbotRAG:
             loader = TextLoader(file_path)
             documents.extend(loader.load())
         
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+        # Slightly larger chunks reduce number of embeddings and retrieval cost
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=80)
         chunks = text_splitter.split_documents(documents)
         
         # Initialize vector store
@@ -51,46 +66,184 @@ class FinancialChatbotRAG:
                 embedding=self.embedding_model
             )
             self.vectorstore.save_local(self.faiss_index_path)
+        # Configure a retriever once with MMR for diversity and better relevance
+        self.retriever = self.vectorstore.as_retriever(
+            search_type="mmr",
+            search_kwargs={"k": 3, "fetch_k": 15, "lambda_mult": 0.8}
+        )
         
         # Initialize LLM pipeline
         model_name = "edbertw/tuned_flanT5"
-        model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to("cpu")
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device)
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         hf_pipeline = pipeline(
             "text2text-generation",
             model=model,
             tokenizer=tokenizer,
-            max_length=128,
-            device="cpu",
-            num_beams=5,
-            temperature=0.5,
-            do_sample=True,
-            top_p=0.9,
+            max_length=160,
+            device=0 if device == "cuda" else -1,
+            # Faster decoding settings; reduce beams and sampling complexity
+            num_beams=1,
+            do_sample=False,
+            temperature=0.0,
             early_stopping=True
         )
         
         self.llm = HuggingFacePipeline(pipeline=hf_pipeline)
-        retriever = self.vectorstore.as_retriever()
         
-        # Create RAG pipeline
-        self.rag_pipeline = RetrievalQA.from_chain_type(
-            llm=self.llm,
-            chain_type="stuff",
-            retriever=retriever,
-            verbose=True
-        )
     
-    def ask_question(self, question):
-        """Process a question through the RAG pipeline"""
+    def get_or_create_session_memory(self, session_id):
+        """Get or create memory for a specific session"""
+        if session_id not in self.session_memories:
+            memory = ConversationBufferMemory(
+                memory_key="chat_history",
+                output_key="answer",
+                return_messages=True
+            )
+            self.session_memories[session_id] = memory
+        return self.session_memories[session_id]
+    
+    def load_session_history(self, session_id):
+        """Load conversation history from database for a session"""
+        try:
+            session = ChatSession.objects.get(id=session_id)
+            messages = session.messages.all().order_by('timestamp')
+            
+            memory = self.get_or_create_session_memory(session_id)
+            
+            # Clear existing memory and load from database
+            memory.clear()
+            
+            for message in messages:
+                if message.message_type == 'user':
+                    memory.chat_memory.add_user_message(message.content)
+                elif message.message_type == 'assistant':
+                    memory.chat_memory.add_ai_message(message.content)
+            
+            return memory
+        except ChatSession.DoesNotExist:
+            return self.get_or_create_session_memory(session_id)
+
+    def _normalize_question(self, question: str) -> str:
+        return (question or "").strip().lower()
+
+    def _prune_cache(self):
+        now = time.time()
+        # Remove expired entries and keep cache size bounded
+        keys_to_delete = []
+        for key, (_, expire_ts) in self.response_cache.items():
+            if expire_ts <= now:
+                keys_to_delete.append(key)
+        for key in keys_to_delete:
+            del self.response_cache[key]
+        # Optional: bound size to last 200 items
+        while len(self.response_cache) > 200:
+            self.response_cache.popitem(last=False)
+
+    def _get_cached_response(self, session_id, question):
+        self._prune_cache()
+        key = (str(session_id), self._normalize_question(question))
+        if key in self.response_cache:
+            answer, expire_ts = self.response_cache[key]
+            if expire_ts > time.time():
+                return answer
+            else:
+                del self.response_cache[key]
+        return None
+
+    def _set_cached_response(self, session_id, question, answer):
+        expire_ts = time.time() + self.cache_ttl_seconds
+        key = (str(session_id), self._normalize_question(question))
+        self.response_cache[key] = (answer, expire_ts)
+    
+    def ask_question(self, question, session_id, user_id):
+        """Process a question through the memory-aware RAG pipeline"""
         if not question:
             raise ValueError("No question provided")
         
-        question = "answer the question: " + question
-        response = self.rag_pipeline.invoke(question)
-        return response['result']
+        if not session_id:
+            raise ValueError("Session ID is required")
+        
+        # Load session history
+        memory = self.load_session_history(session_id)
+        
+        # Cache check to short-circuit repeated queries in the same session
+        cached = self._get_cached_response(session_id, question)
+        if cached is not None:
+            # Still record to DB for continuity
+            self.save_conversation(session_id, user_id, question, cached)
+            return cached
+
+        # Create conversational retrieval chain with memory
+        retriever = self.retriever or self.vectorstore.as_retriever(search_kwargs={"k": 3})
+
+        qa_chain = ConversationalRetrievalChain.from_llm(
+            llm=self.llm,
+            retriever=retriever,
+            memory=memory,
+            return_source_documents=False,
+            verbose=False
+        )
+        
+        # Process the question
+        response = qa_chain({"question": question})
+        
+        # Save the conversation to database and cache
+        self.save_conversation(session_id, user_id, question, response['answer'])
+        self._set_cached_response(session_id, question, response['answer'])
+        
+        return response['answer']
+    
+    def save_conversation(self, session_id, user_id, question, answer):
+        """Save user question and assistant answer to database"""
+        try:
+            session = ChatSession.objects.get(id=session_id)
+            
+            # Save user message
+            ChatMessage.objects.create(
+                session=session,
+                message_type='user',
+                content=question
+            )
+            
+            # Save assistant message
+            ChatMessage.objects.create(
+                session=session,
+                message_type='assistant',
+                content=answer
+            )
+            
+            # Update session timestamp
+            session.updated_at = datetime.now()
+            session.save()
+            
+        except ChatSession.DoesNotExist:
+            raise ValueError("Session not found")
+    
+    def clear_session_memory(self, session_id):
+        """Clear memory for a specific session"""
+        if session_id in self.session_memories:
+            del self.session_memories[session_id]
+    
+    def cleanup_expired_sessions(self):
+        """Clean up expired sessions and their memories"""
+        # Delete sessions older than 24 hours
+        cutoff_time = datetime.now() - timedelta(hours=24)
+        expired_sessions = ChatSession.objects.filter(
+            updated_at__lt=cutoff_time,
+            is_active=True
+        )
+        
+        for session in expired_sessions:
+            # Clear memory
+            self.clear_session_memory(session.id)
+            # Mark session as inactive
+            session.is_active = False
+            session.save()
 
 # Initialize the chatbot instance
-chatbot = FinancialChatbotRAG()
+chatbot = MemoryAwareFinancialChatbotRAG()
 chatbot.initialize()
 
 @csrf_exempt
@@ -98,14 +251,132 @@ chatbot.initialize()
 def ask_chatbot(request):
     try:
         question = request.data.get("question")
+        session_id = request.data.get("session_id")
+        user_id = request.data.get("user_id")
+        
         if not question:
             return Response({'error': 'No question provided.'}, status=400)
         
-        print("Running.....")
-        response_bot = chatbot.ask_question(question)
+        if not session_id:
+            return Response({'error': 'Session ID is required.'}, status=400)
+        
+        if not user_id:
+            return Response({'error': 'User ID is required.'}, status=400)
+        
+        print("Running memory-aware RAG.....")
+        response_bot = chatbot.ask_question(question, session_id, user_id)
         print("Success response!")
         print(response_bot)
         return Response({'response': response_bot}, status=200)
         
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@csrf_exempt
+@api_view(['POST'])
+def create_chat_session(request):
+    """Create a new chat session"""
+    try:
+        user_id = request.data.get("user_id")
+        if not user_id:
+            return Response({'error': 'User ID is required.'}, status=400)
+        
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found.'}, status=404)
+        
+        session = ChatSession.objects.create(user=user)
+        return Response({
+            'session_id': str(session.id),
+            'created_at': session.created_at,
+            'message': 'Chat session created successfully'
+        }, status=201)
+        
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@csrf_exempt
+@api_view(['GET'])
+def get_chat_session(request, session_id):
+    """Get chat session details and messages"""
+    try:
+        session = ChatSession.objects.get(id=session_id)
+        messages = session.messages.all().order_by('timestamp')
+        
+        session_data = {
+            'session_id': str(session.id),
+            'created_at': session.created_at,
+            'updated_at': session.updated_at,
+            'is_active': session.is_active,
+            'messages': [
+                {
+                    'id': msg.id,
+                    'message_type': msg.message_type,
+                    'content': msg.content,
+                    'timestamp': msg.timestamp
+                }
+                for msg in messages
+            ]
+        }
+        
+        return Response(session_data, status=200)
+        
+    except ChatSession.DoesNotExist:
+        return Response({'error': 'Session not found.'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@csrf_exempt
+@api_view(['DELETE'])
+def end_chat_session(request, session_id):
+    """End a chat session and clear its memory"""
+    try:
+        session = ChatSession.objects.get(id=session_id)
+        session.is_active = False
+        session.save()
+        
+        # Clear session memory
+        chatbot.clear_session_memory(session_id)
+        
+        return Response({'message': 'Chat session ended successfully'}, status=200)
+        
+    except ChatSession.DoesNotExist:
+        return Response({'error': 'Session not found.'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@csrf_exempt
+@api_view(['GET'])
+def get_user_sessions(request, user_id):
+    """Get all chat sessions for a user"""
+    try:
+        user = User.objects.get(id=user_id)
+        sessions = ChatSession.objects.filter(user=user, is_active=True).order_by('-updated_at')
+        
+        sessions_data = []
+        for session in sessions:
+            message_count = session.messages.count()
+            sessions_data.append({
+                'session_id': str(session.id),
+                'created_at': session.created_at,
+                'updated_at': session.updated_at,
+                'message_count': message_count
+            })
+        
+        return Response({'sessions': sessions_data}, status=200)
+        
+    except User.DoesNotExist:
+        return Response({'error': 'User not found.'}, status=404)
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+@csrf_exempt
+@api_view(['POST'])
+def cleanup_expired_sessions(request):
+    """Clean up expired sessions (admin endpoint)"""
+    try:
+        chatbot.cleanup_expired_sessions()
+        return Response({'message': 'Expired sessions cleaned up successfully'}, status=200)
     except Exception as e:
         return Response({'error': str(e)}, status=500)

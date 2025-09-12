@@ -1,43 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import '../styles/App.css';
 import Footer from '../components/Footer';
 import { useNavigate, Routes, Route } from 'react-router-dom';
-import NextPage from './NextPage'; // Import NextPage
-import NextNextPage from './NextNextPage'; // Import NextNextPage
-import { FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa'; // Import LinkedIn and Instagram icons
+import { UserProvider, useUser } from '../contexts/UserContext';
 
-const App = () => {
+// Lazy load components for better performance
+const NextPage = lazy(() => import('./NextPage'));
+const NextNextPage = lazy(() => import('./NextNextPage'));
+
+const AppContent = () => {
   const [selectedValue, setSelectedValue] = useState(''); // Selected stock
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState(''); // Error state
   const [description, setDescription] = useState(''); // Description state
-  const [username, setUsername] = useState(null); // Username state
+  const { user } = useUser();
   const navigate = useNavigate(); // Navigation
-  
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const token = localStorage.getItem('access_token');
-      if (token) {
-        try {
-          const response = await fetch('http://127.0.0.1:8000/api/user/info/', {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
-          
-          if (response.ok) {
-            const userData = await response.json();
-            setUsername(userData.username);
-          }
-        } catch (err) {
-          console.error('Error fetching user info:', err);
-        }
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
 
 
   const handleSelectChange = (e) => {
@@ -149,9 +126,9 @@ const App = () => {
     <div className="app-container">
       <header className="app-header">
         <h1>📈 Stock Navigator</h1>
-        {username && (
+        {user && (
           <div className="welcome-message">
-            Welcome, <span className="username">{username}</span>!
+            Welcome, <span className="username">{user.username}</span>!
           </div>
         )}
         <p>Explore insights and predictions for your favorite stocks.</p>
@@ -255,10 +232,32 @@ const App = () => {
       <Footer />
 
       <Routes>
-        <Route path="/next-page" element={<NextPage />} />
-        <Route path="/next-next-page" element={<NextNextPage />} />
+        <Route 
+          path="/next-page" 
+          element={
+            <Suspense fallback={<div className="loading">Loading...</div>}>
+              <NextPage />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path="/next-next-page" 
+          element={
+            <Suspense fallback={<div className="loading">Loading...</div>}>
+              <NextNextPage />
+            </Suspense>
+          } 
+        />
       </Routes>
     </div>
+  );
+};
+
+const App = () => {
+  return (
+    <UserProvider>
+      <AppContent />
+    </UserProvider>
   );
 };
 

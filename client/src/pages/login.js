@@ -3,45 +3,30 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/AuthStyles.css';
 import Footer from '../components/Footer';
+import { useUser } from '../contexts/UserContext';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { login } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
-    try {
-      const response = await fetch('http://127.0.0.1:8000/api/token/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Invalid credentials');
-      }
-
-      const data = await response.json();
-      
-      // Store tokens
-      localStorage.setItem('access_token', data.access);
-      localStorage.setItem('refresh_token', data.refresh);
-      
-      // Redirect to stock navigator
+    const result = await login(username, password);
+    
+    if (result.success) {
       navigate('/app');
-    } catch (err) {
-      setError(err.message);
+    } else {
+      setError(result.error);
     }
+    
+    setLoading(false);
   };
 
   return (
@@ -74,7 +59,9 @@ const Login = () => {
         
         {error && <div className="error">{error}</div>}
         
-        <button type="submit" className="login-button">Login</button>
+        <button type="submit" className="login-button" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
       
       <div className="switch-auth">
