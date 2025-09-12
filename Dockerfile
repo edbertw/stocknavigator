@@ -2,7 +2,6 @@
 FROM node:18-alpine AS react-build
 
 WORKDIR /app
-ENV NODE_ENV=production
 COPY client/package.json client/package-lock.json ./
 RUN npm install
 
@@ -14,12 +13,7 @@ RUN npm run build
 FROM python:3.11-slim
 
 WORKDIR /app
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1 \
-    LC_ALL=C.UTF-8 \
-    LANG=C.UTF-8
+ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
