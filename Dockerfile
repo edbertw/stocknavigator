@@ -4,11 +4,11 @@ FROM node:18-alpine AS react-build
 WORKDIR /app
 ENV NODE_ENV=production
 COPY client/package.json client/package-lock.json ./
-RUN npm ci --no-audit --no-fund
+RUN npm install
 
 COPY client/ ./
 # Fix: Use proper environment variable syntax and handle build errors
-RUN CI=false npm run build || (echo "Build failed, checking if it's a warning issue..." && npm run build -- --force)
+RUN npm run build
 
 # Stage 2: Build Django backend
 FROM python:3.11-slim
