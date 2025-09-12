@@ -1,57 +1,68 @@
-/* styles/TransparentHeader.css */
+/* Trading Platform Header Styles */
 .transparent-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 20px;
-    background-color: transparent;
-    z-index: 1000;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  
-  .header-buttons {
-    display: flex;
-    gap: 15px;
-  }
-  
-  .header-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-  }
-  
-  .predict-button {
-    background-color: #4CAF50; /* Light green */
-    color: white;
-  }
-  
-  .predict-button:hover {
-    background-color: #45a049;
-  }
-  
-  .home-button {
-    background-color: white;
-    color: #4CAF50;
-    border: 1px solid #4CAF50;
-  }
-  
-  .home-button:hover {
-    background-color: #f5f5f5;
-  }
-  
-  .signout-button {
-    background-color: white;
-    color: #f44336;
-    border: 1px solid #f44336;
-  }
-  
-  .signout-button:hover {
-    background-color: #f5f5f5;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.5);
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.header-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.predict-button {
+  background: linear-gradient(135deg, #00d4aa, #00a8ff);
+  color: #000;
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+}
+
+.predict-button:hover {
+  background: linear-gradient(135deg, #00a8ff, #00d4aa);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 212, 170, 0.4);
+}
+
+.home-button {
+  background: transparent;
+  color: #00d4aa;
+  border: 1px solid #00d4aa;
+}
+
+.home-button:hover {
+  background: rgba(0, 212, 170, 0.1);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.signout-button {
+  background: transparent;
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+}
+
+.signout-button:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ffffff;
+  border-color: #ffffff;
+}

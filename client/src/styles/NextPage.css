@@ -1,23 +1,364 @@
-/* General Styles */
-/* NextPage.css */
+/* Trading Platform Styles for NextPage */
 
-/* Base Styles */
-/* NextPage.css */
-.next-page-container {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-top: 70px;
-  background-color: #f8f9fa;
-  color: #333;
-  min-height: 100vh;
-  padding: 20px;
+/* Company Info Section */
+.company-info-section {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid #333;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.next-page-content {
-  max-width: 1800px;
-  margin: 0 auto;
+.company-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.company-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #00d4aa;
+  margin: 0;
+}
+
+.company-symbol {
+  background: linear-gradient(135deg, #00d4aa, #00a8ff);
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.company-description {
+  color: #b3b3b3;
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Charts Section */
+.charts-section {
+  margin-bottom: 32px;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.chart-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #333;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
-  gap: 30px; /* Automatically adds space between all children */
+  overflow: hidden;
+}
+
+.chart-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.1);
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #333;
+}
+
+.chart-header h3 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.chart-type {
+  background: rgba(0, 212, 170, 0.2);
+  color: #00d4aa;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chart-container {
+  background: #0a0a0a;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #333;
+  width: 100%;
+  flex: 1;
+  min-height: 300px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-container .plotly {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-container .js-plotly-plot {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Sentiment Section */
+.sentiment-section {
+  margin-bottom: 32px;
+}
+
+.sentiment-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #333;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+.sentiment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #333;
+}
+
+.sentiment-header h3 {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sentiment-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #00d4aa;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  background: #00d4aa;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.sentiment-content {
+  color: #b3b3b3;
+  line-height: 1.6;
+  font-size: 16px;
+  white-space: pre-wrap;
+}
+
+/* Chat Section */
+.chat-section {
+  margin-bottom: 32px;
+}
+
+.chat-toggle-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.chat-toggle-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.chat-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.chat-panel {
+  display: flex;
+  gap: 20px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 900px;
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.chat-session-sidebar {
+  flex: 0 0 300px;
+  border-right: 1px solid #333;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.chat-interface-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Trading Buttons */
+.trading-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trading-btn.primary {
+  background: linear-gradient(135deg, #00d4aa, #00a8ff);
+  color: #000;
+}
+
+.trading-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 170, 0.3);
+}
+
+.trading-btn.secondary {
+  background: transparent;
+  color: #b3b3b3;
+  border: 1px solid #444;
+}
+
+.trading-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: #666;
+}
+
+/* Loading and Error States */
+.next-page-loading, .next-page-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #b3b3b3;
+}
+
+.next-page-error {
+  color: #ff6b6b;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .charts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .company-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .chart-card {
+    padding: 16px;
+    min-height: 350px;
+  }
+  
+  .chart-container {
+    min-height: 250px;
+    padding: 12px;
+  }
+  
+  .chat-panel {
+    flex-direction: column;
+    height: auto;
+    max-height: none;
+  }
+  
+  .chat-session-sidebar {
+    flex: none;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    max-height: 200px;
+  }
+  
+  .chat-interface-main {
+    min-height: 400px;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .chart-card {
+    padding: 12px;
+    min-height: 300px;
+  }
+  
+  .chart-container {
+    min-height: 200px;
+    padding: 8px;
+  }
 }
 
 .next-page-company-info {

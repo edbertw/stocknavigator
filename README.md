@@ -14,12 +14,10 @@
 ---
 ### Home Page
 ![Starting Page](screen_captures/photo_1.png)
-![Starting Page 2](screen_captures/photo_1_s2.png)
-![Starting Page 3](screen_captures/photo_1_s3.png)
 
 ---
 ### Dynamic Real-Time Stock Analytics and Dashboard
-![Stock Analytics](screen_captures/photo_2_s2.png)
+![Stock Analytics](screen_captures/photo_2.png)
 
 ---
 ### Real-Time Market News and Sentiment Analysis
@@ -32,7 +30,6 @@
 ---
 ### Predictive Analytics
 ![Predictive Analytics](screen_captures/photo_4.png)
-![Predictive Analytics 2](screen_captures/photo_4_s2.png)
 
 ---
 
@@ -170,7 +167,7 @@ Stock-Navigator is powered by an exciting tech stack:
 - **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Seq2seq Trainers
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
-- **Databases:** PostgreSQL
+- **Databases:** PostgreSQL, TLD Caches
 - **Security:** JWT Tokens
 - **CI/CD Integration:** GitHub Actions
 
@@ -179,7 +176,7 @@ Stock-Navigator is powered by an exciting tech stack:
 ## 🤖 Features You’ll Love
 
 - **Interactive Stock Dashboard:** Get real-time data and visualize market trends.
-- **AI Chat Assistant:** Ask any stock question—get context-rich, AI-generated answers.
+- **AI Chat Assistant:** Ask any stock question—get context-rich, AI-generated answers with persistent chat history.
 - **Predictive Analytics:** Forecast prices using advanced RNN (LSTM) models.
 - **Curated Knowledge Base:** Answers are RAG-powered and sourced from the latest market info.
 - **Market Sentiment Analysis** Retrieve real-time market news on the company and analyse underlying sentiment

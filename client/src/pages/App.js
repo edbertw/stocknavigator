@@ -1,6 +1,5 @@
 import React, { useState, lazy, Suspense } from 'react';
 import '../styles/App.css';
-import Footer from '../components/Footer';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import { UserProvider, useUser } from '../contexts/UserContext';
 
@@ -123,113 +122,159 @@ const AppContent = () => {
   };
 
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>📈 Stock Navigator</h1>
-        {user && (
-          <div className="welcome-message">
-            Welcome, <span className="username">{user.username}</span>!
-          </div>
-        )}
-        <p>Explore insights and predictions for your favorite stocks.</p>
-      </header>
-
-      <main className="app-main">
-        <div className="stock-selector">
-          <label htmlFor="stock-select">Select a Stock:</label>
-          <select
-            id="stock-select"
-            value={selectedValue}
-            onChange={handleSelectChange}
-            className="stock-dropdown"
-          >
-            <option value="">-- Choose a Stock --</option>
-            <option value="NVDA">NVIDIA</option>
-            <option value="NDAQ">NASDAQ</option>
-            <option value="TSLA">TESLA</option>
-            <option value="HSBC">HSBC</option>
-            <option value="JPM">JPMORGAN</option>
-            <option value="MS">MORGAN STANLEY</option>
-            <option value="GS">GOLDMAN SACHS</option>
-            <option value="JEF">JEFFERIES</option>
-            <option value="APPL">APPLE</option>
-            <option value="GOOGL">GOOGLE</option>
-            <option value="AMZN">AMAZON</option>
-            <option value="META">META</option>
-            <option value="MSFT">MICROSOFT</option>
-            <option value="NFLX">NETFLIX</option>
-            <option value="DIS">DISNEY</option>
-            <option value="C">CITI</option>
-            <option value="V">VISA</option>
-            <option value="BLK">BLACKROCK</option>
-            <option value="IBM">IBM</option>
-            <option value="UBER">UBER</option>
-            <option value="ORCL">ORACLE</option> 
-            <option value="WMT"> WALMART</option>
-            <option value="MA">MASTERCARD</option>
-            <option value="XOM">EXXONMOBIL</option>
-            <option value="COST">COSTCO</option>
-            <option value="BAC">BANK OF AMERICA</option>
-            <option value="PLTR">PALANTIR TECHNOLOGIES</option>
-            <option value="KO">COCA-COLA</option>
-            <option value="PEP">PEPSICO</option>
-            <option value="UNH">UNITED HEALTHCARE</option>
-            <option value="CRM">SALESFORCE</option>
-            <option value="MCD">MCDONALDS</option>
-            <option value="ACN">ACCENTURE</option>
-            <option value="BA">BOEING</option>
-            <option value="ABNB">AIRBNB</option>
-            <option value="AON">AON</option>
-            <option value="DASH">DOORDASH</option>
-            <option value="INTC">INTEL</option>
-            <option value="ZM">ZOOM</option>
-            <option value="SBUX">STARBUCKS</option>
-            <option value="NKE">NIKE</option>
-            <option value="CB">CHUBB LIMITED</option>
-            <option value="CRWD">CROWDSTRIKE</option>
-            <option value="BX">BLACKSTONE</option>
-            <option value="MFC">MANULIFE US</option>
-            <option value="1299.HK">AIA HK</option>
-            <option value="0388.HK">HKEX</option>
-            <option value="0700.HK">TENCENT HK</option>
-            <option value="2318.HK">PING AN HK</option>
-            <option value="0939.HK">CITIC BANK HK</option>
-            <option value="0005.HK">HSBC HK</option>
-            <option value="0001.HK">CKH HOLDINGS HK</option>
-            <option value="0002.HK">CLP HOLDINGS HK</option>
-            <option value="0011.HK">MTR CORPORATION HK</option>
-            <option value="3988.HK">BANK OF CHINA HK</option>
-            <option value="0003.HK">HANG SENG BANK HK</option>
-            <option value="9888.HK">BAIDU INC</option>
-            <option value="9988.HK">ALIBABA GROUP</option>
-            <option value="9618.HK">MEITUAN</option>
-            <option value="8147.HK">MILLENNIUM PACIFIC HOLDINGS</option>
-            <option value="1828.HK">FWD GROUP</option>
-            <option value="2628.HK">CHINA LIFE INSURANCE</option>
-            <option value="0966.HK">CHINA TAIPING INSURANCE</option>
-            <option value="1508.HK">CHINA REINSURANCE GROUP</option>
-          </select>
+    <div className="trading-platform">
+      {/* Sidebar Navigation */}
+      <nav className="trading-sidebar">
+        <div className="sidebar-header">
+          <a href="/" className="sidebar-logo">
+            <div className="sidebar-logo-icon">📈</div>
+            <span>StockNavigator</span>
+          </a>
         </div>
+        <div className="sidebar-nav">
+          <a href="/app" className="nav-item active">
+            <span className="nav-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+          <a href="/analytics" className="nav-item">
+            <span className="nav-icon">📊</span>
+            <span>Analytics</span>
+          </a>
+          <a href="/login" className="nav-item" onClick={() => {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+          }}>
+            <span className="nav-icon">🚪</span>
+            <span>Sign Out</span>
+          </a>
+        </div>
+      </nav>
 
-        {description && (
-          <div className="stock-description">
-            <h3>About the Stock:</h3>
-            <p>{description}</p>
+      {/* Main Content Area */}
+      <main className="trading-main">
+        {/* Header */}
+        <header className="trading-header">
+          <div className="header-left">
+            <h1 className="header-title">Trading Dashboard</h1>
+            <p className="header-subtitle">Real-time market analysis & predictions</p>
           </div>
-        )}
+          <div className="header-right">
+            {user && (
+              <div className="user-info">
+                <div className="user-avatar">
+                  {user.username ? user.username.charAt(0).toUpperCase() : 'U'}
+                </div>
+                <span className="user-name">{user.username}</span>
+              </div>
+            )}
+          </div>
+        </header>
 
-        {error && <p className="error-message">{error}</p>}
+        {/* Main Content */}
+        <div className="trading-content">
+          {/* Stock Selector Section */}
+          <section className="stock-selector-section">
+            <h2 className="section-title">Stock Analysis</h2>
+            <div className="stock-search-container">
+              <select
+                value={selectedValue}
+                onChange={handleSelectChange}
+                className="stock-dropdown"
+              >
+                <option value="">-- Choose a Stock --</option>
+                <option value="NVDA">NVIDIA (NVDA)</option>
+                <option value="NDAQ">NASDAQ (NDAQ)</option>
+                <option value="TSLA">TESLA (TSLA)</option>
+                <option value="HSBC">HSBC (HSBC)</option>
+                <option value="JPM">JPMORGAN (JPM)</option>
+                <option value="MS">MORGAN STANLEY (MS)</option>
+                <option value="GS">GOLDMAN SACHS (GS)</option>
+                <option value="JEF">JEFFERIES (JEF)</option>
+                <option value="APPL">APPLE (APPL)</option>
+                <option value="GOOGL">GOOGLE (GOOGL)</option>
+                <option value="AMZN">AMAZON (AMZN)</option>
+                <option value="META">META (META)</option>
+                <option value="MSFT">MICROSOFT (MSFT)</option>
+                <option value="NFLX">NETFLIX (NFLX)</option>
+                <option value="DIS">DISNEY (DIS)</option>
+                <option value="C">CITI (C)</option>
+                <option value="V">VISA (V)</option>
+                <option value="BLK">BLACKROCK (BLK)</option>
+                <option value="IBM">IBM (IBM)</option>
+                <option value="UBER">UBER (UBER)</option>
+                <option value="ORCL">ORACLE (ORCL)</option> 
+                <option value="WMT">WALMART (WMT)</option>
+                <option value="MA">MASTERCARD (MA)</option>
+                <option value="XOM">EXXONMOBIL (XOM)</option>
+                <option value="COST">COSTCO (COST)</option>
+                <option value="BAC">BANK OF AMERICA (BAC)</option>
+                <option value="PLTR">PALANTIR TECHNOLOGIES (PLTR)</option>
+                <option value="KO">COCA-COLA (KO)</option>
+                <option value="PEP">PEPSICO (PEP)</option>
+                <option value="UNH">UNITED HEALTHCARE (UNH)</option>
+                <option value="CRM">SALESFORCE (CRM)</option>
+                <option value="MCD">MCDONALDS (MCD)</option>
+                <option value="ACN">ACCENTURE (ACN)</option>
+                <option value="BA">BOEING (BA)</option>
+                <option value="ABNB">AIRBNB (ABNB)</option>
+                <option value="AON">AON (AON)</option>
+                <option value="DASH">DOORDASH (DASH)</option>
+                <option value="INTC">INTEL (INTC)</option>
+                <option value="ZM">ZOOM (ZM)</option>
+                <option value="SBUX">STARBUCKS (SBUX)</option>
+                <option value="NKE">NIKE (NKE)</option>
+                <option value="CB">CHUBB LIMITED (CB)</option>
+                <option value="CRWD">CROWDSTRIKE (CRWD)</option>
+                <option value="BX">BLACKSTONE (BX)</option>
+                <option value="MFC">MANULIFE US (MFC)</option>
+                <option value="1299.HK">AIA HK (1299.HK)</option>
+                <option value="0388.HK">HKEX (0388.HK)</option>
+                <option value="0700.HK">TENCENT HK (0700.HK)</option>
+                <option value="2318.HK">PING AN HK (2318.HK)</option>
+                <option value="0939.HK">CITIC BANK HK (0939.HK)</option>
+                <option value="0005.HK">HSBC HK (0005.HK)</option>
+                <option value="0001.HK">CKH HOLDINGS HK (0001.HK)</option>
+                <option value="0002.HK">CLP HOLDINGS HK (0002.HK)</option>
+                <option value="0011.HK">MTR CORPORATION HK (0011.HK)</option>
+                <option value="3988.HK">BANK OF CHINA HK (3988.HK)</option>
+                <option value="0003.HK">HANG SENG BANK HK (0003.HK)</option>
+                <option value="9888.HK">BAIDU INC (9888.HK)</option>
+                <option value="9988.HK">ALIBABA GROUP (9988.HK)</option>
+                <option value="9618.HK">MEITUAN (9618.HK)</option>
+                <option value="8147.HK">MILLENNIUM PACIFIC HOLDINGS (8147.HK)</option>
+                <option value="1828.HK">FWD GROUP (1828.HK)</option>
+                <option value="2628.HK">CHINA LIFE INSURANCE (2628.HK)</option>
+                <option value="0966.HK">CHINA TAIPING INSURANCE (0966.HK)</option>
+                <option value="1508.HK">CHINA REINSURANCE GROUP (1508.HK)</option>
+              </select>
+              <button
+                onClick={handleSubmit}
+                className="submit-button"
+                disabled={loading || !selectedValue}
+              >
+                {loading ? (
+                  <>
+                    <div className="loading-spinner"></div>
+                    Analyzing...
+                  </>
+                ) : (
+                  'Analyze Stock'
+                )}
+              </button>
+            </div>
 
-        <button
-          onClick={handleSubmit}
-          className="submit-button"
-          disabled={loading || !selectedValue}
-        >
-          {loading ? 'Submitting...' : 'Submit'}
-        </button>
+            {description && (
+              <div className="stock-description">
+                <h3>About {selectedValue}</h3>
+                <p>{description}</p>
+              </div>
+            )}
+
+            {error && <div className="error-message">{error}</div>}
+          </section>
+        </div>
       </main>
 
-      <Footer />
 
       <Routes>
         <Route 

@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/NextPage.css';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 import ChatSessionManager from '../components/ChatSessionManager';
 import ChatInterface from '../components/ChatInterface';
 import { useUser } from '../contexts/UserContext';
+import Footer from '../components/Footer';
 
 const NextPage = () => {
   const location = useLocation();
@@ -90,6 +89,7 @@ const NextPage = () => {
     navigate(-1);
   };
 
+
   const handleNext = () => {
     navigate('/next-next-page', { state: { stockSymbol, company } });
   };
@@ -112,161 +112,392 @@ const NextPage = () => {
   if (error) return <div className="next-page-error">{error}</div>;
 
   return (
-    <div className="next-page-container">
-      <Header 
-        showPredict={true}
-        onPredict={handleNext}
-      />
-      <div className="next-page-content">
-        {company && (
-          <div className="next-page-company-info">
-            <h1>{company.name}</h1>
-            <p>{company.description}</p>
-          </div>
-        )}
-
-        <div className="next-page-grid">
-          {graphDataStock && (
-            <div className="next-page-graph-card">
-              <h3>Stock Prices</h3>
-              <Plot data={graphDataStock.data} layout={{ ...graphDataStock.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataMomentum && (
-            <div className="next-page-graph-card">
-              <h3>Momentum</h3>
-              <Plot data={graphDataMomentum.data} layout={{ ...graphDataMomentum.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataMA10 && (
-            <div className="next-page-graph-card">
-              <h3>Moving Average (10-day)</h3>
-              <Plot data={graphDataMA10.data} layout={{ ...graphDataMA10.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataMA20 && (
-            <div className="next-page-graph-card">
-              <h3>Moving Average (20-day)</h3>
-              <Plot data={graphDataMA20.data} layout={{ ...graphDataMA20.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataCandlestick && (
-            <div className="next-page-graph-card">
-              <h3>Candlestick</h3>
-              <Plot data={graphDataCandlestick.data} layout={{ ...graphDataCandlestick.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataRSI && (
-            <div className="next-page-graph-card">
-              <h3>Relative Strength Index (RSI)</h3>
-              <Plot data={graphDataRSI.data} layout={{ ...graphDataRSI.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataCorr && (
-            <div className="next-page-graph-card">
-              <h3>Feature Correlations</h3>
-              <Plot data={graphDataCorr.data} layout={{ ...graphDataCorr.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataBollinger && (
-            <div className="next-page-graph-card">
-              <h3>Bollinger Bands</h3>
-              <Plot data={graphDataBollinger.data} layout={{ ...graphDataBollinger.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataMACD && (
-            <div className="next-page-graph-card">
-              <h3>MACD</h3>
-              <Plot data={graphDataMACD.data} layout={{ ...graphDataMACD.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
-          {graphDataCum && (
-            <div className="next-page-graph-card">
-              <h3>Cumulative Returns</h3>
-              <Plot data={graphDataCum.data} layout={{ ...graphDataCum.layout, autosize: true, height: 400, width: 500 }} />
-            </div>
-          )}
+    <div className="trading-platform">
+      {/* Sidebar Navigation */}
+      <nav className="trading-sidebar">
+        <div className="sidebar-header">
+          <a href="/" className="sidebar-logo">
+            <div className="sidebar-logo-icon">📈</div>
+            <span>StockNavigator</span>
+          </a>
         </div>
-
-        <div className="next-page-sentiment">
-          <h2>Market Sentiment Analysis for {company.name}</h2>
-          <div className="next-page-sentiment-box">
-            {sentimentAnalysis || "Loading sentiment analysis..."}
-          </div>
+        <div className="sidebar-nav">
+          <a className="nav-item" onClick={handleBack}>
+            <span className="nav-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+          <a className="nav-item active">
+            <span className="nav-icon">📊</span>
+            <span>Analytics</span>
+          </a>
+          <a href="/login" className="nav-item" onClick={() => {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+          }}>
+            <span className="nav-icon">🚪</span>
+            <span>Sign Out</span>
+          </a>
         </div>
+      </nav>
 
-        <div className="next-page-info-section">
-          <h2>Additional Information</h2>
-          <p>
-          These charts give a comprehensive view of {company.name}'s stock performance, showing trends over time,
-          price volatility, momentum, and potential price patterns. This data can help inform your investment decisions.
-          </p>
-
-          <div className="next-page-info-grid">
-            <div className="next-page-info-item">
-              <h2>Momentum</h2>
-              <p>Rate of acceleration of {company.name}'s stock prices. A strong momentum suggests that a price trend is likely to continue and vice versa. A positive momentum often reflects bullish sentiment among investors; otherwise bearish sentiment.</p>
-            </div>
-            <div className="next-page-info-item">
-              <h2>Moving Average</h2>
-              <p>Smooths out {company.name}'s stock price data to identify trends over a specific period. An upward trend sloping moving average indicates a bullish trend and vice versa. It also acts as dynamic support and resistance levels. Prices may bounce off the moving average, indicating potential reversal points.</p>
-            </div>
-            <div className="next-page-info-item">
-              <h2>Relative Strength Index</h2>
-              <p>A momentum oscillator that measures speed and change of {company.name}'s stock price movements. An RSI of above 70 indicates a stock may be overbought, indicating a potential price correction and vice versa. An RSI of above 50 typically indicates a strong upward trend and vice versa.</p>
-            </div>
-            <div className="next-page-info-item">
-              <h2>Feature Correlations</h2>
-              <p>Correlations identify relationships between different features of {company.name}'s stocks, such as Closing Price and Volume. Understanding these relationships can inform trading strategies. Strong correlations between features can serve as potential predictors for stock price movements.</p>
-            </div>
-            <div className="next-page-info-item">
-              <h2>Bollinger Bands</h2>
-              <p>A technical analysis tool that consists of a middle band and two outer bands. Wider bands indicate increased volatility and potential price swings and vice versa. When {company.name}'s stock closing price touches or exceeds the upper band, it may indicate that the stock is overbought and vice versa.</p>
-            </div>
-            <div className="next-page-info-item">
-              <h2>MACD</h2>
-              <p>A popular momentum indicator used for technical {company.name}'s stock analysis. If this line is above zero, it indicates a bullish trend; otherwise, a bearish trend. When the MACD line crosses above the signal line, a bullish signal will be generated.</p>
-            </div>
+      {/* Main Content Area */}
+      <main className="trading-main">
+        {/* Header */}
+        <header className="trading-header">
+          <div className="header-left">
+            <h1 className="header-title">Technical Analysis</h1>
+            <p className="header-subtitle">{company?.name || 'Stock Analysis'}</p>
           </div>
-        </div>
-
-        <div className="next-page-chat-section">
-          <div className="chat-toggle-container">
-            <button 
-              className="chat-toggle-btn"
-              onClick={toggleChatPanel}
-            >
-              {showChatPanel ? 'Hide' : 'Show'} AI Financial Advisor Chat
+          <div className="header-right">
+            <button onClick={handleBack} className="trading-btn secondary">
+              ← Back
+            </button>
+            <button onClick={handleNext} className="trading-btn primary">
+              Predict →
             </button>
           </div>
-          
-          {showChatPanel && (
-            <div className="chat-panel">
-              <div className="chat-session-sidebar">
-                <ChatSessionManager
-                  userId={user?.id}
-                  onSessionSelect={handleSessionSelect}
-                  currentSessionId={currentSessionId}
-                  onSessionEnd={handleSessionEnd}
-                />
+        </header>
+
+        {/* Main Content */}
+        <div className="trading-content">
+          {/* Company Info */}
+          {company && (
+            <section className="company-info-section">
+              <div className="company-header">
+                <h2 className="company-name">{company.name}</h2>
+                <div className="company-symbol">{stockSymbol}</div>
               </div>
-              <div className="chat-interface-main">
-                <ChatInterface
-                  sessionId={currentSessionId}
-                  userId={user?.id}
-                  onSessionEnd={handleSessionEnd}
-                />
+              <p className="company-description">{company.description}</p>
+            </section>
+          )}
+
+          {/* Charts Grid */}
+          <section className="charts-section">
+            <h2 className="section-title">Technical Indicators</h2>
+            <div className="charts-grid">
+              {graphDataStock && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Stock Prices</h3>
+                    <span className="chart-type">Price Chart</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataStock.data} 
+                      layout={{ 
+                        ...graphDataStock.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+              
+              {graphDataCandlestick && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Candlestick Chart</h3>
+                    <span className="chart-type">OHLC</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataCandlestick.data} 
+                      layout={{ 
+                        ...graphDataCandlestick.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataRSI && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>RSI Indicator</h3>
+                    <span className="chart-type">Momentum</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataRSI.data} 
+                      layout={{ 
+                        ...graphDataRSI.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataMACD && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>MACD</h3>
+                    <span className="chart-type">Trend</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataMACD.data} 
+                      layout={{ 
+                        ...graphDataMACD.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataBollinger && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Bollinger Bands</h3>
+                    <span className="chart-type">Volatility</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataBollinger.data} 
+                      layout={{ 
+                        ...graphDataBollinger.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataMomentum && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Momentum</h3>
+                    <span className="chart-type">Momentum</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataMomentum.data} 
+                      layout={{ 
+                        ...graphDataMomentum.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataMA10 && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Moving Average (10-day)</h3>
+                    <span className="chart-type">Trend</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataMA10.data} 
+                      layout={{ 
+                        ...graphDataMA10.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataMA20 && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Moving Average (20-day)</h3>
+                    <span className="chart-type">Trend</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataMA20.data} 
+                      layout={{ 
+                        ...graphDataMA20.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataCorr && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Feature Correlations</h3>
+                    <span className="chart-type">Correlation</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataCorr.data} 
+                      layout={{ 
+                        ...graphDataCorr.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {graphDataCum && (
+                <div className="chart-card">
+                  <div className="chart-header">
+                    <h3>Cumulative Returns</h3>
+                    <span className="chart-type">Performance</span>
+                  </div>
+                  <div className="chart-container">
+                    <Plot 
+                      data={graphDataCum.data} 
+                      layout={{ 
+                        ...graphDataCum.layout, 
+                        autosize: true, 
+                        height: 300,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#ffffff' },
+                        xaxis: { color: '#ffffff' },
+                        yaxis: { color: '#ffffff' },
+                        margin: { l: 40, r: 40, t: 40, b: 40 }
+                      }}
+                      config={{ responsive: true, displayModeBar: false }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Sentiment Analysis */}
+          <section className="sentiment-section">
+            <h2 className="section-title">Market Sentiment</h2>
+            <div className="sentiment-card">
+              <div className="sentiment-header">
+                <h3>AI Sentiment Analysis</h3>
+                <div className="sentiment-indicator">
+                  <span className="indicator-dot"></span>
+                  <span>Live Analysis</span>
+                </div>
+              </div>
+              <div className="sentiment-content">
+                {sentimentAnalysis || "Loading sentiment analysis..."}
               </div>
             </div>
-          )}
-        </div>
+          </section>
 
-        <div className="next-page-button-container">
-          <button onClick={handleBack} className="next-page-back-button">BACK</button>
-          <button onClick={handleNext} className="next-page-next-button">PREDICT</button>
+          {/* AI Chat Section */}
+          <section className="chat-section">
+            <div className="chat-toggle-container">
+              <button 
+                className="chat-toggle-btn"
+                onClick={toggleChatPanel}
+              >
+                {showChatPanel ? 'Hide' : 'Show'} AI Financial Advisor
+              </button>
+            </div>
+            
+            {showChatPanel && (
+              <div className="chat-panel">
+                <div className="chat-session-sidebar">
+                  <ChatSessionManager
+                    userId={user?.id}
+                    onSessionSelect={handleSessionSelect}
+                    currentSessionId={currentSessionId}
+                    onSessionEnd={handleSessionEnd}
+                  />
+                </div>
+                <div className="chat-interface-main">
+                  <ChatInterface
+                    sessionId={currentSessionId}
+                    userId={user?.id}
+                    onSessionEnd={handleSessionEnd}
+                  />
+                </div>
+              </div>
+            )}
+          </section>
+          <Footer />
         </div>
-      </div>
-      <Footer />
+      </main>
     </div>
   );
 };

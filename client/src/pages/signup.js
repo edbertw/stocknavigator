@@ -65,57 +65,71 @@ const Signup = () => {
   };
 
   return (
-    <div className="auth-container">
-      <h1>Stock Navigator</h1>
-      <p>Create an account to access stock insights and predictions</p>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center',
+      padding: '20px',
+      background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%)'
+    }}>
+      <div className="auth-container">
+        <div style={{ marginBottom: '8px' }}>
+          <span style={{ fontSize: '32px', marginRight: '8px' }}>📈</span>
+        </div>
+        <h1>StockNavigator</h1>
+        <p>Join thousands of traders using AI-powered stock analysis</p>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Choose a username"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Create a strong password"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="password2">Confirm Password</label>
+            <input
+              type="password"
+              id="password2"
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
+              placeholder="Confirm your password"
+              required
+            />
+          </div>
+          
+          {error && <div className="error">{error}</div>}
+          
+          <button type="submit" className="signup-button" disabled={loading}>
+            {loading ? 'Creating Account...' : 'Create Account'}
+          </button>
+        </form>
+        
+        <div className="switch-auth">
+          Already have an account? <button className="link-button" onClick={() => navigate('/login')}>Sign In</button>
         </div>
         
-        
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="password2">Confirm Password</label>
-          <input
-            type="password"
-            id="password2"
-            value={password2}
-            onChange={(e) => setPassword2(e.target.value)}
-            required
-          />
-        </div>
-        
-        {error && <div className="error">{error}</div>}
-        
-        <button type="submit" className="signup-button" disabled={loading}>
-          {loading ? 'Creating Account...' : 'Sign Up'}
-        </button>
-      </form>
-      
-      <div className="switch-auth">
-        Already have an account? <button className="link-button" onClick={() => navigate('/login')}>Log in</button>
+        <Footer />
       </div>
-      
-      <Footer />
     </div>
   );
 };

@@ -1,89 +1,228 @@
-/* AuthStyles.css */
-  
+/* Trading Platform Auth Styles */
+
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #ffffff;
+}
+
+.auth-container, .container {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  width: 400px;
+  max-width: 90vw;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.auth-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00d4aa, #00a8ff, #007bff);
+  border-radius: 16px 16px 0 0;
+}
+
+.auth-container h1 {
+  color: #00d4aa;
+  margin-bottom: 8px;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00d4aa, #00a8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 0;
+}
+
+.auth-container p {
+  color: #b3b3b3;
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: #00d4aa;
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.form-group input::placeholder {
+  color: #666;
+}
+
+.login-button, .signup-button {
+  background: linear-gradient(135deg, #00d4aa, #00a8ff);
+  color: #000;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-button:hover, .signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 212, 170, 0.4);
+}
+
+.login-button:active, .signup-button:active {
+  transform: translateY(0);
+}
+
+.login-button:disabled, .signup-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.switch-auth {
+  margin-top: 24px;
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #00d4aa;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  width: auto;
+  display: inline;
+  transition: color 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.link-button:hover {
+  color: #00a8ff;
+  text-decoration: underline;
+}
+
+/* Loading state */
+.login-button:disabled, .signup-button:disabled {
+  position: relative;
+}
+
+.login-button:disabled::after, .signup-button:disabled::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid #000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .auth-container, .container {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    width: 350px;
-    text-align: center;
+    width: 90vw;
+    padding: 32px 24px;
+    margin: 20px auto;
   }
   
-  h1 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-size: 24px;
+  .auth-container h1 {
+    font-size: 28px;
   }
   
-  .form-group {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #2c3e50;
-  }
-  
-  input, select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    box-sizing: border-box;
+  .form-group input, .form-group select {
+    padding: 12px 14px;
+    font-size: 16px;
   }
   
   .login-button, .signup-button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
-    transition: background-color 0.3s;
+    padding: 14px 20px;
+    font-size: 15px;
+  }
 }
-  
-  button:hover {
-    background-color: #4caf50;
+
+@media (max-width: 480px) {
+  .auth-container, .container {
+    width: 95vw;
+    padding: 24px 20px;
+    margin: 10px auto;
   }
   
-  .footer {
-    margin-top: 20px;
-    font-size: 12px;
-    color: #7f8c8d;
+  .auth-container h1 {
+    font-size: 24px;
   }
   
-  .error {
-    color: #e74c3c;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-  }
-  
-  .switch-auth {
-    margin-top: 15px;
+  .auth-container p {
     font-size: 14px;
   }
-  
-  .link-button {
-    background: none;
-    border: none;
-    padding: 0;
-    color: #3498db;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: normal;
-    width: auto;
-    display: inline;
-  }
-  
-  .link-button:hover {
-    text-decoration: none;
-  }
+}
