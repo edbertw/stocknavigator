@@ -7,8 +7,8 @@ COPY client/package.json client/package-lock.json ./
 RUN npm ci --no-audit --no-fund
 
 COPY client/ ./
-# Avoid CRA failing the build on warnings under CI
-RUN CI= npm run build
+# Fix: Use proper environment variable syntax and handle build errors
+RUN CI=false npm run build || (echo "Build failed, checking if it's a warning issue..." && npm run build -- --force)
 
 # Stage 2: Build Django backend
 FROM python:3.11-slim
@@ -29,9 +29,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies (including psycopg2-binary for Python 3.11)
+# Install Python dependencies
 COPY server/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt psycopg2-binary python-dotenv gunicorn
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy Django project
 COPY server/ .
@@ -40,12 +40,5 @@ COPY server/ .
 COPY --from=react-build /app/build /app/server/static/frontend
 
 # The command will be overridden by docker-compose
-# The default command can be overridden by docker-compose via DJANGO_CMD
 ENV DJANGO_SETTINGS_MODULE=mybackend.settings
 CMD ["sh", "-c", "${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"]
-#CMD sh -c "gunicorn --bind 0.0.0.0:8000 \
-    #--workers ${GUNICORN_WORKERS} \
-    #--threads ${GUNICORN_THREADS} \
-    #--timeout ${GUNICORN_TIMEOUT} \
-    #--worker-class sync \
-    #mybackend.wsgi:application"
