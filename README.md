@@ -167,7 +167,7 @@ Stock-Navigator is powered by an exciting tech stack:
 - **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Seq2seq Trainers
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
-- **Databases:** PostgreSQL, TLD Caches
+- **Databases:** PostgreSQL, Redis
 - **Security:** JWT Tokens
 - **CI/CD Integration:** GitHub Actions
 
@@ -177,7 +177,7 @@ Stock-Navigator is powered by an exciting tech stack:
 
 - **Interactive Stock Dashboard:** Get real-time data and visualize market trends.
 - **AI Chat Assistant:** Ask any stock question—get context-rich, AI-generated answers with persistent chat history.
-- **Predictive Analytics:** Forecast prices using advanced RNN (LSTM) models.
+- **Predictive Analytics:** Forecast prices using advanced RNN (LSTM) models, cache results with Redis for speed and efficiency
 - **Curated Knowledge Base:** Answers are RAG-powered and sourced from the latest market info.
 - **Market Sentiment Analysis** Retrieve real-time market news on the company and analyse underlying sentiment
 ---

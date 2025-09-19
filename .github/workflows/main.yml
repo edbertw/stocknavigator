@@ -13,6 +13,10 @@ env:
   DB_USER: postgres
   DB_NAME: postgres
   DB_PWD: mysecretpassword
+  REDIS_HOST: localhost
+  REDIS_PORT: 6379
+  REDIS_DB: 0
+  REDIS_TTL_SECONDS: 86400
 
 jobs:
   test:
@@ -27,6 +31,10 @@ jobs:
         ports:
           - 5433:5432  # Map host:5433 → container:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
 
     steps:
     - name: Checkout code
@@ -45,6 +53,10 @@ jobs:
     - name: Run Django tests
       env:
         DATABASE_URL: postgres://${{ env.DB_USER }}:${{ env.DB_PWD }}@localhost:${{ env.DB_PORT }}/${{ env.DB_NAME }}
+        REDIS_HOST: ${{ env.REDIS_HOST }}
+        REDIS_PORT: ${{ env.REDIS_PORT }}
+        REDIS_DB: ${{ env.REDIS_DB }}
+        REDIS_TTL_SECONDS: ${{ env.REDIS_TTL_SECONDS }}
       run: |
         cd server
         python manage.py test

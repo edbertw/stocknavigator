@@ -169,3 +169,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redis env defaults (used by predict_views)
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_PORT = int(os.getenv('REDIS_PORT', '6379'))
+REDIS_DB = int(os.getenv('REDIS_DB', '0'))
+REDIS_TTL_SECONDS = int(os.getenv('REDIS_TTL_SECONDS', '86400'))

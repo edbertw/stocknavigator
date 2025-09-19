@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-dev \
     libpq-dev \
     postgresql-client \
+    redis-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
@@ -35,4 +36,8 @@ COPY --from=react-build /app/build /app/server/static/frontend
 
 # The command will be overridden by docker-compose
 ENV DJANGO_SETTINGS_MODULE=mybackend.settings
+ENV REDIS_HOST=redis
+ENV REDIS_PORT=6379
+ENV REDIS_DB=0
+ENV REDIS_TTL_SECONDS=86400
 CMD ["sh", "-c", "${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"]

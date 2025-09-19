@@ -11,6 +11,9 @@ import plotly.io as pio
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
+import os
+import json
+import redis
 
 class StockPredictor:
     def __init__(self):
@@ -123,10 +126,10 @@ class StockPredictor:
         
         # Prepare data
         scaler, x_train, y_train, scaled_data = self.prepare_data(closing_prices)
-        
+
         # Build and train model
         model = self.build_model((x_train.shape[1], 1))
-        model.fit(x_train, y_train, batch_size=2, epochs=50)
+        model.fit(x_train, y_train, batch_size=2, epochs=20)
         
         # Make predictions
         last_60_days = scaled_data[-60:]
@@ -141,6 +144,19 @@ class StockPredictor:
 # Initialize the stock predictor
 stock_predictor = StockPredictor()
 
+# Initialize Redis client (lazy; created on module import)
+_redis_client = None
+
+def get_redis_client():
+    global _redis_client
+    # Redis client will store key-vale pairs of stock_symbol -> graph_json_pred
+    if _redis_client is None:
+        redis_host = os.getenv('REDIS_HOST', 'localhost')
+        redis_port = int(os.getenv('REDIS_PORT', '6379'))
+        redis_db = int(os.getenv('REDIS_DB', '0'))
+        _redis_client = redis.Redis(host=redis_host, port=redis_port, db=redis_db, socket_timeout=2)
+    return _redis_client
+
 @csrf_exempt
 @api_view(['POST'])
 def predict_stock(request):
@@ -149,7 +165,31 @@ def predict_stock(request):
         if not stock_symbol:
             return Response({'error': 'Stock symbol not provided'}, status=400)
         
+        symbol_key = f"prediction:{stock_symbol.upper()}"
+        redis_ttl_seconds = int(os.getenv('REDIS_TTL_SECONDS', '86400'))
+
+        # Try cache first
+        try:
+            client = get_redis_client()
+            cached = client.get(symbol_key)
+            if cached is not None:
+                # Value stored is raw JSON string of plotly fig
+                graph_json_pred = cached.decode('utf-8')
+                return Response({"graph_json_pred": graph_json_pred})
+        except Exception:
+            # Cache is best-effort; continue on failure
+            pass
+
+        # Compute fresh
         graph_json_pred = stock_predictor.predict(stock_symbol)
+
+        # Store in cache
+        try:
+            client = get_redis_client()
+            client.setex(symbol_key, redis_ttl_seconds, graph_json_pred)
+        except Exception:
+            pass
+
         return Response({"graph_json_pred": graph_json_pred})
     
     except ValueError as e:

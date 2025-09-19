@@ -1,6 +1,16 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - backend
   db:
     image: postgres:13
     env_file: .env
@@ -27,6 +37,7 @@ services:
     env_file: .env
     command: >
       sh -c "until pg_isready -h db -p 5432 -U ${DB_USER}; do echo waiting for db; sleep 1; done && \
+      until redis-cli -h redis ping | grep PONG; do echo waiting for redis; sleep 1; done && \
       python manage.py migrate && \
       ${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"
     volumes:
@@ -37,12 +48,38 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - backend
+
+  redis-flush-daily:
+    image: bitnami/redis:7.2.4
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT_NUMBER=6379
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      "while true; do \
+        now=$(date +%H:%M); \
+        if [ \"$now\" = \"03:00\" ]; then \
+          redis-cli -h redis FLUSHALL; \
+          sleep 60; \
+        else \
+          sleep 30; \
+        fi; \
+      done"
     restart: unless-stopped
     networks:
       - backend
 
 volumes:
   postgres_data:
+    driver: local
+  redis_data:
     driver: local
 networks:
   backend:
