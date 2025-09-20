@@ -95,13 +95,16 @@ WSGI_APPLICATION = 'mybackend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # SQLite Database (for development)
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 # For testing purposes, I did not use environment variables 
+
 '''
 DATABASES = {
     "default": {
@@ -116,7 +119,7 @@ DATABASES = {
 '''
 
 # PostgreSQL Database (uncomment to use)
-'''
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -127,7 +130,7 @@ DATABASES = {
         "PORT": os.getenv("DB_PORT"),
     }
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

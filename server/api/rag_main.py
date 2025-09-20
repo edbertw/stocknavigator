@@ -50,7 +50,7 @@ class MemoryAwareFinancialChatbotRAG:
             documents.extend(loader.load())
         
         # Slightly larger chunks reduce number of embeddings and retrieval cost
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=80)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
         chunks = text_splitter.split_documents(documents)
         
         # Initialize vector store
@@ -69,7 +69,7 @@ class MemoryAwareFinancialChatbotRAG:
         # Configure a retriever once with MMR for diversity and better relevance
         self.retriever = self.vectorstore.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": 3, "fetch_k": 15, "lambda_mult": 0.8}
+            search_kwargs={"k": 3, "fetch_k": 15, "lambda_mult": 0.8, "score_threshold": 0.85}
         )
         
         # Initialize LLM pipeline
@@ -81,15 +81,13 @@ class MemoryAwareFinancialChatbotRAG:
             "text2text-generation",
             model=model,
             tokenizer=tokenizer,
-            max_length=160,
+            max_length=1000,
             device=0 if device == "cuda" else -1,
             # Faster decoding settings; reduce beams and sampling complexity
             num_beams=1,
-            do_sample=False,
-            temperature=0.0,
-            early_stopping=True
+            do_sample=False
         )
-        
+       
         self.llm = HuggingFacePipeline(pipeline=hf_pipeline)
         
     

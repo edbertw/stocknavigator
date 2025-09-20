@@ -58,7 +58,7 @@
     ```bash
     pip3 install -r requirements.txt
     ```
-3. **Initialize a PostgreSQL database connection through Docker or 3-rd party apps**
+3. **Initialize a PostgreSQL database and Redis connection through Docker or 3-rd party apps**
 
 4. **Navigate to backend and launch the server:**
     ```bash

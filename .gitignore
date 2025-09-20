@@ -9,3 +9,5 @@
 .venv
 
 .env
+
+vercel.json

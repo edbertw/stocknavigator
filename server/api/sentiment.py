@@ -31,11 +31,11 @@ class SentimentAnalyzer:
     def initialize(self):
         """Initialize the sentiment analyzer by loading model and data"""
         # Load model
-        model_path = os.path.join(os.path.dirname(__file__), "sentiment_rnn.pt")
+        model_path = os.path.join(os.path.dirname(__file__), "artifacts/sentiment_rnn.pt")
         self.model = torch.jit.load(model_path, map_location=torch.device('cpu'))
         
         # Load and preprocess data
-        csv_path = os.path.join(os.path.dirname(__file__), "data.csv")
+        csv_path = os.path.join(os.path.dirname(__file__), "artifacts/data.csv")
         self.data = pd.read_csv(csv_path)
         self.data["review"] = self.data["review"].apply(self.remove_punc)
         
