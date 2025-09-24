@@ -163,12 +163,13 @@ Stock-Navigator is powered by an exciting tech stack:
 
 - **Frontend:** React.js, HTML, CSS, Plotly.js
 - **Backend:** Django, Django REST Framework
-- **Data Science:** Pandas, NumPy, TensorFlow, PyTorch, Yahoo Finance, FinnHub, Torch Script
-- **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS Vector DB, Seq2seq Trainers
+- **External APIs** FinnHub, Yahoo Finance, OpenRouter
+- **Data Science:** Pandas, NumPy, TensorFlow, PyTorch, Torch Scripts
+- **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS, Seq2seq Trainers
 - **Scraping:** BeautifulSoup
 - **DevOps:** Docker
 - **Databases:** PostgreSQL, Redis
-- **Security:** JWT Tokens
+- **Security:** JSON Web Tokens
 - **CI/CD Integration:** GitHub Actions
 
 ---

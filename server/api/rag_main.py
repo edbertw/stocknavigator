@@ -8,6 +8,7 @@ from langchain_community.vectorstores import FAISS
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 from langchain_huggingface import HuggingFacePipeline
 from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from .models import ChatSession, ChatMessage
@@ -18,6 +19,9 @@ from datetime import datetime, timedelta
 from collections import OrderedDict
 import time
 import torch
+from dotenv import load_dotenv
+import requests
+
 
 class MemoryAwareFinancialChatbotRAG:
     def __init__(self):
@@ -41,8 +45,32 @@ class MemoryAwareFinancialChatbotRAG:
         # Simple in-memory cache: {(session_id, normalized_question): (answer, expire_epoch)}
         self.response_cache = OrderedDict()
         self.cache_ttl_seconds = 300  # 5 minutes
+        # Simple keyword routing to decide when to enforce RAG-only answers
+        self.rag_keywords = {
+            'ma','moving average','sma','ema','wma','rsi','macd','bollinger','band','bands',
+            'candlestick','candle','doji','hammer','engulfing','shooting star','harami',
+            'momentum','correlation','cumulative','return','chart pattern','pattern','volume',
+            'vwap','obv','adx','parabolic sar','keltner','donchian','support','resistance', 'stock'
+        }
+        self.strict_rag_prompt = PromptTemplate(
+            input_variables=["context","question"],
+            template=(
+                "You are a precise financial assistant.") +
+                " Answer ONLY using the provided context.\n"
+                "- If the answer is not fully supported by the context, reply: 'I don't know based on the provided knowledge base.'\n"
+                "- Do not make up facts.\n"
+                "- Keep answers concise and focused.\n\n"
+                "Context:\n{context}\n\n"
+                "Question: {question}\n"
+            )
         
     def initialize(self):
+        # Load environment variables
+        try:
+            load_dotenv()
+        except Exception:
+            pass
+
         # Load and process documents
         documents = []
         for file_path in self.file_paths:
@@ -87,9 +115,12 @@ class MemoryAwareFinancialChatbotRAG:
             num_beams=1,
             do_sample=False
         )
-       
-        self.llm = HuggingFacePipeline(pipeline=hf_pipeline)
         
+        self.llm = HuggingFacePipeline(pipeline=hf_pipeline)
+        # Configure OpenRouter base LLM
+        self.openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
+        self.openrouter_model = "deepseek/deepseek-chat-v3.1:free"
+        self.openrouter_base_url = "https://openrouter.ai/api/v1/chat/completions"
     
     def get_or_create_session_memory(self, session_id):
         """Get or create memory for a specific session"""
@@ -123,6 +154,51 @@ class MemoryAwareFinancialChatbotRAG:
         except ChatSession.DoesNotExist:
             return self.get_or_create_session_memory(session_id)
 
+    def _render_memory_for_system(self, memory, max_chars=2000):
+        """Render recent conversation turns for inclusion in a system prompt.
+        Keeps it compact to avoid token bloat.
+        """
+        try:
+            messages = getattr(memory, "chat_memory", None)
+            if not messages or not getattr(messages, "messages", None):
+                return ""
+            rendered = []
+            for m in messages.messages[-20:]:
+                role = getattr(m, "type", "") or ("human" if m.__class__.__name__.lower().startswith("human") else "ai")
+                content = getattr(m, "content", "")
+                prefix = "User" if role in ("human", "user") else "Assistant"
+                rendered.append(f"{prefix}: {content}")
+            text = "\n".join(rendered)
+            if len(text) > max_chars:
+                return text[-max_chars:]
+            return text
+        except Exception:
+            return ""
+
+    def _call_openrouter_chat(self, system_prompt, user_prompt, temperature=0.2, max_tokens=800):
+        if not self.openrouter_api_key:
+            raise ValueError("OPENROUTER_API_KEY is not set")
+        headers = {
+            "Authorization": f"Bearer {self.openrouter_api_key}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "model": self.openrouter_model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            "temperature": temperature,
+            "max_tokens": max_tokens
+        }
+        resp = requests.post(self.openrouter_base_url, headers=headers, json=payload, timeout=60)
+        resp.raise_for_status()
+        data = resp.json()
+        try:
+            return data["choices"][0]["message"]["content"].strip()
+        except Exception:
+            return str(data)
+
     def _normalize_question(self, question: str) -> str:
         return (question or "").strip().lower()
 
@@ -155,6 +231,10 @@ class MemoryAwareFinancialChatbotRAG:
         key = (str(session_id), self._normalize_question(question))
         self.response_cache[key] = (answer, expire_ts)
     
+    def _is_rag_topic(self, question: str) -> bool:
+        q = (question or "").lower()
+        return any(k in q for k in self.rag_keywords)
+    
     def ask_question(self, question, session_id, user_id):
         """Process a question through the memory-aware RAG pipeline"""
         if not question:
@@ -173,25 +253,35 @@ class MemoryAwareFinancialChatbotRAG:
             self.save_conversation(session_id, user_id, question, cached)
             return cached
 
-        # Create conversational retrieval chain with memory
-        retriever = self.retriever or self.vectorstore.as_retriever(search_kwargs={"k": 3})
-
-        qa_chain = ConversationalRetrievalChain.from_llm(
-            llm=self.llm,
-            retriever=retriever,
-            memory=memory,
-            return_source_documents=False,
-            verbose=False
-        )
-        
-        # Process the question
-        response = qa_chain({"question": question})
-        
+        # Route: if topic is RAG-relevant, enforce context-only answering
+        if self._is_rag_topic(question):
+            retriever = self.retriever or self.vectorstore.as_retriever(search_kwargs={"k": 3})
+            qa_chain = ConversationalRetrievalChain.from_llm(
+                llm=self.llm,
+                retriever=retriever,
+                memory=memory,
+                return_source_documents=False,
+                verbose=False,
+                combine_docs_chain_kwargs={"prompt": self.strict_rag_prompt}
+            )
+            response = qa_chain({"question": question})
+            final_answer = response['answer']
+        else:
+            # Non-RAG topic: answer directly with base LLM (no retrieval)
+            system_prompt = (
+                f"""You are a formal and helpful assistant. Answer clearly, concisely and make it consistent with the provided chat history below.\n\n
+                For any stock or finance-related questions, answer it to the best of your ability. Please do not hallucinate or make up any information.
+                If you don't know the answer, please say "I don't know" or "I don't have that information".
+                Chat History:
+                {self._render_memory_for_system(memory)}
+                """
+            )
+            final_answer = self._call_openrouter_chat(system_prompt, question)
         # Save the conversation to database and cache
-        self.save_conversation(session_id, user_id, question, response['answer'])
-        self._set_cached_response(session_id, question, response['answer'])
+        self.save_conversation(session_id, user_id, question, final_answer)
+        self._set_cached_response(session_id, question, final_answer)
         
-        return response['answer']
+        return final_answer
     
     def save_conversation(self, session_id, user_id, question, answer):
         """Save user question and assistant answer to database"""
