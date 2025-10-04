@@ -43,6 +43,7 @@
 - 🖼️ **Real-time Market Sentiment Analysis**: Read real-time market news on the company and use our system to analyze its sentiment.
 - 🔮 **Stock price prediction**: Interactive, LSTM-driven predictions with beautiful charting.
 - 🛠️ **Modern full-stack experience**: Fast, intuitive, and ready for your contributions!
+- 👁️ **Application Visibility**: With state-of-the-art tools, monitor your app and system's performance with ease!
 
 ---
 
@@ -50,22 +51,12 @@
 
 ### 🐍 **Run Locally**
 
-1. **Activate virtual environment**:
+**Run the start script**:
     ```bash
-    source .venv/bin/activate
+    ./setup-monitoring.sh
     ```
-2. **Install dependencies:**
-    ```bash
-    pip3 install -r requirements.txt
-    ```
-3. **Initialize a PostgreSQL database and Redis connection through Docker or 3-rd party apps**
+**Ensure Docker Hub is open and ready to use**
 
-4. **Navigate to backend and launch the server:**
-    ```bash
-    cd server
-    python manage.py runserver
-    ```
-    > _No need to run a separate frontend server—everything is rendered for you!_
 
 ---
 
@@ -161,16 +152,16 @@ Currently, Stock-Navigator brings you insights on 64 S&P500 and HK corporations:
 
 Stock-Navigator is powered by an exciting tech stack:
 
-- **Frontend:** React.js, HTML, CSS, Plotly.js
+- **Frontend:** React.js
 - **Backend:** Django, Django REST Framework
 - **External APIs** FinnHub, Yahoo Finance, OpenRouter
 - **Data Science:** Pandas, NumPy, TensorFlow, PyTorch, Torch Scripts
 - **AI/ML:** LangChain, HuggingFace, Transformers, LSTM, FAISS, Seq2seq Trainers
 - **Scraping:** BeautifulSoup
-- **DevOps:** Docker
+- **DevOps:** Docker, Grafana, Prometheus
 - **Databases:** PostgreSQL, Redis
 - **Security:** JSON Web Tokens
-- **CI/CD Integration:** GitHub Actions
+- **CI/CD Pipeline:** GitHub Actions
 
 ---
 
