@@ -17,6 +17,11 @@ from .serializers import UserSerializer, NoteSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Note
 from rest_framework.views import APIView
+from django.http import HttpResponse
+from django.db import connection
+import time
+import psutil
+import os
 
 
 class NoteListCreate(generics.ListCreateAPIView):
@@ -42,6 +47,69 @@ class UserInfoView(APIView):
             'id': user.id,
             'username': user.username
         })
+
+# Prometheus metrics endpoint
+@api_view(['GET'])
+def metrics(request):
+    """Prometheus metrics endpoint for application monitoring"""
+    metrics_data = []
+    
+    # Application uptime
+    try:
+        with open('/proc/uptime', 'r') as f:
+            uptime_seconds = float(f.readline().split()[0])
+        metrics_data.append(f'django_uptime_seconds {uptime_seconds}')
+    except:
+        metrics_data.append(f'django_uptime_seconds 0')
+    
+    # Database connection status
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            db_status = 1
+    except:
+        db_status = 0
+    metrics_data.append(f'django_database_connected {db_status}')
+    
+    # Total users count
+    try:
+        user_count = User.objects.count()
+        metrics_data.append(f'django_users_total {user_count}')
+    except:
+        metrics_data.append(f'django_users_total 0')
+    
+    # Total notes count
+    try:
+        note_count = Note.objects.count()
+        metrics_data.append(f'django_notes_total {note_count}')
+    except:
+        metrics_data.append(f'django_notes_total 0')
+    
+    # Memory usage
+    try:
+        process = psutil.Process(os.getpid())
+        memory_info = process.memory_info()
+        memory_mb = memory_info.rss / 1024 / 1024
+        metrics_data.append(f'django_memory_usage_mb {memory_mb}')
+    except:
+        metrics_data.append(f'django_memory_usage_mb 0')
+    
+    # CPU usage
+    try:
+        process = psutil.Process(os.getpid())
+        cpu_percent = process.cpu_percent()
+        metrics_data.append(f'django_cpu_usage_percent {cpu_percent}')
+    except:
+        metrics_data.append(f'django_cpu_usage_percent 0')
+    
+    # Request count (simple counter)
+    metrics_data.append(f'django_requests_total 1')
+    
+    # Current timestamp
+    current_time = int(time.time())
+    metrics_data.append(f'django_metrics_timestamp {current_time}')
+    
+    return HttpResponse('\n'.join(metrics_data), content_type='text/plain')
     
           
 class NoteDelete(generics.DestroyAPIView):

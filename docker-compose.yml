@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   redis:
     image: redis:7-alpine
@@ -8,9 +6,16 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
     restart: unless-stopped
     networks:
       - backend
+
   db:
     image: postgres:13
     env_file: .env
@@ -27,7 +32,8 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 30s
     restart: unless-stopped
     networks:
       - backend
@@ -36,10 +42,18 @@ services:
     build: .
     env_file: .env
     command: >
-      sh -c "until pg_isready -h db -p 5432 -U ${DB_USER}; do echo waiting for db; sleep 1; done && \
-      until redis-cli -h redis ping | grep PONG; do echo waiting for redis; sleep 1; done && \
-      python manage.py migrate && \
-      ${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}"
+      sh -c "
+        echo 'Waiting for database...' &&
+        until pg_isready -h db -p 5432 -U $${DB_USER}; do sleep 2; done &&
+        echo 'Database ready!' &&
+        echo 'Waiting for Redis...' &&
+        until redis-cli -h redis ping | grep -q PONG; do sleep 2; done &&
+        echo 'Redis ready!' &&
+        echo 'Running migrations...' &&
+        python manage.py migrate &&
+        echo 'Starting server...' &&
+        $${DJANGO_CMD:-python manage.py runserver 0.0.0.0:8000}
+      "
     volumes:
       - ./server:/app
       - ./server/static:/app/static
@@ -49,29 +63,113 @@ services:
       db:
         condition: service_healthy
       redis:
-        condition: service_started
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - backend
 
   redis-flush-daily:
-    image: bitnami/redis:7.2.4
+    image: redis:7-alpine
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     environment:
       - REDIS_HOST=redis
-      - REDIS_PORT_NUMBER=6379
+      - REDIS_PORT=6379
     entrypoint: ["/bin/sh", "-c"]
     command: |
-      "while true; do \
-        now=$(date +%H:%M); \
-        if [ \"$now\" = \"03:00\" ]; then \
-          redis-cli -h redis FLUSHALL; \
-          sleep 60; \
-        else \
-          sleep 30; \
-        fi; \
+      "while true; do
+        now=$$(date +%H:%M);
+        if [ \"$$now\" = \"03:00\" ]; then
+          echo 'Flushing Redis cache...';
+          redis-cli -h redis FLUSHALL;
+          sleep 60;
+        else
+          sleep 30;
+        fi;
       done"
+    restart: unless-stopped
+    networks:
+      - backend
+
+  # Monitoring Services
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - backend
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    networks:
+      - backend
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/host/root'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - '/proc:/host/proc:ro'
+      - '/sys:/host/sys:ro'
+      - '/Users:/host/Users:ro'
+    restart: unless-stopped
+    networks:
+      - backend
+
+  postgres_exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    container_name: postgres_exporter
+    ports:
+      - "9187:9187"
+    environment:
+      - DATA_SOURCE_NAME=postgresql://${DB_USER}:${DB_PWD}@db:5432/${DB_NAME}?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - backend
+
+  redis_exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis_exporter
+    ports:
+      - "9121:9121"
+    environment:
+      - REDIS_ADDR=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - backend
@@ -81,6 +179,11 @@ volumes:
     driver: local
   redis_data:
     driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
 networks:
   backend:
     driver: bridge

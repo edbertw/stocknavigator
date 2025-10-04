@@ -20,16 +20,11 @@ server/db.sqlite3
 
 # Git
 .git
-.gitignore
 
 # OS/editor
 .DS_Store
 .idea
 .vscode
-
-# Docker
-Dockerfile*
-docker-compose*.yml
 
 # Misc
 *.swp

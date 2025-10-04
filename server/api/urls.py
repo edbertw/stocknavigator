@@ -37,4 +37,7 @@ urlpatterns = [
     path('end-chat-session/<uuid:session_id>/', end_chat_session, name='end-chat-session'),
     path('get-user-sessions/<int:user_id>/', get_user_sessions, name='get-user-sessions'),
     path('cleanup-expired-sessions/', cleanup_expired_sessions, name='cleanup-expired-sessions'),
+    
+    # Monitoring endpoints
+    path('metrics/', views.metrics, name='metrics'),
 ]
