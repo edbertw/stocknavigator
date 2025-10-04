@@ -51,12 +51,10 @@
 
 ### 🐍 **Run Locally**
 
-**Run the start script**:
+1. **Run the start script (Ensure Docker Hub is ready)**:
     ```bash
-    ./setup-monitoring.sh
+    ./setup-monitoring.sh .
     ```
-**Ensure Docker Hub is open and ready to use**
-
 
 ---
 
@@ -64,11 +62,7 @@
 
 1. **Build the Docker image:**
     ```bash
-    docker build -t stocknavigator .
-    ```
-2. **Spin up the container:**
-    ```bash
-    docker run -p 8000:8000 stocknavigator
+    docker-compose up -d .
     ```
 
 ---
@@ -172,6 +166,7 @@ Stock-Navigator is powered by an exciting tech stack:
 - **Predictive Analytics:** Forecast prices using advanced RNN (LSTM) models, cache results with Redis for speed and efficiency
 - **Curated Knowledge Base:** Answers are RAG-powered and sourced from the latest market info.
 - **Market Sentiment Analysis** Retrieve real-time market news on the company and analyse underlying sentiment
+- **Application Monitoring** Gain insights to your application's performance and data with Grafana and Prometheus
 ---
 
 ## 🌱 Contributing
