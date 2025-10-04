@@ -53,7 +53,7 @@
 
 1. **Run the start script (Ensure Docker Hub is ready)**:
     ```bash
-    ./setup-monitoring.sh .
+    ./setup-monitoring.sh 
     ```
 
 ---
@@ -62,7 +62,7 @@
 
 1. **Build the Docker image:**
     ```bash
-    docker-compose up -d .
+    docker-compose up -d 
     ```
 
 ---
