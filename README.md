@@ -60,7 +60,7 @@
 
 ### 🐳 **Run with Docker**
 
-1. **Build the Docker image:**
+1. **Build the Docker Container:**
     ```bash
     docker-compose up -d 
     ```
