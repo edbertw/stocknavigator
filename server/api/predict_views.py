@@ -151,7 +151,7 @@ def get_redis_client():
     global _redis_client
     # Redis client will store key-vale pairs of stock_symbol -> graph_json_pred
     if _redis_client is None:
-        redis_host = os.getenv('REDIS_HOST', 'localhost')
+        redis_host = os.getenv('REDIS_HOST', 'redis')
         redis_port = int(os.getenv('REDIS_PORT', '6379'))
         redis_db = int(os.getenv('REDIS_DB', '0'))
         _redis_client = redis.Redis(host=redis_host, port=redis_port, db=redis_db, socket_timeout=2)
