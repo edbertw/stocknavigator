@@ -136,7 +136,7 @@ const AppContent = () => {
             <span className="nav-icon">🏠</span>
             <span>Dashboard</span>
           </a>
-          <a href="/analytics" className="nav-item">
+          <a className="nav-item">
             <span className="nav-icon">📊</span>
             <span>Analytics</span>
           </a>

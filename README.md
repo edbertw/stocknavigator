@@ -32,6 +32,12 @@
 ![Predictive Analytics](screen_captures/photo_4.png)
 
 ---
+### Application Monitoring
+![App Monitoring](screen_captures/photo_8.png)
+### Systems Monitoring
+![Systems Monitoring](screen_captures/photo_9.png)
+
+---
 
 ## 🧐 What is Stock-Navigator?
 
